@@ -35,7 +35,10 @@
 
 <main>
 
-<section class="hero hero--data" aria-labelledby="titulo-principal">
+<section class="hero" aria-labelledby="titulo-principal">
+  <div class="hero__media">
+    <img src="img/hero-guayaquil.webp" alt="" loading="eager" />
+  </div>
   <div class="wrap hero__inner">
     <h1 class="hero__title" id="titulo-principal">El Banco Central eleva a 2,7% la previsión de crecimiento de Ecuador para 2026</h1>
     <p class="hero__subtitle">Y proyecta un promedio de 2,5% anual entre 2027 y 2030, sostenido por el consumo de los hogares y la inversión.</p>
@@ -45,56 +48,54 @@
 <section class="section" id="cifras" aria-labelledby="titulo-cifras">
   <div class="wrap">
     <header class="section-mark">
-      <span class="section-mark__num" aria-hidden="true">01</span>
-      <p class="section-mark__eyebrow">En cifras</p>
       <h2 class="section-mark__title" id="titulo-cifras">El escenario en diez datos</h2>
     </header>
 
-    <div class="stats-hero-row">
-    <div class="stat-hero reveal">
+    <div class="stats-hero-row reveal">
+    <div class="stat-hero">
       <p class="stat-hero__label">PIB 2026</p>
-      <p class="stat-hero__figure"><span class="counter" data-count-to="2.7" data-decimals="1">2,7</span><span>%</span></p>
+      <p class="stat-hero__figure"><span class="counter" data-count-to="2.7" data-decimals="1">2,7</span><span class="stat-hero__unit">%</span></p>
       <p class="stat-hero__note">Revisado al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica.</p>
     </div>
-    <div class="stat-hero reveal">
+    <div class="stat-hero">
       <p class="stat-hero__label">Promedio 2027-2030</p>
-      <p class="stat-hero__figure"><span class="counter" data-count-to="2.5" data-decimals="1">2,5</span><span>%</span></p>
+      <p class="stat-hero__figure"><span class="counter" data-count-to="2.5" data-decimals="1">2,5</span><span class="stat-hero__unit">%</span></p>
       <p class="stat-hero__note">Crecimiento sostenido por demanda interna, con un pico de <strong>2,8%</strong> en 2028.</p>
     </div>
-    <div class="stat-hero reveal">
+    <div class="stat-hero">
       <p class="stat-hero__label">Cuenta corriente 2026</p>
-      <p class="stat-hero__figure"><span class="counter" data-count-to="4587" data-decimals="0">4.587</span><span>M USD</span></p>
+      <p class="stat-hero__figure"><span class="counter" data-count-to="4587" data-decimals="0">4.587</span><span class="stat-hero__unit">M USD</span></p>
       <p class="stat-hero__note">Equivale a <strong>3,4% del PIB</strong> — cae desde <strong>USD 7.632M</strong> en 2025 (-39,9%).</p>
     </div>
   </div>
 
-    <div class="stats-list">
-    <div class="stat-row reveal">
+    <div class="stats-list reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Consumo de hogares</p>
       <p class="stat-row__val">+3,3%</p>
       <p class="stat-row__ctx">El motor más estable del crecimiento en 2026, apoyado en remesas y crédito de consumo.</p>
     </div>
-    <div class="stat-row reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Inversión (FBKF)</p>
       <p class="stat-row__val">+5,8%</p>
       <p class="stat-row__ctx">El componente más dinámico del año — construcción, vivienda y obra pública.</p>
     </div>
-    <div class="stat-row reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Remesas</p>
       <p class="stat-row__val">USD 8.020M</p>
       <p class="stat-row__ctx">+3,8% en 2026; sostienen el consumo y compensan el déficit de servicios.</p>
     </div>
-    <div class="stat-row reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Inflación promedio 2026</p>
       <p class="stat-row__val">2,1%</p>
       <p class="stat-row__ctx">Repunta por combustibles y tarifa eléctrica; converge a 0,9% recién en 2030.</p>
     </div>
-    <div class="stat-row reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Crédito al sector privado</p>
       <p class="stat-row__val">+10,9%</p>
       <p class="stat-row__ctx">Crece pero se desacelera cada año hasta 6,8% en 2030 — de forma ordenada.</p>
     </div>
-    <div class="stat-row reveal">
+    <div class="stat-row">
       <p class="stat-row__key">Reservas Internacionales</p>
       <p class="stat-row__val">USD 11.239M</p>
       <p class="stat-row__ctx">Cierre de 2026, en niveles históricamente altos.</p>
@@ -106,105 +107,82 @@
 <section class="section" id="temas" aria-labelledby="titulo-temas">
   <div class="wrap">
     <header class="section-mark">
-      <span class="section-mark__num" aria-hidden="true">02</span>
-      <p class="section-mark__eyebrow">El reporte</p>
       <h2 class="section-mark__title" id="titulo-temas">Los frentes para entender hacia dónde va la economía</h2>
       <p class="section-mark__lead">Del pulso reciente de la economía al primer impacto cuantificado del Fenómeno de El Niño, con el detalle sector por sector.</p>
     </header>
 
-    <div class="objectives__grid">
-  <a class="obj-cover obj-cover--1 obj-cover--data reveal" href="pages/tema-01-panorama.html">
+    <div class="objectives__grid reveal">
+  <a class="obj-cover obj-cover--1 obj-cover--data" href="pages/tema-01-panorama.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">01</span>
       <p class="obj-cover__title">Panorama</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 01 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">2,7%</span>
       <span class="obj-cover__data-label">PIB 2026</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--2 obj-cover--data reveal" href="pages/tema-02-pulso-domestico.html">
+  <a class="obj-cover obj-cover--2 obj-cover--data" href="pages/tema-02-pulso-domestico.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">02</span>
       <p class="obj-cover__title">Pulso doméstico</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 02 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">+2,2%</span>
       <span class="obj-cover__data-label">IMAEc jun-26</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--3 obj-cover--data reveal" href="pages/tema-03-motores.html">
+  <a class="obj-cover obj-cover--3 obj-cover--data" href="pages/tema-03-motores.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">03</span>
       <p class="obj-cover__title">Motores del crecimiento</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 03 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">+5,8%</span>
       <span class="obj-cover__data-label">Inversión (FBKF) 2026</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--4 obj-cover--data reveal" href="pages/tema-04-industrias.html">
+  <a class="obj-cover obj-cover--4 obj-cover--data" href="pages/tema-04-industrias.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">04</span>
       <p class="obj-cover__title">Cómo crecerá tu sector</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 04 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">+6,8%</span>
-      <span class="obj-cover__data-label">Minería, la industria líder en 2026</span>
+      <span class="obj-cover__data-label">Minería lidera en 2026</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--5 obj-cover--data reveal" href="pages/tema-05-externo.html">
+  <a class="obj-cover obj-cover--5 obj-cover--data" href="pages/tema-05-externo.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">05</span>
       <p class="obj-cover__title">Sector externo</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 05 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">USD 4.587M</span>
       <span class="obj-cover__data-label">Cuenta corriente 2026</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--6 obj-cover--data reveal" href="pages/tema-06-fiscal-monetario.html">
+  <a class="obj-cover obj-cover--6 obj-cover--data" href="pages/tema-06-fiscal-monetario.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">06</span>
       <p class="obj-cover__title">Fiscal y monetario</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 06 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">2,1%</span>
       <span class="obj-cover__data-label">Inflación 2026</span>
     </div>
   </a>
-  <a class="obj-cover obj-cover--8 obj-cover--data reveal" href="pages/tema-08-el-nino.html">
+  <a class="obj-cover obj-cover--8 obj-cover--data" href="pages/tema-08-el-nino.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">08</span>
       <p class="obj-cover__title">El Niño: el riesgo climático</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        <span class="obj-cover__meta">Tema 08 de 08</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">-1,4 p.p.</span>
@@ -218,11 +196,10 @@
 <section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
   <div class="wrap">
     <div class="risk-panel reveal">
-      <p class="risk-panel__eyebrow">El mapa de riesgos del BCE</p>
       <h2 class="risk-panel__title" id="titulo-riesgos">Balance de riesgos: más factores a la baja que al alza</h2>
       <p class="risk-panel__lead">El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo.</p>
 
-      <div class="risk-ratio reveal">
+      <div class="risk-ratio">
   <div class="risk-ratio__seg risk-ratio__seg--alza" style="flex:3">
     <span class="risk-ratio__n">3</span>
     <span class="risk-ratio__label">factores al alza</span>
@@ -262,7 +239,6 @@
 <section class="section" id="el-nino" aria-labelledby="titulo-el-nino">
   <div class="wrap">
     <div class="closing-panel reveal">
-      <p class="closing-panel__eyebrow">El dato más noticioso</p>
       <h2 class="closing-panel__title" id="titulo-el-nino">El Niño ya tiene un número: hasta -1,4 puntos de PIB en 2027</h2>
       <p class="closing-panel__text">El Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización.</p>
       <a class="closing-panel__cta" href="pages/tema-08-el-nino.html">Ver la cuantificación completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>

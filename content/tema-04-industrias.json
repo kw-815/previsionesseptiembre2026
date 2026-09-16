@@ -2,6 +2,11 @@
   "meta_desc": "Crecimiento del valor agregado por industria en 2026 y 2027, según el Banco Central del Ecuador — de la minería a la agricultura.",
   "en_sintesis": "Detrás del 2,7% de crecimiento total hay <strong>veinte industrias</strong> que se mueven a ritmos muy distintos. En 2026, la minería lidera con <strong>+6,8%</strong>, mientras que el arte y entretenimiento y la agricultura se contraen. Este es el desglose sector por sector.",
   "chart": "industrias-crecimiento",
+  "photo": {
+    "src": "hero-puerto.webp",
+    "alt": "Vista aérea de contenedores de exportación en un puerto de Guayaquil",
+    "caption": "El comercio exterior no petrolero — minería, camarón, banano — es uno de los canales por los que estas cifras llegan a la economía real. Puerto de Guayaquil."
+  },
   "sections": [
     {
       "eyebrow": "Los extremos del ranking",

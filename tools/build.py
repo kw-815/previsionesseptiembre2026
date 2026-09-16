@@ -4,8 +4,10 @@
 Patrón heredado de ace2040 / ley-transporte-impacto: sitio estático
 pre-renderizado (sin hidratación cliente), CSS compartido, contenido en
 JSON separado del layout. Lo nuevo en este producto: cada tema puede
-llevar gráficos SVG (tools/charts.py) y todo el markup se apoya en la
-clase .reveal para el scroll-reveal de js/main.js.
+llevar gráficos SVG (tools/charts.py), fotografía editorial donde el
+tema tiene un sujeto real y fotografiable, y el motion vive a nivel de
+sección (no ítem por ítem) — un solo momento coreografiado por bloque,
+con stagger por nth-child, en vez de N entradas idénticas repetidas.
 """
 import html
 import json
@@ -32,7 +34,7 @@ THEMES = [
     (1, "tema-01-panorama", "Panorama y cifras clave", "Panorama", "2,7%", "PIB 2026", True),
     (2, "tema-02-pulso-domestico", "El pulso de la economía ecuatoriana", "Pulso doméstico", "+2,2%", "IMAEc jun-26", True),
     (3, "tema-03-motores", "Los motores del crecimiento 2026-2030", "Motores del crecimiento", "+5,8%", "Inversión (FBKF) 2026", True),
-    (4, "tema-04-industrias", "Cómo crecerá tu sector", "Cómo crecerá tu sector", "+6,8%", "Minería, la industria líder en 2026", True),
+    (4, "tema-04-industrias", "Cómo crecerá tu sector", "Cómo crecerá tu sector", "+6,8%", "Minería lidera en 2026", True),
     (5, "tema-05-externo", "Petróleo, sector externo y reservas", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", True),
     (6, "tema-06-fiscal-monetario", "Fiscal, crédito e inflación", "Fiscal y monetario", "2,1%", "Inflación 2026", True),
     (7, "tema-07-riesgos", "Balance de riesgos", "Balance de riesgos", "6 vs 3", "Riesgos a la baja vs. al alza", False),
@@ -74,7 +76,9 @@ def load_chart(slug):
 
 
 # ----------------------------------------------------------------------
-# Bloques reutilizables
+# Bloques reutilizables — el contenedor lleva .reveal (un solo momento
+# coreografiado); los ítems dentro se escalonan por nth-child en CSS,
+# no repiten cada uno su propia entrada idéntica.
 # ----------------------------------------------------------------------
 
 def facts_grid_html(facts, highlight=None):
@@ -83,14 +87,14 @@ def facts_grid_html(facts, highlight=None):
     items = []
     for f in facts or []:
         items.append(
-            f'      <div class="fact reveal">\n'
+            f'      <div class="fact">\n'
             f'        <p class="fact__label">{esc(f["label"])}</p>\n'
             f'        <p class="fact__text">{rich(f["text"])}</p>\n'
             f'      </div>'
         )
     if highlight:
         items.append(
-            f'      <div class="fact fact--highlight reveal">\n'
+            f'      <div class="fact fact--highlight">\n'
             f'        <span class="fact__icon" aria-hidden="true">{ARROW_SVG}</span>\n'
             f'        <div>\n'
             f'          <p class="fact__label">{esc(highlight["label"])}</p>\n'
@@ -98,7 +102,7 @@ def facts_grid_html(facts, highlight=None):
             f'        </div>\n'
             f'      </div>'
         )
-    return '<div class="facts-grid">\n' + "\n".join(items) + "\n    </div>"
+    return '<div class="facts-grid reveal">\n' + "\n".join(items) + "\n    </div>"
 
 
 def stats_list_html(rows):
@@ -107,13 +111,13 @@ def stats_list_html(rows):
     items = []
     for r in rows:
         items.append(
-            f'    <div class="stat-row reveal">\n'
+            f'    <div class="stat-row">\n'
             f'      <p class="stat-row__key">{esc(r["key"])}</p>\n'
             f'      <p class="stat-row__val">{esc(r["val"])}</p>\n'
             f'      <p class="stat-row__ctx">{rich(r["ctx"])}</p>\n'
             f'    </div>'
         )
-    return '<div class="stats-list">\n' + "\n".join(items) + "\n  </div>"
+    return '<div class="stats-list reveal">\n' + "\n".join(items) + "\n  </div>"
 
 
 def stats_hero_html(items):
@@ -124,14 +128,25 @@ def stats_hero_html(items):
         decimals = 1 if "," in it["figure"] else 0
         count_to = it["figure"].replace(".", "").replace(",", ".")
         cards.append(
-            f'    <div class="stat-hero reveal">\n'
+            f'    <div class="stat-hero">\n'
             f'      <p class="stat-hero__label">{esc(it["label"])}</p>\n'
             f'      <p class="stat-hero__figure"><span class="counter" data-count-to="{count_to}" '
-            f'data-decimals="{decimals}">{esc(it["figure"])}</span><span>{esc(it["unit"])}</span></p>\n'
+            f'data-decimals="{decimals}">{esc(it["figure"])}</span><span class="stat-hero__unit">{esc(it["unit"])}</span></p>\n'
             f'      <p class="stat-hero__note">{rich(it["note"])}</p>\n'
             f'    </div>'
         )
-    return '<div class="stats-hero-row">\n' + "\n".join(cards) + "\n  </div>"
+    return '<div class="stats-hero-row reveal">\n' + "\n".join(cards) + "\n  </div>"
+
+
+def photo_html(photo, base="img/"):
+    if not photo:
+        return ""
+    return (
+        f'<figure class="obj-photo reveal">\n'
+        f'  <img src="{base}{esc(photo["src"])}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
+        f'  <figcaption>{rich(photo["caption"])}</figcaption>\n'
+        f'</figure>'
+    )
 
 
 # --- Balance de riesgos: componentes visuales compartidos entre el home
@@ -139,7 +154,7 @@ def stats_hero_html(items):
 
 def risk_ratio_html(risk):
     n_alza, n_baja = len(risk["alza"]), len(risk["baja"])
-    return f'''<div class="risk-ratio reveal">
+    return f'''<div class="risk-ratio">
   <div class="risk-ratio__seg risk-ratio__seg--alza" style="flex:{n_alza}">
     <span class="risk-ratio__n">{n_alza}</span>
     <span class="risk-ratio__label">factor{"es" if n_alza != 1 else ""} al alza</span>
@@ -154,7 +169,7 @@ def risk_ratio_html(risk):
 def risk_cards_html(risk):
     def col(kind, label, items, icon):
         cards = "\n".join(
-            f'      <article class="risk-card reveal">\n'
+            f'      <article class="risk-card">\n'
             f'        <span class="risk-card__icon" aria-hidden="true">{icon}</span>\n'
             f'        <p class="risk-card__title">{esc(it["title"])}</p>\n'
             f'        <p class="risk-card__text">{rich(it["text"])}</p>\n'
@@ -200,8 +215,7 @@ def risk_chips_html(risk):
 
 def section_html(sec):
     head = (
-        f'      <header class="fact-section__head reveal">\n'
-        f'        <p class="fact-section__eyebrow">{esc(sec["eyebrow"])}</p>\n'
+        f'      <header class="fact-section__head">\n'
         f'        <h2 class="fact-section__title">{esc(sec["title"])}</h2>\n'
         + (f'        <p class="fact-section__lead">{rich(sec["lead"])}</p>\n' if sec.get("lead") else "")
         + '      </header>'
@@ -285,21 +299,21 @@ TEMA_TPL = """<!doctype html>
 
 <section class="obj-hero obj-hero--{num}" aria-labelledby="titulo-tema">
   <div class="wrap">
-    <p class="obj-hero__kicker">Tema {num:02d} de {n:02d}</p>
     <div class="obj-hero__row">
+      <span class="obj-hero__num" aria-hidden="true">{num:02d}<small>/{n:02d}</small></span>
       <h1 class="obj-hero__name" id="titulo-tema">{nombre}</h1>
-      <span class="obj-hero__num" aria-hidden="true">{num:02d}</span>
     </div>
 
     <div class="obj-lead{lead_solo}">
       <div class="obj-lead__card reveal">
-        <p class="obj-lead__label">En síntesis</p>
         <p class="obj-lead__text">{en_sintesis}</p>
       </div>
       {chart_lead}
     </div>
 
-    <div class="roadmap" style="margin-top: clamp(2.5rem, 6vw, 4rem);">
+    {photo}
+
+    <div class="roadmap">
 {sections}
     </div>
 
@@ -343,6 +357,7 @@ def build_tema(theme):
         font=FONT_LINKS, nav=nav_top_html(num),
         en_sintesis=rich(data["en_sintesis"]),
         lead_solo=lead_solo, chart_lead=chart_lead,
+        photo=photo_html(data.get("photo"), base="../img/"),
         sections=sections_html,
         pager=pager_html(num),
         email=EMAIL,
@@ -359,14 +374,11 @@ def build_tema(theme):
 
 def obj_cover_html(theme):
     num, slug, nombre, corto, fig, lab, _grid = theme
-    return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data reveal" href="pages/{slug}.html">
+    return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data" href="pages/{slug}.html">
     <div class="obj-cover__top">
       <span class="obj-cover__num" aria-hidden="true">{num:02d}</span>
       <p class="obj-cover__title">{esc(corto)}</p>
-      <div class="obj-cover__cta">
-        <span class="obj-cover__cta-pill">Explorar tema {ARROW_SVG}</span>
-        <span class="obj-cover__meta">Tema {num:02d} de {N:02d}</span>
-      </div>
+      <span class="obj-cover__cta-pill">Explorar tema {ARROW_SVG}</span>
     </div>
     <div class="obj-cover__data">
       <span class="obj-cover__data-figure">{esc(fig)}</span>
@@ -410,7 +422,10 @@ HOME_TPL = """<!doctype html>
 
 <main>
 
-<section class="hero hero--data" aria-labelledby="titulo-principal">
+<section class="hero" aria-labelledby="titulo-principal">
+  <div class="hero__media">
+    <img src="img/hero-guayaquil.webp" alt="" loading="eager" />
+  </div>
   <div class="wrap hero__inner">
     <h1 class="hero__title" id="titulo-principal">{title}</h1>
     <p class="hero__subtitle">{subtitle}</p>
@@ -420,8 +435,6 @@ HOME_TPL = """<!doctype html>
 <section class="section" id="cifras" aria-labelledby="titulo-cifras">
   <div class="wrap">
     <header class="section-mark">
-      <span class="section-mark__num" aria-hidden="true">01</span>
-      <p class="section-mark__eyebrow">En cifras</p>
       <h2 class="section-mark__title" id="titulo-cifras">El escenario en diez datos</h2>
     </header>
 
@@ -434,13 +447,11 @@ HOME_TPL = """<!doctype html>
 <section class="section" id="temas" aria-labelledby="titulo-temas">
   <div class="wrap">
     <header class="section-mark">
-      <span class="section-mark__num" aria-hidden="true">02</span>
-      <p class="section-mark__eyebrow">{intro_eyebrow}</p>
       <h2 class="section-mark__title" id="titulo-temas">{intro_title}</h2>
       <p class="section-mark__lead">{intro_lead}</p>
     </header>
 
-    <div class="objectives__grid">
+    <div class="objectives__grid reveal">
 {cards}
     </div>
   </div>
@@ -449,7 +460,6 @@ HOME_TPL = """<!doctype html>
 <section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
   <div class="wrap">
     <div class="risk-panel reveal">
-      <p class="risk-panel__eyebrow">{risks_eyebrow}</p>
       <h2 class="risk-panel__title" id="titulo-riesgos">{risks_title}</h2>
       <p class="risk-panel__lead">{risks_lead}</p>
 
@@ -464,7 +474,6 @@ HOME_TPL = """<!doctype html>
 <section class="section" id="el-nino" aria-labelledby="titulo-el-nino">
   <div class="wrap">
     <div class="closing-panel reveal">
-      <p class="closing-panel__eyebrow">{closing_eyebrow}</p>
       <h2 class="closing-panel__title" id="titulo-el-nino">{closing_title}</h2>
       <p class="closing-panel__text">{closing_text}</p>
       <a class="closing-panel__cta" href="{closing_href}">{closing_label} {arrow}</a>
@@ -502,18 +511,15 @@ def build_home():
         subtitle=rich(data["subtitle"]),
         stats_hero=stats_hero_html(data["stats_hero"]),
         stats_list=stats_list_html(data["stats_list"]),
-        intro_eyebrow=esc(data["intro_nav"]["eyebrow"]),
         intro_title=esc(data["intro_nav"]["title"]),
         intro_lead=rich(data["intro_nav"]["lead"]),
         cards=cards,
-        risks_eyebrow=esc(data["risks"]["eyebrow"]),
         risks_title=esc(data["risks"]["title"]),
         risks_lead=rich(data["risks"]["lead"]),
         risk_ratio=risk_ratio_html(risk),
         risk_chips=risk_chips_html(risk),
         risks_href=data["risks"]["cta_href"],
         risks_label=esc(data["risks"]["cta_label"]),
-        closing_eyebrow=esc(data["closing"]["eyebrow"]),
         closing_title=esc(data["closing"]["title"]),
         closing_text=rich(data["closing"]["text"]),
         closing_href=data["closing"]["cta_href"],
