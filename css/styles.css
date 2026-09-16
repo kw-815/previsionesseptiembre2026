@@ -1246,46 +1246,34 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .closing-panel__cta:hover svg { transform: translateX(3px); }
 
 /* Cierre del home: declaraciones oficiales + retrato — el único bloque de
-   foto a gran escala fuera del hero, tratamiento consistente con el resto
-   del documento (marco redondeado, velo de marca, mismo idioma tipográfico
-   de los paneles de riesgos/El Niño). */
+   foto a gran escala fuera del hero. Tratamiento deliberadamente
+   contenido y formal, más cerca de una atribución de prensa (retrato
+   pequeño junto al nombre y cargo) que de un banner fotográfico — un
+   retrato grande dominando el bloque se leía como propaganda, no como
+   reporte. */
 .quote-panel {
-  display: grid;
-  grid-template-columns: 0.86fr 1.14fr;
+  max-width: 74ch;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
   border-radius: var(--r-xl);
-  overflow: hidden;
   border: 1px solid var(--t-15);
   background: var(--t-08);
 }
-@media (max-width: 780px) {
-  .quote-panel { grid-template-columns: 1fr; }
+.quote-panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
 }
-.quote-panel__media {
-  position: relative;
-  min-height: 320px;
-  isolation: isolate;
-}
-.quote-panel__media img {
-  width: 100%;
-  height: 100%;
+.quote-panel__portrait {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   object-fit: cover;
   object-position: top center;
-  display: block;
-}
-.quote-panel__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(200deg, rgba(23, 28, 92, 0.05) 30%, rgba(23, 28, 92, 0.55) 100%);
-}
-@media (max-width: 780px) {
-  .quote-panel__media { min-height: 240px; }
-}
-.quote-panel__body {
-  padding: clamp(2rem, 4vw, 3.25rem);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
+  flex-shrink: 0;
+  filter: grayscale(55%) contrast(1.03);
+  border: 1px solid var(--t-15);
 }
 .quote-panel__eyebrow {
   font-size: var(--fs-xs);
@@ -1293,21 +1281,26 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--orange);
+  margin-bottom: 0.15rem;
 }
-.quote-panel__intro { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; }
+.quote-panel__name { font-size: var(--fs-base); font-weight: 700; color: var(--white); line-height: 1.2; }
+.quote-panel__role { font-size: var(--fs-xs); color: var(--t-60); line-height: 1.3; }
+.quote-panel__intro { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.6; margin-bottom: var(--s-3); }
 .quote-panel__quote {
-  margin: 0;
-  padding-left: 1.1rem;
-  border-left: 3px solid var(--orange);
-  font-size: var(--fs-xl);
-  font-weight: 700;
-  line-height: 1.4;
+  margin: 0 0 var(--s-3);
+  padding-left: 1rem;
+  border-left: 2px solid var(--t-25);
+  font-size: var(--fs-md);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.55;
   color: var(--white);
 }
-.quote-panel__text { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; }
+.quote-panel__text { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.6; }
 .quote-panel__credit {
-  margin-top: auto;
+  margin-top: var(--s-3);
   padding-top: var(--s-2);
+  border-top: 1px solid var(--t-10);
   font-size: var(--fs-xs);
   color: var(--t-40);
 }

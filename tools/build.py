@@ -398,25 +398,32 @@ def obj_cover_html(theme):
 
 
 def quote_panel_html(qc):
+    """Bloque de cierre con cita presidencial. Tratamiento formal/editorial
+    deliberadamente contenido: un retrato pequeño junto al nombre y cargo
+    (como una atribución de prensa), no una foto a gran escala — un
+    retrato grande ahí se leía como propaganda, no como reporte."""
     if not qc:
         return ""
     photo = qc.get("photo") or {}
-    photo_html = (
-        f'<div class="quote-panel__media">\n'
-        f'      <img src="img/{esc(photo.get("src",""))}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
-        f'    </div>'
+    portrait_html = (
+        f'<img class="quote-panel__portrait" src="img/{esc(photo.get("src",""))}" '
+        f'alt="{esc(photo.get("alt",""))}" loading="lazy" />'
         if photo.get("src") else ""
     )
     credit_html = f'<p class="quote-panel__credit">Foto: {esc(photo["credit"])}</p>' if photo.get("credit") else ""
     return f'''<div class="quote-panel reveal">
-    {photo_html}
-    <div class="quote-panel__body">
-      <p class="quote-panel__eyebrow">{esc(qc.get("eyebrow",""))}</p>
-      <p class="quote-panel__intro">{rich(qc["intro"])}</p>
-      <blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote"])}&rdquo;</blockquote>
-      <p class="quote-panel__text">{rich(qc["text"])}</p>
-      {credit_html}
+    <div class="quote-panel__head">
+      {portrait_html}
+      <div>
+        <p class="quote-panel__eyebrow">{esc(qc.get("eyebrow",""))}</p>
+        <p class="quote-panel__name">{esc(qc.get("name",""))}</p>
+        <p class="quote-panel__role">{esc(qc.get("role",""))}</p>
+      </div>
     </div>
+    <p class="quote-panel__intro">{rich(qc["intro"])}</p>
+    <blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote"])}&rdquo;</blockquote>
+    <p class="quote-panel__text">{rich(qc["text"])}</p>
+    {credit_html}
   </div>'''
 
 
