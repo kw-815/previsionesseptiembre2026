@@ -989,7 +989,11 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   grid-template-columns: 1fr 1fr;
   gap: var(--s-3);
   margin-top: clamp(2rem, 4vw, 3rem);
-  align-items: stretch;
+  /* align-items:start, no stretch: cuando el texto es más largo que el
+     gráfico (habitual en los bloques fusionados del hilo único), estirar
+     la tarjeta del gráfico a la altura del texto dejaba un vacío enorme
+     debajo de la fuente — cada tarjeta ahora ocupa solo su alto real. */
+  align-items: start;
 }
 .obj-lead--solo { grid-template-columns: 1fr; }
 @media (max-width: 860px) { .obj-lead { grid-template-columns: 1fr; } }
