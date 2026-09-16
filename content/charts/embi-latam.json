@@ -1,0 +1,12 @@
+{
+  "kind": "hbars",
+  "title": "Riesgo soberano en LATAM (EMBI)",
+  "unit": "pb",
+  "note": "Ecuador redujo su riesgo país en 1.641 puntos básicos desde diciembre de 2023, pero sigue por encima de toda la región.",
+  "source": "Fuente: EMBI (Emerging Markets Bonds Index) - J.P. Morgan Chase, agosto 2026.",
+  "highlight": "Ecuador",
+  "categories": ["Ecuador", "México", "Colombia", "Brasil", "Perú", "Chile"],
+  "series": [
+    { "name": "EMBI", "accent": "obj-2", "values": [428.36, 197.25, 188.54, 176.33, 108.36, 90.00] }
+  ]
+}

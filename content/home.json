@@ -1,0 +1,35 @@
+{
+  "kicker": "Coyuntura económica · Programación Macroeconómica BCE, septiembre 2026",
+  "title": "El Banco Central eleva a 2,7% la previsión de crecimiento de Ecuador para 2026",
+  "subtitle": "Y proyecta un promedio de 2,5% anual entre 2027 y 2030, sostenido por el consumo de los hogares y la inversión. Esta es la lectura de Keyword para empresarios: qué dice el escenario oficial, dónde están los riesgos y qué significa para tu negocio.",
+  "meta_desc": "Lectura empresarial de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador: crecimiento, riesgos y el primer impacto cuantificado del Fenómeno de El Niño.",
+  "stats_hero": [
+    { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "Revisado al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica." },
+    { "label": "Promedio 2027-2030", "figure": "2,5", "unit": "%", "note": "Crecimiento sostenido por demanda interna, con un pico de <strong>2,8%</strong> en 2028." },
+    { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "Superávit equivalente a <strong>3,4% del PIB</strong>, aunque cae 39,9% frente a 2025." }
+  ],
+  "stats_list": [
+    { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "El motor más estable del crecimiento en 2026, apoyado en remesas y crédito de consumo." },
+    { "key": "Inversión (FBKF)", "val": "+5,8%", "ctx": "El componente más dinámico del año — construcción, vivienda y obra pública." },
+    { "key": "Remesas", "val": "USD 8.020M", "ctx": "+3,8% en 2026; sostienen el consumo y compensan el déficit de servicios." },
+    { "key": "Inflación promedio 2026", "val": "2,1%", "ctx": "Repunta por combustibles y tarifa eléctrica; converge a 0,9% recién en 2030." },
+    { "key": "Crédito al sector privado", "val": "+10,9%", "ctx": "Crece pero se desacelera cada año hasta 6,8% en 2030 — de forma ordenada." },
+    { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Cierre de 2026, en niveles históricamente altos." }
+  ],
+  "intro_nav": {
+    "eyebrow": "El reporte",
+    "title": "Nueve frentes para entender hacia dónde va la economía",
+    "lead": "De la coyuntura internacional al primer impacto cuantificado del Fenómeno de El Niño — cada tema cierra con una lectura directa de qué significa para tu empresa."
+  },
+  "closing": {
+    "eyebrow": "El dato más noticioso",
+    "title": "El Niño ya tiene un número: hasta -1,4 puntos de PIB en 2027",
+    "text": "Por primera vez, el Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización — y la que menos empresas están monitoreando todavía.",
+    "cta_label": "Ver la cuantificación completa",
+    "cta_href": "pages/tema-08-el-nino.html"
+  },
+  "final": {
+    "eyebrow": "Sobre este reporte",
+    "text": "Elaborado por Keyword a partir de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador (septiembre de 2026). Todas las cifras citadas provienen de esa publicación; las lecturas de \"qué implica para tu empresa\" son análisis propio de Keyword y no declaraciones del Banco Central."
+  }
+}

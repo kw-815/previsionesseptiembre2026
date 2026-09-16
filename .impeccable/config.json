@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "css/styles.css"
+        ],
+        "createdAt": "2026-09-16T02:10:45.156Z",
+        "reason": "Inherited verbatim from ley-transporte-impacto/ace2040 base template (pull-quote, pilar-framing, roadmap-final, wall-note, strat card) — already shipped in production on two other Keyword sites, not introduced by this task; the one new instance (risk-card) was removed instead of suppressed."
+      }
+    ]
+  }
+}

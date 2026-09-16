@@ -1,0 +1,11 @@
+{
+  "kind": "line",
+  "title": "Crédito al sector privado y captaciones",
+  "unit": "%",
+  "note": "Ambas variables se desaceleran de forma gradual y ordenada; las captaciones se mantienen por encima del crédito durante todo el horizonte.",
+  "categories": ["2026 (e)", "2027 (e)", "2028 (e)", "2029 (e)", "2030 (e)"],
+  "series": [
+    { "name": "Crédito privado", "accent": "obj-6", "values": [10.9, 9.0, 8.0, 7.3, 6.8] },
+    { "name": "Captaciones", "accent": "obj-8", "values": [11.5, 9.3, 8.2, 7.5, 7.0] }
+  ]
+}

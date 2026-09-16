@@ -1,0 +1,10 @@
+{
+  "kind": "line",
+  "title": "Inflación anual promedio",
+  "unit": "%",
+  "note": "La inflación repunta en 2026-2027 por la liberalización de combustibles y la normalización de tarifas eléctricas, y luego converge a la baja.",
+  "categories": ["2020", "2021", "2022", "2023", "2024", "2025", "2026 (e)", "2027 (e)", "2028 (e)", "2029 (e)", "2030 (e)"],
+  "series": [
+    { "name": "Inflación", "accent": "obj-6", "values": [-0.3, 0.1, 3.5, 2.2, 1.6, 0.7, 2.1, 2.2, 1.7, 1.1, 0.9] }
+  ]
+}

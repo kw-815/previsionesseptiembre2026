@@ -1,0 +1,32 @@
+{
+  "meta_desc": "El mapa oficial de riesgos del Banco Central: tres factores que podrían mejorar el escenario y seis que podrían deteriorarlo.",
+  "en_sintesis": "El propio Banco Central marca los límites de su escenario base: <strong>tres factores</strong> podrían llevar el crecimiento por encima de lo previsto, y <strong>seis</strong> podrían llevarlo por debajo. El balance, en su lectura, está más cargado hacia los riesgos a la baja — aunque ninguno es, por sí solo, suficiente para descarrilar el escenario central.",
+  "sections": [
+    {
+      "eyebrow": "El mapa de riesgos del BCE",
+      "title": "Qué podría mejorar o deteriorar el escenario",
+      "risk_cards": {
+        "alza": [
+          { "title": "Acuerdos comerciales", "text": "CEPA con Emiratos Árabes Unidos, SECA con Corea del Sur, TLC con Canadá y una primera ronda con República Dominicana amplían el acceso a nuevos mercados para la oferta exportable ecuatoriana." },
+          { "title": "Exportaciones no petroleras e inversión", "text": "Una mejora del tipo de cambio efectivo real y nuevas inversiones estratégicas podrían generar más divisas y productividad que las previstas en el escenario base." },
+          { "title": "Remesas", "text": "Crecieron 7,7% interanual en el primer trimestre de 2026 y representan ya el 5,9% del PIB — si el ritmo se mantiene, sostienen el consumo por encima de lo proyectado." }
+        ],
+        "baja": [
+          { "title": "Dinamismo del sector petrolero", "text": "El OCP y el SOTE siguen expuestos a eventos climáticos extremos; una nueva interrupción como la de 2025 restringiría producción, exportación e ingresos fiscales." },
+          { "title": "Conflicto geopolítico en Medio Oriente", "text": "Una escalada puede encarecer energía, transporte e insumos importados y endurecer las condiciones financieras internacionales." },
+          { "title": "Incertidumbre sobre proyectos mineros", "text": "Factores ambientales, sociales e institucionales pueden postergar proyectos más allá de Mirador y Fruta del Norte, limitando la inversión extranjera directa prevista." },
+          { "title": "Riesgos de financiamiento externo", "text": "Una Reserva Federal más restrictiva de lo esperado encarecería el acceso al financiamiento externo del país." },
+          { "title": "Presiones fiscales", "text": "Desde 2026 vencen los períodos de gracia de la reestructuración de deuda: el repago de capital gana peso frente a los nuevos desembolsos, en un contexto de ingresos fiscales más volátiles que el calendario de pagos." },
+          { "title": "Panorama de inseguridad", "text": "Eleva los costos operativos de las empresas, reduce el atractivo para el turismo y la inversión, y deteriora la percepción de riesgo del país." }
+        ]
+      }
+    }
+  ],
+  "business_take": {
+    "title": "Qué implica para tu empresa",
+    "items": [
+      { "func": "Monitoreo trimestral", "text": "Este mapa es, en la práctica, una lista de verificación: vale la pena revisarlo cada trimestre junto con los resultados de tu propio negocio para detectar temprano si alguno de estos factores se está materializando." },
+      { "func": "Cobertura de riesgo", "text": "Los tres riesgos con mayor probabilidad de afectar la operación directa de una empresa son financiamiento externo, inseguridad y el sector petrolero (por su efecto fiscal). Priorízalos al diseñar coberturas o planes de contingencia." }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "bars",
+  "title": "Saldo de la cuenta corriente",
+  "unit": "USD M",
+  "note": "El superávit externo se estrecha de forma gradual: de USD 7.632 millones en 2025 a USD 3.645 millones en 2030.",
+  "categories": ["2025", "2026 (e)", "2027 (e)", "2028 (e)", "2029 (e)", "2030 (e)"],
+  "series": [
+    { "name": "Cuenta corriente", "accent": "obj-5", "values": [7632, 4587, 5013, 4344, 3887, 3645] }
+  ]
+}

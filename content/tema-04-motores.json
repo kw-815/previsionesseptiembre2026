@@ -1,0 +1,39 @@
+{
+  "meta_desc": "Consumo, inversión y exportaciones no petroleras: qué sectores impulsan el crecimiento 2026-2030 y cuáles están en corrección.",
+  "en_sintesis": "El crecimiento de mediano plazo descansa en tres motores: el <strong>consumo de los hogares</strong>, la <strong>inversión (FBKF)</strong> y, en menor medida, las <strong>exportaciones no petroleras</strong>. Dentro de ese último grupo la fotografía es desigual: minería y camarón en expansión fuerte, cacao y pesca en corrección.",
+  "chart": "exportaciones-producto",
+  "sections": [
+    {
+      "eyebrow": "Los tres motores",
+      "title": "Consumo, inversión y exportaciones en 2026-2030",
+      "stats_list": [
+        { "key": "Consumo de hogares", "val": "+3,3% / +2,8%", "ctx": "2026 y promedio 2027-2030. Sostenido por remesas y crédito de consumo." },
+        { "key": "Inversión (FBKF)", "val": "+5,8% / +2,4%", "ctx": "2026 y promedio 2027-2030. Impulsada por construcción, vivienda y obra pública." },
+        { "key": "Exportaciones", "val": "+3,8% / +1,7%", "ctx": "2026 y promedio 2027-2030. El componente más volátil del escenario." }
+      ]
+    },
+    {
+      "eyebrow": "Exportaciones no petroleras",
+      "title": "Minería y camarón arriba, cacao y pesca en corrección",
+      "lead": "Las exportaciones no tradicionales crecen 10,8% en 2026, con la minería como líder absoluto: Fruta del Norte y Mirador explican buena parte del salto. El cacao, en cambio, cae 45,8% en valor por una combinación de fatiga fisiológica en las plantaciones y la corrección de precios internacionales tras dos años atípicamente altos.",
+      "facts": [
+        { "label": "Minería", "text": "<strong>+24,7%</strong> en 2026 (USD 5.192 millones), por precios altos de oro y cobre y mayor producción de Fruta del Norte y Mirador. Fruta del Norte agota reservas en 2027." },
+        { "label": "Camarón", "text": "<strong>+11,5%</strong> en volumen para 2026, con demanda sostenida de Estados Unidos y China pese a restricciones comerciales puntuales ya superadas." },
+        { "label": "Cacao y elaborados", "text": "<strong>-45,8%</strong> en valor: cae el precio internacional tras el pico de 2024-2025 y la oferta de Ghana y Costa de Marfil vuelve al mercado." },
+        { "label": "Atún, pescado y enlatados", "text": "Caídas de <strong>3% a 6,5%</strong> en volumen por costos de producción, transporte y disponibilidad del recurso — con el FEN como riesgo adicional en el segundo semestre." }
+      ]
+    },
+    {
+      "eyebrow": "El contrapeso",
+      "title": "Las importaciones también aceleran",
+      "highlight": { "label": "Importaciones 2026", "text": "Crecen <strong>15,1%</strong> (comercio registrado), lideradas por combustibles y lubricantes (+37,7%, efecto precio), bienes de consumo duraderos (+17,8%) y bienes de capital para industria (+8,0%) — señal de que buena parte del gasto es inversión productiva, no solo consumo." }
+    }
+  ],
+  "business_take": {
+    "title": "Qué implica para tu empresa",
+    "items": [
+      { "func": "Cadena de suministro agro", "text": "Si tu negocio depende de cacao o pesca, este no es un bache pasajero de un trimestre: es una corrección de precio y oferta que se extiende al menos hasta 2027. Vale la pena revisar contratos y coberturas con ese horizonte." },
+      { "func": "Bienes de capital e insumos", "text": "El fuerte crecimiento de importaciones de bienes de capital (+8,0%) sugiere que otras empresas están invirtiendo en capacidad productiva ahora — una señal de que el momentum de inversión de 2026 es real, no solo un dato agregado." }
+    ]
+  }
+}
