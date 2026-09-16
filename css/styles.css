@@ -989,11 +989,15 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   grid-template-columns: 1fr 1fr;
   gap: var(--s-3);
   margin-top: clamp(2rem, 4vw, 3rem);
-  /* align-items:start, no stretch: cuando el texto es más largo que el
-     gráfico (habitual en los bloques fusionados del hilo único), estirar
-     la tarjeta del gráfico a la altura del texto dejaba un vacío enorme
-     debajo de la fuente — cada tarjeta ahora ocupa solo su alto real. */
-  align-items: start;
+  /* stretch: en los bloques fusionados del hilo único, texto y gráfico casi
+     nunca tienen el mismo alto natural — sea cual sea el más corto,
+     align-items:start/end deja un hueco de fondo expuesto debajo de esa
+     tarjeta (la fila del grid siempre mide lo que mide la más alta). Con
+     stretch, las dos tarjetas siempre llenan la fila completa; el contenido
+     de cada una se centra verticalmente (.obj-lead__card y .chart-card)
+     para que el espacio sobrante se vea como margen de diseño, no como un
+     vacío accidental. */
+  align-items: stretch;
 }
 .obj-lead--solo { grid-template-columns: 1fr; }
 @media (max-width: 860px) { .obj-lead { grid-template-columns: 1fr; } }
@@ -1028,6 +1032,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   border-radius: var(--r-lg);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.4rem;
 }
 .chart-card__head {
