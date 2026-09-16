@@ -43,8 +43,8 @@ Salida: `index.html` + 7 páginas en `pages/`.
 
 - **7 temas:** Panorama y cifras clave · El pulso de la economía ecuatoriana ·
   Los motores del crecimiento 2026-2030 · El crecimiento por industria
-  (ranking de 20 industrias) · Petróleo, sector externo y reservas · Fiscal,
-  crédito e inflación · Fenómeno de El Niño.
+  (ranking de 20 industrias) · Petróleo, sector externo y reservas · Sector
+  fiscal, crédito e inflación · Fenómeno de El Niño.
 - **Balance de riesgos** no es un tema aparte: vive como la sección de
   cierre del home (barra de proporción + tarjetas completas por factor),
   justo antes del pie de página.
@@ -82,7 +82,7 @@ multiply` con el acento `--obj-N` de cada tema) sobre la foto — ver
   construcción (https://unsplash.com/photos/Mcn1Ky7jzZU).
 - Tarjeta de "Sector externo" (`card-externo.webp`): Josep M Bové, complejo
   industrial/refinería (https://unsplash.com/photos/ArdlHSiX44s).
-- Tarjeta de "Fiscal y monetario" (`card-fiscal.webp`): Giorgio Trovato,
+- Tarjeta de "Sector fiscal y monetario" (`card-fiscal.webp`): Giorgio Trovato,
   billetes de dólar (https://unsplash.com/photos/WyxqQpyFNk8).
 - Tarjeta de "El Niño" (`card-el-nino.webp`): Daniel Lerman, tormenta sobre
   el mar (https://unsplash.com/photos/GBkssTODNT0).

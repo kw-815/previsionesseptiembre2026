@@ -36,7 +36,7 @@ THEMES = [
     (3, "tema-03-motores", "Los motores del crecimiento 2026-2030", "Motores del crecimiento", "+5,8%", "Inversión (FBKF) 2026", "card-motores.webp"),
     (4, "tema-04-industrias", "El crecimiento por industria", "Por industria", "+6,8%", "Minería lidera en 2026", "hero-puerto.webp"),
     (5, "tema-05-externo", "Petróleo, sector externo y reservas", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", "card-externo.webp"),
-    (6, "tema-06-fiscal-monetario", "Fiscal, crédito e inflación", "Fiscal y monetario", "2,1%", "Inflación 2026", "card-fiscal.webp"),
+    (6, "tema-06-fiscal-monetario", "Sector fiscal, crédito e inflación", "Sector fiscal y monetario", "2,1%", "Inflación 2026", "card-fiscal.webp"),
     (7, "tema-07-el-nino", "Fenómeno de El Niño", "El Niño: el riesgo climático", "-1,4 p.p.", "PIB 2027, escenario fuerte", "card-el-nino.webp"),
 ]
 N = len(THEMES)
@@ -51,6 +51,17 @@ FONT_LINKS = (
 ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 TREND_UP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 6-9"/><path d="M15 6h5v5"/></svg>'
 TREND_DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l6 6 4-4 6 9"/><path d="M15 18h5v-5"/></svg>'
+
+# Iconos pequeños opcionales para .fact (p.ej. el desglose de industrias en
+# tema-04) — mismo estilo trazo/round que ARROW_SVG, un icono por sector.
+FACT_ICONS = {
+    "mining": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l6-11 4 6 2-3 6 8z"/></svg>',
+    "bolt": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 4 14h6l-1 7 9-11h-6z"/></svg>',
+    "construction": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-5v5h8v12"/><path d="M12 9v12"/><path d="M4 21h16"/></svg>',
+    "food": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V9"/><path d="M12 9c-2.2 0-4-1.8-4-4 2.2 0 4 1.8 4 4z"/><path d="M12 9c2.2 0 4-1.8 4-4-2.2 0-4 1.8-4 4z"/><path d="M12 15c-2.2 0-4-1.8-4-4 2.2 0 4 1.8 4 4z"/><path d="M12 15c2.2 0 4-1.8 4-4-2.2 0-4 1.8-4 4z"/></svg>',
+    "art": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-1.1-.9-2-2-2h-2.2a2 2 0 0 1-1.9-2.7c.2-.5.1-1-.3-1.4A2 2 0 0 0 13 5.3c0-.9-.4-1.7-1-2.1-.6-.2-1.3-.2-2 0"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="9" cy="7" r="1"/><circle cx="14.5" cy="6.2" r="1"/></svg>',
+    "leaf": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21c8 0 14-6 14-14V5h-2C9 5 3 11 3 19v2z"/><path d="M3 21c4-6 8-9 13-11"/></svg>',
+}
 
 
 def esc(s):
@@ -85,8 +96,11 @@ def facts_grid_html(facts, highlight=None):
         return ""
     items = []
     for f in facts or []:
+        icon_svg = FACT_ICONS.get(f.get("icon"))
+        icon_html = f'        <span class="fact__icon" aria-hidden="true">{icon_svg}</span>\n' if icon_svg else ""
         items.append(
             f'      <div class="fact">\n'
+            f'{icon_html}'
             f'        <p class="fact__label">{esc(f["label"])}</p>\n'
             f'        <p class="fact__text">{rich(f["text"])}</p>\n'
             f'      </div>'
@@ -142,7 +156,9 @@ def photo_html(photo, base="img/"):
         return ""
     return (
         f'<figure class="obj-photo reveal">\n'
-        f'  <img src="{base}{esc(photo["src"])}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
+        f'  <div class="obj-photo__frame">\n'
+        f'    <img src="{base}{esc(photo["src"])}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
+        f'  </div>\n'
         f'  <figcaption>{rich(photo["caption"])}</figcaption>\n'
         f'</figure>'
     )
@@ -200,7 +216,18 @@ def section_html(sec):
     )
     body = []
     if sec.get("chart"):
-        body.append("      " + charts.render_chart(load_chart(sec["chart"])).replace("\n", "\n      "))
+        chart_html = charts.render_chart(load_chart(sec["chart"]))
+        # Un gráfico embebido a nivel de sección ocupa el ancho completo por
+        # defecto (necesario para rankings largos como industrias). Cuando
+        # el gráfico es simple (pocas categorías) eso lo hace ver
+        # desproporcionadamente grande frente al resto — chart_compact lo
+        # acota al ancho de una columna de obj-lead; chart_cap lo acota a un
+        # ancho generoso pero no de borde a borde.
+        if sec.get("chart_compact"):
+            chart_html = f'<div class="fact-section__chart--compact">{chart_html}</div>'
+        elif sec.get("chart_cap"):
+            chart_html = f'<div class="fact-section__chart--cap">{chart_html}</div>'
+        body.append("      " + chart_html.replace("\n", "\n      "))
     if sec.get("facts") or sec.get("highlight"):
         body.append("      " + facts_grid_html(sec.get("facts"), sec.get("highlight")).replace("\n", "\n      "))
     if sec.get("stats_list"):

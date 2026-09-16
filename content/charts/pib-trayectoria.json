@@ -2,7 +2,6 @@
   "kind": "line",
   "title": "Previsión del PIB: tasa de variación anual",
   "unit": "%",
-  "note": "El crecimiento de 2026 se revisó al alza de 2,5% a 2,7%. Para 2027-2030 el promedio previsto es 2,5%.",
   "categories": ["2024 (p)", "2025 (prel)", "2026 (prev)", "2027 (prev)", "2028 (prev)", "2029 (prev)", "2030 (prev)"],
   "series": [
     { "name": "PIB", "accent": "obj-1", "values": [-1.9, 3.7, 2.7, 2.5, 2.8, 2.3, 2.2] }

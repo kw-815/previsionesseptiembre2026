@@ -124,6 +124,7 @@ def chart_line(chart):
     labels_x = [f'<text class="chart-axis" x="{x0 + step * i:.1f}" y="{H - 8}" text-anchor="middle">{esc(c)}</text>'
                 for i, c in enumerate(categories)]
 
+    end_labels = []
     for si, s in enumerate(series):
         pts = [xy(i, v) for i, v in enumerate(s["values"])]
         length = _poly_len(pts)
@@ -143,9 +144,27 @@ def chart_line(chart):
             )
         lx, ly = pts[-1]
         label_dy = -10 if s["values"][-1] >= s["values"][-2 if n > 1 else -1] else 16
+        end_labels.append({
+            "x": lx, "y": ly + label_dy, "accent": accent,
+            "text": f'{esc(s["name"])} {_fmt(s["values"][-1])}{esc(unit)}',
+        })
+
+    # Cuando dos series terminan con valores muy próximos (p.ej. crédito y
+    # captaciones), sus etiquetas de cierre caen casi en el mismo punto y se
+    # sobreponen, ilegibles. Se resuelve en un paso aparte, por orden de
+    # altura, empujando cada etiqueta lo mínimo necesario para dejar un
+    # espacio mínimo entre ellas — el punto de dato en sí no se mueve, solo
+    # el texto.
+    MIN_LABEL_GAP = 13
+    end_labels.sort(key=lambda l: l["y"])
+    for i in range(1, len(end_labels)):
+        min_y = end_labels[i - 1]["y"] + MIN_LABEL_GAP
+        if end_labels[i]["y"] < min_y:
+            end_labels[i]["y"] = min_y
+    for lbl in end_labels:
         parts.append(
-            f'<text class="chart-label" style="fill:var(--{accent})" x="{lx:.1f}" y="{ly + label_dy:.1f}" '
-            f'text-anchor="end">{esc(s["name"])} {_fmt(s["values"][-1])}{esc(unit)}</text>'
+            f'<text class="chart-label" style="fill:var(--{lbl["accent"]})" x="{lbl["x"]:.1f}" y="{lbl["y"]:.1f}" '
+            f'text-anchor="end">{lbl["text"]}</text>'
         )
 
     parts.append(_hitzone(x0, y1 - 6, x1 - x0, y0 - y1 + 6))
@@ -263,7 +282,11 @@ def chart_hbars(chart):
     series2 = chart.get("series2")
     accent = series.get("accent", "orange")
     n = len(categories)
-    row_h = 33
+    # Con muchas filas (p.ej. el ranking de 20 industrias) una fila de 33px
+    # produce un gráfico desproporcionadamente alto frente al resto de
+    # cards del documento — se reduce el alto de fila cuando hay más de 10
+    # categorías, sin afectar a los hbars cortos.
+    row_h = 33 if n <= 10 else max(20, round(480 / n))
     height = PAD_T + n * row_h + 10
 
     vmin = min(0, min(values))
@@ -328,7 +351,12 @@ def chart_diverging(chart):
     vmax = max(abs(min(all_vals)), abs(max(all_vals)), 0.5) * 1.25
 
     x_mid = W / 2 + 30
-    x_left = 96
+    # La columna de etiquetas de categoría se ajusta al nombre más largo:
+    # con un ancho fijo, categorías compuestas ("Consumo de hogares",
+    # "FBKF (inversión)") se salían por el borde izquierdo del SVG (bug
+    # reportado en el gráfico de El Niño).
+    max_label_len = max((len(str(c)) for c in categories), default=0)
+    x_left = max(96, min(200, 34 + max_label_len * 8.4))
     x_right = W - 20
     half = min(x_mid - x_left, x_right - x_mid)
     bar_h = (row_h - 16) / n_series

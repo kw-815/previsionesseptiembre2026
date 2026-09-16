@@ -295,6 +295,16 @@ p { margin: 0; }
   transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
 }
 .fact:hover { background: var(--t-10); border-color: var(--t-15); }
+.fact__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--t-10);
+  color: var(--orange);
+  display: grid;
+  place-items: center;
+}
+.fact__icon svg { width: 16px; height: 16px; }
 .fact__label {
   font-size: var(--fs-sm);
   font-weight: 700;
@@ -385,15 +395,33 @@ p { margin: 0; }
   display: block;
   transition: transform var(--t-med) var(--ease);
 }
+/* Velo de legibilidad: independiente del color de marca, siempre oscuro,
+   más fuerte donde cae el texto (arriba, y abajo sobre num/pill) — sin
+   esto, fotos claras (cielo, hormigón) dejaban el texto blanco ilegible
+   sobre el color de marca cuando ese acento también es claro (amarillo,
+   verde claro). */
+.obj-cover__photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(195deg,
+    rgba(8, 10, 22, 0.78) 0%,
+    rgba(8, 10, 22, 0.2) 32%,
+    rgba(8, 10, 22, 0.14) 56%,
+    rgba(8, 10, 22, 0.8) 100%);
+}
 .obj-cover__photo::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
   mix-blend-mode: multiply;
+  opacity: 0.55;
 }
 .obj-cover__num {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   right: 0.4rem;
   bottom: -0.65rem;
   font-size: clamp(3.4rem, 6vw, 4.9rem);
@@ -406,14 +434,17 @@ p { margin: 0; }
 }
 .obj-cover__title {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   color: var(--ink);
   font-size: var(--fs-md);
   font-weight: 700;
   line-height: 1.16;
   max-width: 9ch;
 }
-.obj-cover:has(.obj-cover__photo) .obj-cover__title { color: var(--white); }
+.obj-cover:has(.obj-cover__photo) .obj-cover__title {
+  color: var(--white);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
 /* Pill principal: acción explícita "Explorar tema →" */
 .obj-cover__cta-pill {
   position: relative;
@@ -586,18 +617,54 @@ p { margin: 0; }
 .obj-hero--7 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-7) 55%, transparent); }
 
 /* Banner fotográfico editorial dentro de un tema (solo donde hay sujeto
-   real y fotografiable — no decoración de relleno) */
+   real y fotografiable — no decoración de relleno). Tratamiento más
+   discreto que las tarjetas del muro del home: marco + velo de color de
+   marca a baja opacidad, no el multiply a pleno de .obj-cover__photo, para
+   que no compita visualmente con el resto del documento (que no usa
+   fotografía a este tamaño en ningún otro tema). */
 .obj-photo {
   margin: clamp(2rem, 4vw, 3rem) 0 0;
+}
+.obj-photo__frame {
+  position: relative;
   border-radius: var(--r-xl);
   overflow: hidden;
+  border: 1px solid var(--t-15);
+  isolation: isolate;
 }
-.obj-photo img {
+.obj-photo__frame img {
   width: 100%;
-  height: clamp(220px, 34vw, 420px);
+  height: clamp(170px, 19vw, 260px);
   object-fit: cover;
   display: block;
 }
+/* Doble velo: un tono de marca en multiply (identidad) + un azul-tinta
+   translúcido (integra la foto con la paleta oscura del resto del
+   documento, en vez de dejarla como una foto de stock suelta y saturada). */
+.obj-photo__frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(23, 28, 92, 0.4);
+  pointer-events: none;
+}
+.obj-photo__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.obj-hero--1 .obj-photo__frame::after { background: var(--obj-1); }
+.obj-hero--2 .obj-photo__frame::after { background: var(--obj-2); }
+.obj-hero--3 .obj-photo__frame::after { background: var(--obj-3); }
+.obj-hero--4 .obj-photo__frame::after { background: var(--obj-4); }
+.obj-hero--5 .obj-photo__frame::after { background: var(--obj-5); }
+.obj-hero--6 .obj-photo__frame::after { background: var(--obj-6); }
+.obj-hero--7 .obj-photo__frame::after { background: var(--obj-7); }
 .obj-photo figcaption {
   padding-top: var(--s-2);
   font-size: var(--fs-xs);
@@ -952,6 +1019,13 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 }
 .chart-card__note { font-size: var(--fs-xs); color: var(--t-60); line-height: 1.5; }
 .chart-card__source { font-size: var(--fs-xs); color: var(--t-40); margin-top: 0.2rem; }
+
+/* Un gráfico embebido a nivel de sección (sec.chart) ocupa el ancho
+   completo por defecto — correcto para rankings largos (industrias), pero
+   desproporcionado para un gráfico simple de pocas categorías (inflación).
+   Estos modificadores lo acotan sin tocar charts.py. */
+.fact-section__chart--compact { max-width: 560px; }
+.fact-section__chart--cap { max-width: 880px; }
 
 .chart { width: 100%; height: auto; overflow: visible; }
 .chart text { font-family: var(--font); }
