@@ -1245,6 +1245,73 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .closing-panel__cta svg { width: 16px; height: 16px; transition: transform var(--t-fast) var(--ease); }
 .closing-panel__cta:hover svg { transform: translateX(3px); }
 
+/* Cierre del home: declaraciones oficiales + retrato — el único bloque de
+   foto a gran escala fuera del hero, tratamiento consistente con el resto
+   del documento (marco redondeado, velo de marca, mismo idioma tipográfico
+   de los paneles de riesgos/El Niño). */
+.quote-panel {
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--t-15);
+  background: var(--t-08);
+}
+@media (max-width: 780px) {
+  .quote-panel { grid-template-columns: 1fr; }
+}
+.quote-panel__media {
+  position: relative;
+  min-height: 320px;
+  isolation: isolate;
+}
+.quote-panel__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.quote-panel__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(200deg, rgba(23, 28, 92, 0.05) 30%, rgba(23, 28, 92, 0.55) 100%);
+}
+@media (max-width: 780px) {
+  .quote-panel__media { min-height: 240px; }
+}
+.quote-panel__body {
+  padding: clamp(2rem, 4vw, 3.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.quote-panel__eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.quote-panel__intro { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; }
+.quote-panel__quote {
+  margin: 0;
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--orange);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--white);
+}
+.quote-panel__text { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; }
+.quote-panel__credit {
+  margin-top: auto;
+  padding-top: var(--s-2);
+  font-size: var(--fs-xs);
+  color: var(--t-40);
+}
+
 /* Nota final "sobre este reporte" */
 .about-note {
   max-width: 74ch;

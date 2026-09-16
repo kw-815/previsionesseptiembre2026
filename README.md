@@ -63,7 +63,9 @@ industria (`tema-04-industrias`) vienen del Excel de referencia del BCE
 ## Fotografía
 
 Todas las fotos son de Unsplash (licencia Unsplash — uso comercial libre, sin
-atribución obligatoria, atribución dada de todas formas por buena práctica).
+atribución obligatoria, atribución dada de todas formas por buena práctica),
+salvo el retrato del cierre (`cierre-noboa.webp`), que es una foto oficial de
+Presidencia del Ecuador vía Wikimedia Commons (Public Domain Mark 1.0).
 Las tarjetas del muro de temas llevan un velo de color de marca (`mix-blend-mode:
 multiply` con el acento `--obj-N` de cada tema) sobre la foto — ver
 `.obj-cover__photo` en `css/styles.css`.
@@ -86,6 +88,10 @@ multiply` con el acento `--obj-N` de cada tema) sobre la foto — ver
   billetes de dólar (https://unsplash.com/photos/WyxqQpyFNk8).
 - Tarjeta de "El Niño" (`card-el-nino.webp`): Daniel Lerman, tormenta sobre
   el mar (https://unsplash.com/photos/GBkssTODNT0).
+- Cierre del home, retrato del presidente Noboa (`cierre-noboa.webp`):
+  Isaac Castillo / Presidencia de la República del Ecuador, foto oficial de
+  investidura, mayo de 2025 (Public Domain Mark 1.0, vía Wikimedia Commons
+  — https://commons.wikimedia.org/wiki/File:President_Daniel_Noboa_May_2025.jpg).
 
 ## Publicación
 

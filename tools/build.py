@@ -397,6 +397,29 @@ def obj_cover_html(theme):
   </a>'''
 
 
+def quote_panel_html(qc):
+    if not qc:
+        return ""
+    photo = qc.get("photo") or {}
+    photo_html = (
+        f'<div class="quote-panel__media">\n'
+        f'      <img src="img/{esc(photo.get("src",""))}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
+        f'    </div>'
+        if photo.get("src") else ""
+    )
+    credit_html = f'<p class="quote-panel__credit">Foto: {esc(photo["credit"])}</p>' if photo.get("credit") else ""
+    return f'''<div class="quote-panel reveal">
+    {photo_html}
+    <div class="quote-panel__body">
+      <p class="quote-panel__eyebrow">{esc(qc.get("eyebrow",""))}</p>
+      <p class="quote-panel__intro">{rich(qc["intro"])}</p>
+      <blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote"])}&rdquo;</blockquote>
+      <p class="quote-panel__text">{rich(qc["text"])}</p>
+      {credit_html}
+    </div>
+  </div>'''
+
+
 HOME_TPL = """<!doctype html>
 <html lang="es" class="no-js">
 <head>
@@ -426,6 +449,7 @@ HOME_TPL = """<!doctype html>
     <a href="#temas">Los temas</a>
     <a href="#el-nino">Fenómeno de El Niño</a>
     <a href="#riesgos">Balance de riesgos</a>
+    <a href="#voz-oficial">Voz oficial</a>
     <a href="#cierre">Sobre este reporte</a>
   </div>
 </nav>
@@ -487,6 +511,12 @@ HOME_TPL = """<!doctype html>
   </div>
 </section>
 
+<section class="section" id="voz-oficial" aria-label="Voz oficial">
+  <div class="wrap">
+    {quote_panel}
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer" id="cierre">
@@ -522,6 +552,7 @@ def build_home():
         risks_title=esc(data["risks"]["title"]),
         risks_lead=rich(data["risks"]["lead"]),
         risk_cards=risk_cards_html(risk),
+        quote_panel=quote_panel_html(data.get("quote_closing")),
         closing_title=esc(data["closing"]["title"]),
         closing_text=rich(data["closing"]["text"]),
         closing_href=data["closing"]["cta_href"],
