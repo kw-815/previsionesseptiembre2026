@@ -1168,8 +1168,37 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--s-4);
+  margin-top: var(--s-4);
 }
 @media (max-width: 860px) { .risk-grid { grid-template-columns: 1fr; } }
+
+/* Balance de riesgos: <details>/<summary> nativo en vez de mostrar las 9
+   tarjetas abiertas por defecto — se pincha para ver el detalle, cero JS. */
+.risk-details summary {
+  list-style: none;
+  cursor: pointer;
+}
+.risk-details summary::-webkit-details-marker { display: none; }
+.risk-details__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--t-10);
+  border: 1px solid var(--t-15);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--white);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.risk-details__toggle:hover { background: var(--t-15); border-color: var(--t-25); }
+.risk-details__chevron {
+  display: inline-flex;
+  transition: transform var(--t-fast) var(--ease);
+}
+.risk-details__chevron svg { width: 16px; height: 16px; }
+.risk-details[open] .risk-details__chevron { transform: rotate(180deg); }
 
 .risk-col__head {
   display: flex;
@@ -1208,7 +1237,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .risk-card__title { font-size: var(--fs-base); font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
 .risk-card__text { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.55; }
 
-/* Panel del home — mismo tratamiento visual que el cierre de El Niño */
 .risk-panel {
   position: relative;
   padding: clamp(2.25rem, 5vw, 3.5rem);
@@ -1219,31 +1247,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 }
 .risk-panel__title { font-size: var(--fs-2xl); max-width: 32ch; margin-bottom: var(--s-3); }
 .risk-panel__lead { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; max-width: 62ch; margin-bottom: var(--s-5); }
-
-/* Bloque de cierre del home ("El dato más noticioso") */
-.closing-panel {
-  position: relative;
-  padding: clamp(2.25rem, 5vw, 3.5rem);
-  border-radius: var(--r-xl);
-  background: linear-gradient(135deg, rgba(226, 97, 140, 0.16), rgba(226, 97, 140, 0.03) 55%);
-  border: 1px solid rgba(226, 97, 140, 0.32);
-  overflow: hidden;
-}
-.closing-panel__title { font-size: var(--fs-2xl); max-width: 24ch; margin-bottom: var(--s-3); }
-.closing-panel__text { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; max-width: 62ch; margin-bottom: var(--s-4); }
-.closing-panel__cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.9rem 1.6rem;
-  background: var(--white);
-  color: var(--ink);
-  font-weight: 700;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: transform var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
-}
-.closing-panel__cta:hover { transform: translateY(-2px); filter: brightness(0.96); }
-.closing-panel__cta svg { width: 16px; height: 16px; transition: transform var(--t-fast) var(--ease); }
-.closing-panel__cta:hover svg { transform: translateX(3px); }
 
 /* Cierre del home: declaraciones oficiales + retrato — el único bloque de
    foto a gran escala fuera del hero. Tratamiento deliberadamente

@@ -180,11 +180,31 @@ def chart_line(chart):
     return _wrap_figure(svg, chart)
 
 
+def _wrap_axis_label(c, max_chars=12):
+    """Parte una categoría larga de dos o más palabras en dos líneas, por
+    el espacio más cercano al centro. Categorías cortas o de una sola
+    palabra no se tocan."""
+    c = str(c)
+    if len(c) <= max_chars or " " not in c:
+        return [c]
+    mid = len(c) / 2
+    spaces = [i for i, ch in enumerate(c) if ch == " "]
+    split_at = min(spaces, key=lambda i: abs(i - mid))
+    return [c[:split_at], c[split_at + 1:]]
+
+
 def chart_bars(chart, stacked=False):
     categories = chart["categories"]
     series = chart["series"]
     unit = chart.get("unit", "")
     n = len(categories)
+    # Etiquetas largas de dos palabras ("Enlatados de pescado") no caben en
+    # una sola línea dentro de la columna de una barra y terminaban
+    # sobrepuestas entre sí — si hace falta, se parten en dos líneas y el
+    # SVG gana una franja extra abajo para alojarlas (bug reportado en el
+    # gráfico "motores del crecimiento").
+    needs_wrap = any(len(str(c)) > 12 and " " in str(c) for c in categories)
+    total_h = H + (16 if needs_wrap else 0)
     if stacked:
         totals = [sum(s["values"][i] for s in series) for i in range(n)]
         vmax = max(totals) if totals else 1
@@ -196,6 +216,13 @@ def chart_bars(chart, stacked=False):
     if vmax == vmin:
         vmax = vmin + 1
     vmax *= 1.18
+    # Igual que vmax, vmin necesita su propio margen cuando hay barras
+    # negativas: sin esto, la barra más negativa llega hasta el borde
+    # inferior del área de trazado y su etiqueta de valor queda montada
+    # sobre las etiquetas de categoría del eje X (bug reportado en el
+    # gráfico de exportaciones no petroleras).
+    if vmin < 0:
+        vmin *= 1.18
 
     x0, x1 = PAD_L + 4, W - PAD_R - 4
     y0, y1 = H - PAD_B, PAD_T
@@ -211,7 +238,17 @@ def chart_bars(chart, stacked=False):
     labels_x = []
     for i, c in enumerate(categories):
         gx = x0 + group_w * i
-        labels_x.append(f'<text class="chart-axis" x="{gx + group_w/2:.1f}" y="{H - 8}" text-anchor="middle">{esc(c)}</text>')
+        lx = gx + group_w / 2
+        lines = _wrap_axis_label(c) if needs_wrap else [c]
+        if len(lines) == 1:
+            labels_x.append(f'<text class="chart-axis" x="{lx:.1f}" y="{H - 8}" text-anchor="middle">{esc(c)}</text>')
+        else:
+            labels_x.append(
+                f'<text class="chart-axis" text-anchor="middle">'
+                f'<tspan x="{lx:.1f}" y="{H - 16}">{esc(lines[0])}</tspan>'
+                f'<tspan x="{lx:.1f}" y="{H - 3}">{esc(lines[1])}</tspan>'
+                f'</text>'
+            )
         if stacked:
             cum = 0
             bx = gx + bar_gap
@@ -244,7 +281,7 @@ def chart_bars(chart, stacked=False):
                     f'x="{bx:.1f}" y="{top:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
                     f'data-final-h="{h:.1f}" data-final-y="{top:.1f}">{_title(str(c), v, unit)}</rect>'
                 )
-                lbl_y = top - 6 if v >= 0 else top + h + 12
+                lbl_y = top - 6 if v >= 0 else min(top + h + 12, y0 - 10)
                 parts.append(f'<text class="chart-val" x="{bx + bar_w/2:.1f}" y="{lbl_y:.1f}" text-anchor="middle">{_fmt(v)}</text>')
 
     legend = ""
@@ -260,7 +297,7 @@ def chart_bars(chart, stacked=False):
     parts.append(_hitzone(x0, y1 - 6, x1 - x0, y0 - y1 + 6))
 
     svg = (
-        f'<svg class="chart chart--bars" viewBox="0 0 {W} {H}" role="img" '
+        f'<svg class="chart chart--bars" viewBox="0 0 {W} {total_h}" role="img" '
         f'aria-label="{esc(chart.get("title",""))}" '
         f'data-orient="x" data-x0="{x0}" data-step="{group_w:.2f}" data-n="{n}" '
         f'data-plot-top="{y1}" data-plot-bottom="{y0}">'

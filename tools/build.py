@@ -49,6 +49,7 @@ FONT_LINKS = (
 )
 
 ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+CHEVRON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'
 TREND_UP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 6-9"/><path d="M15 6h5v5"/></svg>'
 TREND_DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l6 6 4-4 6 9"/><path d="M15 18h5v-5"/></svg>'
 
@@ -198,12 +199,22 @@ def risk_cards_html(risk):
             f'      <p class="risk-col__title">{label} ({len(items)})</p>\n'
             f'    </div>\n{cards}\n  </div>'
         )
+    total = len(risk["alza"]) + len(risk["baja"])
     return (
         risk_ratio_html(risk) + "\n"
-        + '<div class="risk-grid">\n'
+        # <details>/<summary> nativo: el balance de riesgos se abre al
+        # pinchar en vez de mostrar las 9 tarjetas de entrada — cero JS,
+        # el mismo patrón "cero dependencias" del resto del sitio.
+        + '<details class="risk-details">\n'
+        + '  <summary class="risk-details__toggle">\n'
+        + f'    <span>Ver el detalle de los {total} factores</span>\n'
+        + f'    <span class="risk-details__chevron" aria-hidden="true">{CHEVRON_SVG}</span>\n'
+        + '  </summary>\n'
+        + '  <div class="risk-grid">\n'
         + col("alza", "Factores al alza", risk["alza"], TREND_UP_SVG) + "\n"
         + col("baja", "Factores a la baja", risk["baja"], TREND_DOWN_SVG) + "\n"
-        + "</div>"
+        + '  </div>\n'
+        + '</details>'
     )
 
 
@@ -454,7 +465,6 @@ HOME_TPL = """<!doctype html>
   <div class="wrap home-nav__inner">
     <a href="#cifras">En cifras</a>
     <a href="#temas">Los temas</a>
-    <a href="#el-nino">Fenómeno de El Niño</a>
     <a href="#riesgos">Balance de riesgos</a>
     <a href="#voz-oficial">Voz oficial</a>
     <a href="#cierre">Sobre este reporte</a>
@@ -493,16 +503,6 @@ HOME_TPL = """<!doctype html>
 
     <div class="objectives__grid reveal">
 {cards}
-    </div>
-  </div>
-</section>
-
-<section class="section" id="el-nino" aria-labelledby="titulo-el-nino">
-  <div class="wrap">
-    <div class="closing-panel reveal">
-      <h2 class="closing-panel__title" id="titulo-el-nino">{closing_title}</h2>
-      <p class="closing-panel__text">{closing_text}</p>
-      <a class="closing-panel__cta" href="{closing_href}">{closing_label} {arrow}</a>
     </div>
   </div>
 </section>
@@ -560,11 +560,6 @@ def build_home():
         risks_lead=rich(data["risks"]["lead"]),
         risk_cards=risk_cards_html(risk),
         quote_panel=quote_panel_html(data.get("quote_closing")),
-        closing_title=esc(data["closing"]["title"]),
-        closing_text=rich(data["closing"]["text"]),
-        closing_href=data["closing"]["cta_href"],
-        closing_label=esc(data["closing"]["cta_label"]),
-        arrow=ARROW_SVG,
         final_text=rich(data["final"]["text"]),
         email=EMAIL,
     )

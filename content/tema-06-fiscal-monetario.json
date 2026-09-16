@@ -17,12 +17,12 @@
         {
           "label": "Pico en 2027",
           "text": "<strong>2,2%</strong>, antes de iniciar una convergencia sostenida hacia 0,9% en 2030."
-        },
-        {
-          "label": "Mecanismos de compensación",
-          "text": "Tras la eliminación del subsidio al diésel en septiembre de 2025 (Decreto Ejecutivo 378), el Gobierno implementó mecanismos de compensación dirigidos específicamente al sector de transporte comercial, uno de los más expuestos al ajuste de precios. El Banco Central asume en su escenario que estas medidas tienen un carácter <strong>temporal, con una duración de 8 meses</strong>, y no las proyecta como una política permanente — un supuesto que incide directamente en la trayectoria de inflación estimada para 2026 y 2027."
         }
-      ]
+      ],
+      "highlight": {
+        "label": "Mecanismos de compensación",
+        "text": "Tras la eliminación del subsidio al diésel en septiembre de 2025 (Decreto Ejecutivo 378), el Gobierno implementó mecanismos de compensación dirigidos específicamente al sector de transporte comercial, uno de los más expuestos al ajuste de precios. El Banco Central asume en su escenario que estas medidas tienen un carácter <strong>temporal, con una duración de 8 meses</strong>, y no las proyecta como una política permanente — un supuesto que incide directamente en la trayectoria de inflación estimada para 2026 y 2027."
+      }
     },
     {
       "eyebrow": "Crédito y sector fiscal",
