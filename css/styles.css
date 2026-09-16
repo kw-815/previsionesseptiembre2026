@@ -665,6 +665,15 @@ p { margin: 0; }
 .obj-hero--5 .obj-photo__frame::after { background: var(--obj-5); }
 .obj-hero--6 .obj-photo__frame::after { background: var(--obj-6); }
 .obj-hero--7 .obj-photo__frame::after { background: var(--obj-7); }
+
+/* Mismo tratamiento de foto para la cabecera de cada bloque del hilo
+   único del home (Ronda 7.1) — velo de color por bloque. */
+.narrative-block--1 .obj-photo__frame::after { background: var(--obj-1); }
+.narrative-block--2 .obj-photo__frame::after { background: var(--obj-2); }
+.narrative-block--3 .obj-photo__frame::after { background: var(--obj-3); }
+.narrative-block--4 .obj-photo__frame::after { background: var(--obj-4); }
+.narrative-block--5 .obj-photo__frame::after { background: var(--obj-5); }
+.narrative-block .obj-photo { margin-top: var(--s-4); margin-bottom: 0; }
 .obj-photo figcaption {
   padding-top: var(--s-2);
   font-size: var(--fs-xs);

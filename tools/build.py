@@ -41,18 +41,6 @@ THEMES = [
 ]
 N = len(THEMES)
 
-# Tarjetas del muro "Los temas" del home — ya no enlazan a una página
-# aparte, saltan por ancla al bloque correspondiente del hilo único
-# (Ronda 7: se eliminó la navegación por pestañas, ver NOTAS-EDITORIAL.md).
-# (num, id, corto, headline_figure, headline_label, card_photo)
-NARRATIVE_CARDS = [
-    (1, "panorama", "Panorama", "2,7%", "PIB 2026", "card-panorama.webp"),
-    (2, "motores-industrias", "Motores e industria", "+6,8%", "Minería lidera en 2026", "card-motores.webp"),
-    (3, "sector-externo", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", "card-externo.webp"),
-    (4, "fiscal-monetario", "Fiscal y monetario", "2,1%", "Inflación 2026", "card-fiscal.webp"),
-    (5, "el-nino", "El Niño", "-1,4 p.p.", "PIB 2027, escenario fuerte", "card-el-nino.webp"),
-]
-
 FONT_LINKS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
     '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n'
@@ -405,49 +393,6 @@ def build_tema(theme):
 # Home
 # ----------------------------------------------------------------------
 
-def obj_cover_html(theme):
-    num, slug, nombre, corto, fig, lab, photo = theme
-    photo_html = (
-        f'<div class="obj-cover__photo"><img src="img/{esc(photo)}" alt="" loading="lazy" /></div>'
-        if photo else ""
-    )
-    return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data" href="pages/{slug}.html">
-    <div class="obj-cover__top">
-      {photo_html}
-      <span class="obj-cover__num" aria-hidden="true">{num:02d}</span>
-      <p class="obj-cover__title">{esc(corto)}</p>
-      <span class="obj-cover__cta-pill">Explorar tema {ARROW_SVG}</span>
-    </div>
-    <div class="obj-cover__data">
-      <span class="obj-cover__data-figure">{esc(fig)}</span>
-      <span class="obj-cover__data-label">{esc(lab)}</span>
-    </div>
-  </a>'''
-
-
-def narrative_cover_html(card):
-    """Tarjeta del muro 'Los temas' — misma pieza visual que obj_cover_html,
-    pero el href salta por ancla dentro del propio home en vez de navegar
-    a una página aparte."""
-    num, bid, corto, fig, lab, photo = card
-    photo_html = (
-        f'<div class="obj-cover__photo"><img src="img/{esc(photo)}" alt="" loading="lazy" /></div>'
-        if photo else ""
-    )
-    return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data" href="#{bid}">
-    <div class="obj-cover__top">
-      {photo_html}
-      <span class="obj-cover__num" aria-hidden="true">{num:02d}</span>
-      <p class="obj-cover__title">{esc(corto)}</p>
-      <span class="obj-cover__cta-pill">Ir al bloque {ARROW_SVG}</span>
-    </div>
-    <div class="obj-cover__data">
-      <span class="obj-cover__data-figure">{esc(fig)}</span>
-      <span class="obj-cover__data-label">{esc(lab)}</span>
-    </div>
-  </a>'''
-
-
 def narrative_headline_html(block):
     """La parte del bloque que siempre está visible en el hilo: cifra +
     2-3 frases + a lo sumo un gráfico y un puñado de facts/stats. Reusa
@@ -504,13 +449,15 @@ def narrative_block_html(block):
     bid = block["id"]
     headline_html = narrative_headline_html(block)
     trigger_label = esc(block["drawer"]["trigger_label"])
-    return f'''<section class="section narrative-block" id="{bid}" aria-labelledby="titulo-{bid}">
+    photo = photo_html(block.get("photo"))
+    photo_block = ("\n    " + photo.replace("\n", "\n    ") + "\n") if photo else ""
+    return f'''<section class="section narrative-block narrative-block--{num}" id="{bid}" aria-labelledby="titulo-{bid}">
   <div class="wrap">
     <header class="section-mark narrative-block__head">
       <span class="narrative-block__num" style="background:var(--obj-{num})" aria-hidden="true">{num:02d}</span>
       <h2 class="section-mark__title" id="titulo-{bid}">{esc(block["title"])}</h2>
     </header>
-
+{photo_block}
     {headline_html}
 
     <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">{trigger_label} {ARROW_SVG}</a>
@@ -576,7 +523,7 @@ HOME_TPL = """<!doctype html>
 <nav class="home-nav" aria-label="Índice del análisis">
   <div class="wrap home-nav__inner">
     <a href="#cifras">En cifras</a>
-    <a href="#temas">Los temas</a>
+    <a href="#panorama">Los temas</a>
     <a href="#riesgos">Balance de riesgos</a>
     <a href="#voz-oficial">Voz oficial</a>
     <a href="#cierre">Sobre este reporte</a>
@@ -605,19 +552,6 @@ HOME_TPL = """<!doctype html>
     {stats_hero}
 
     {stats_list}
-  </div>
-</section>
-
-<section class="section" id="temas" aria-labelledby="titulo-temas">
-  <div class="wrap">
-    <header class="section-mark">
-      <h2 class="section-mark__title" id="titulo-temas">{intro_title}</h2>
-      <p class="section-mark__lead">Saltá directo a un bloque, o seguí leyendo — el hilo completo continúa más abajo.</p>
-    </header>
-
-    <div class="objectives__grid reveal">
-{cards}
-    </div>
   </div>
 </section>
 
@@ -665,7 +599,6 @@ def build_home():
     data = load("home")
     risks_data = load("riesgos")
     risk = risks_data["sections"][0]["risk_cards"]
-    cards = "\n".join(narrative_cover_html(c) for c in NARRATIVE_CARDS)
     narrative = load_narrative()
     narrative_blocks = "\n\n".join(narrative_block_html(b) for b in narrative)
     page = HOME_TPL.format(
@@ -675,8 +608,6 @@ def build_home():
         cifras_lead=rich(data["cifras_lead"]),
         stats_hero=stats_hero_html(data["stats_hero"]),
         stats_list=stats_list_html(data["stats_list"]),
-        intro_title=esc(data["intro_nav"]["title"]),
-        cards=cards,
         narrative_blocks=narrative_blocks,
         risks_title=esc(data["risks"]["title"]),
         risks_lead=rich(data["risks"]["lead"]),

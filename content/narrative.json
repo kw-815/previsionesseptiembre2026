@@ -3,6 +3,11 @@
     "num": 1,
     "id": "panorama",
     "title": "Panorama y pulso reciente",
+    "photo": {
+      "src": "card-panorama.webp",
+      "alt": "Centro histórico de Quito",
+      "caption": "El centro histórico de Quito, capital de Ecuador, cuya economía crece a un ritmo moderado según la última actualización del Banco Central."
+    },
     "headline": {
       "chart": "pib-trayectoria",
       "intro": "El Banco Central revisó al alza su previsión de crecimiento para 2026, de <strong>2,5% a 2,7%</strong>, con la información más reciente de actividad económica, y proyecta una expansión promedio de <strong>2,5% anual</strong> para 2027-2030, sostenida por la demanda interna más que por el sector exportador. Los indicadores de corto plazo confirman ese ritmo: el Indicador de Actividad Económica Mensual (IMAEc) creció <strong>2,2% interanual en junio</strong> y la confianza empresarial se mantiene en zona optimista por quinto mes consecutivo.",
@@ -76,6 +81,11 @@
     "num": 2,
     "id": "motores-industrias",
     "title": "Motores del crecimiento y por industria",
+    "photo": {
+      "src": "card-motores.webp",
+      "alt": "Grúa de construcción",
+      "caption": "La construcción es uno de los motores más dinámicos del crecimiento previsto para 2026, junto con la inversión y el consumo de los hogares."
+    },
     "headline": {
       "chart": "exportaciones-producto",
       "intro": "El crecimiento de mediano plazo descansa en tres motores: el <strong>consumo de los hogares</strong>, la <strong>inversión (FBKF)</strong> y, en menor medida, las <strong>exportaciones no petroleras</strong>. Por industria, la fotografía es desigual: detrás del 2,7% de crecimiento total hay <strong>veinte sectores</strong> que se mueven a ritmos muy distintos — en 2026 la minería lidera con <strong>+6,8%</strong>, mientras que la agricultura, la administración pública y el arte y entretenimiento se contraen.",
@@ -134,6 +144,11 @@
     "num": 3,
     "id": "sector-externo",
     "title": "Sector externo",
+    "photo": {
+      "src": "card-externo.webp",
+      "alt": "Complejo industrial y refinería",
+      "caption": "El sector petrolero y la actividad industrial sostienen buena parte del superávit externo del país."
+    },
     "headline": {
       "chart": "cuenta-corriente",
       "intro": "El país sigue recibiendo más dólares de los que gasta con el exterior, pero ese margen se <strong>estrecha año tras año</strong>. La cuenta corriente pasa de un superávit de USD 7.632 millones en 2025 a USD 4.587 millones en 2026 y a USD 3.645 millones en 2030, mientras el petróleo aporta cada vez menos y las remesas sostienen buena parte del ingreso de divisas.",
@@ -162,6 +177,11 @@
     "num": 4,
     "id": "fiscal-monetario",
     "title": "Sector fiscal, crédito e inflación",
+    "photo": {
+      "src": "card-fiscal.webp",
+      "alt": "Billetes de dólar",
+      "caption": "El crédito al sector privado y la inflación son las dos variables monetarias que más de cerca sigue el Banco Central."
+    },
     "headline": {
       "chart": "inflacion-trayectoria",
       "intro": "La inflación promedio pasa de 0,7% en 2025 a <strong>2,1% en 2026</strong>, empujada por la liberalización gradual de combustibles y la normalización de tarifas eléctricas. El pico llega en 2027 (2,2%) y luego converge hasta 0,9% en 2030. El crédito al sector privado y el resultado fiscal siguen una trayectoria similar de desaceleración y consolidación graduales, sin sobresaltos.",
@@ -195,6 +215,11 @@
     "num": 5,
     "id": "el-nino",
     "title": "Fenómeno de El Niño",
+    "photo": {
+      "src": "card-el-nino.webp",
+      "alt": "Tormenta sobre el mar",
+      "caption": "El Fenómeno de El Niño, cuyo impacto climático y económico el Banco Central cuantifica por primera vez en esta actualización."
+    },
     "headline": {
       "chart": "fen-impacto",
       "intro": "El Banco Central <strong>cuantifica</strong> el impacto potencial del Fenómeno de El Niño. Bajo un escenario <strong>moderado</strong>, el crecimiento del PIB en 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>. Es el riesgo más noticioso de esta actualización.",

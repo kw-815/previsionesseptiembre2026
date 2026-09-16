@@ -16,9 +16,6 @@
     { "key": "Crédito al sector privado", "val": "+10,9%", "ctx": "Crecimiento previsto para 2026 frente a 2025. El ritmo se desacelera cada año de forma ordenada, hasta 6,8% en 2030." },
     { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Proyección del Banco Central para el cierre de 2026 — de confirmarse, un nivel históricamente alto." }
   ],
-  "intro_nav": {
-    "title": "Los frentes para entender hacia dónde va la economía"
-  },
   "risks": {
     "title": "Balance de riesgos: más factores a la baja que al alza",
     "lead": "El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo."
