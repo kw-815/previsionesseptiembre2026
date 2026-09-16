@@ -1437,6 +1437,11 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   font-variant-numeric: tabular-nums;
 }
 .narrative-block .obj-lead { margin-top: var(--s-4); }
+/* Los párrafos de síntesis del hilo único fusionan 2 temas y son más
+   largos que los de una página individual — a fs-lg (pensado para 2-3
+   líneas) el bloque de texto se veía desproporcionadamente grande y
+   pesado al lado de la tarjeta compacta del gráfico. */
+.narrative-block .obj-lead__text { font-size: var(--fs-md); }
 
 /* Botón "Ver más" — abre el panel lateral correspondiente */
 .drawer-trigger {
