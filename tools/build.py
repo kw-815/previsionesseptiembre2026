@@ -64,6 +64,18 @@ FACT_ICONS = {
     "leaf": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21c8 0 14-6 14-14V5h-2C9 5 3 11 3 19v2z"/><path d="M3 21c4-6 8-9 13-11"/></svg>',
 }
 
+# Iconos grandes por capítulo del informe — geometría simple (línea fina,
+# formas primitivas: flecha, círculos, barras, triángulo) en vez de una
+# forma derivada de datos. Se usan como marca de agua grande en el margen
+# de cada capítulo; el trazo fino (1.4) es deliberado para que se vea bien
+# ampliado, igual que el -webkit-text-stroke de los numerales outline.
+CHAPTER_ICONS = {
+    1: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 6-9"/><path d="M15 6h5v5"/></svg>',
+    2: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="9" r="6"/><circle cx="12" cy="15.5" r="6"/></svg>',
+    3: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="15" width="6" height="6" rx="0.6"/><rect x="9" y="11" width="6" height="10" rx="0.6"/><rect x="16" y="6" width="6" height="15" rx="0.6"/></svg>',
+    4: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3 22 20 2 20Z"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>',
+}
+
 
 def esc(s):
     return html.escape(str(s), quote=True)
@@ -86,8 +98,8 @@ def load_chart(slug):
         return json.load(f)
 
 
-def load_narrative():
-    with open(os.path.join(CONTENT, "narrative.json"), encoding="utf-8") as f:
+def load_informe():
+    with open(os.path.join(CONTENT, "informe.json"), encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -211,8 +223,13 @@ def risk_cards_html(risk):
             f'    </div>\n{cards}\n  </div>'
         )
     total = len(risk["alza"]) + len(risk["baja"])
+    # La barra de proporción y el desplegable se agrupan en una sola tarjeta
+    # (.risk-summary) — sueltos se veían como dos botones iguales (mismo
+    # estilo que .drawer-trigger) apretados contra una barra de color, sin
+    # que quedara claro qué hacía cada uno.
     return (
-        risk_ratio_html(risk) + "\n"
+        '<div class="risk-summary">\n'
+        + risk_ratio_html(risk) + "\n"
         # <details>/<summary> nativo: el balance de riesgos se abre al
         # pinchar en vez de mostrar las 9 tarjetas de entrada — cero JS,
         # el mismo patrón "cero dependencias" del resto del sitio.
@@ -225,7 +242,8 @@ def risk_cards_html(risk):
         + col("alza", "Factores al alza", risk["alza"], TREND_UP_SVG) + "\n"
         + col("baja", "Factores a la baja", risk["baja"], TREND_DOWN_SVG) + "\n"
         + '  </div>\n'
-        + '</details>'
+        + '</details>\n'
+        + '</div>'
     )
 
 
@@ -399,30 +417,117 @@ def build_tema(theme):
 # Home
 # ----------------------------------------------------------------------
 
-def narrative_headline_html(block):
-    """La parte del bloque que siempre está visible en el hilo: cifra +
-    2-3 frases + a lo sumo un gráfico y un puñado de facts/stats. Reusa
-    los mismos renderers que las antiguas páginas de tema — el modelo de
-    datos no cambió, solo qué tan visible es cada parte."""
+def masthead_html(chapters):
+    items = []
+    for i, block in enumerate(chapters):
+        active = " is-active" if i == 0 else ""
+        items.append(
+            f'      <li class="chapter-rail__item{active}" data-chapter="{block["num"]}">'
+            f'<a href="#{block["id"]}"><span class="dot">{block["num"]:02d}</span>'
+            f'<span class="chapter-rail__label">{esc(block["title"])}</span></a></li>'
+        )
+    return f'''<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a href="#top" class="brand" aria-label="Keyword — inicio">
+      <img src="img/logo-keyword-white.svg" alt="Keyword" class="brand__logo masthead__logo" />
+    </a>
+    <nav class="chapter-rail" aria-label="Progreso del informe">
+      <ol>
+{chr(10).join(items)}
+      </ol>
+    </nav>
+  </div>
+</header>'''
+
+
+def cover_html(data):
+    # Foto editorial real a sangre (mismo tratamiento validado del hero
+    # anterior: degradado de abajo hacia arriba, el titular siempre asienta
+    # sobre índigo sólido, el cielo de la foto respira arriba). Reemplaza la
+    # textura de barras de datos en este lugar específico — con una foto
+    # real de fondo, la textura abstracta quedaba compitiendo de más; la
+    # textura de datos se conserva en el riel de cada capítulo, donde no
+    # hay foto.
+    return f'''<section class="cover" id="top">
+  <div class="cover__media">
+    <img src="img/hero-guayaquil.webp" alt="" loading="eager" />
+  </div>
+  <div class="wrap cover__inner">
+    <div class="cover__content">
+      <p class="kicker">{PRODUCT_TITLE} &middot; Banco Central del Ecuador</p>
+      <h1>{rich(data["title"])}</h1>
+    </div>
+  </div>
+</section>'''
+
+
+def divider_html(next_block):
+    # Sin el numeral gigante: repetía, idéntico en tamaño, el mismo numeral
+    # que aparece un segundo después en el riel del capítulo — se leía como
+    # el mismo elemento duplicado, no como "viene esto". El ícono chico acá
+    # es un adelanto del ícono grande del riel, no una repetición literal.
+    icon_svg = CHAPTER_ICONS.get(next_block["num"], "")
+    return f'''<section class="divider">
+  <div class="wrap divider__inner">
+    <p class="divider__eyebrow">Capítulo siguiente</p>
+    <div class="divider__icon" aria-hidden="true">{icon_svg}</div>
+    <p class="divider__title">{esc(next_block["title"])}</p>
+  </div>
+</section>'''
+
+
+def chapter_html(block):
+    num = block["num"]
+    bid = block["id"]
     headline = block["headline"]
-    chart_lead = ""
-    lead_solo = ""
-    if headline.get("chart"):
-        chart_lead = charts.render_chart(load_chart(headline["chart"]))
-    else:
-        lead_solo = " obj-lead--solo"
+
+    chart_html = charts.render_chart(load_chart(headline["chart"])) if headline.get("chart") else ""
+    stat_tiles = stats_hero_html(headline.get("stats_hero")) if headline.get("stats_hero") else ""
+
     extra = []
     if headline.get("facts") or headline.get("highlight"):
         extra.append(facts_grid_html(headline.get("facts"), headline.get("highlight")))
     if headline.get("stats_list"):
         extra.append(stats_list_html(headline["stats_list"]))
-    extra_html = ("\n\n    " + "\n\n    ".join(extra)) if extra else ""
-    return f'''<div class="obj-lead{lead_solo}">
-      <div class="obj-lead__card reveal">
-        <p class="obj-lead__text">{rich(headline["intro"])}</p>
+    extra_html = ("\n\n        " + "\n\n        ".join(extra)) if extra else ""
+
+    closing = ""
+    if bid == "crecimiento-general":
+        home = load("home")
+        closing = f'\n\n        <div class="quote-panel--inset">{quote_panel_html(home.get("quote_closing"))}</div>'
+    if bid == "riesgos":
+        risk = load("riesgos")["sections"][0]["risk_cards"]
+        closing = f'\n\n        <div class="reveal">{risk_cards_html(risk)}</div>'
+
+    photo = photo_html(block.get("photo"))
+    photo_block = ("\n        " + photo.replace("\n", "\n        ") + "\n") if photo else ""
+    icon_svg = CHAPTER_ICONS.get(num, "")
+
+    return f'''<section class="chapter chapter--paper" id="{bid}" data-chapter-section="{num}" aria-labelledby="titulo-{bid}">
+  <div class="chapter__grid">
+    <aside class="chapter__rail">
+      <div class="chapter__rail-icon" aria-hidden="true">{icon_svg}</div>
+      <div class="chapter__rail-sticky">
+        <span class="chapter__num">{num:02d}</span>
+        <span class="chapter__label" id="titulo-{bid}">{esc(block["title"])}</span>
       </div>
-      {chart_lead}
-    </div>{extra_html}'''
+    </aside>
+
+    <div class="chapter__body">
+      <p class="lead reveal">{rich(headline["intro"])}</p>
+{photo_block}
+      {stat_tiles}
+
+      {chart_html}
+      {extra_html}
+
+      <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">{esc(block["drawer"]["trigger_label"])} {ARROW_SVG}</a>
+      {closing}
+    </div>
+  </div>
+</section>
+
+{drawer_html(block)}'''
 
 
 def drawer_html(block):
@@ -448,29 +553,6 @@ def drawer_html(block):
     </div>
   </div>
 </div>'''
-
-
-def narrative_block_html(block):
-    num = block["num"]
-    bid = block["id"]
-    headline_html = narrative_headline_html(block)
-    trigger_label = esc(block["drawer"]["trigger_label"])
-    photo = photo_html(block.get("photo"))
-    photo_block = ("\n    " + photo.replace("\n", "\n    ") + "\n") if photo else ""
-    return f'''<section class="section narrative-block narrative-block--{num}" id="{bid}" aria-labelledby="titulo-{bid}">
-  <div class="wrap">
-    <header class="section-mark narrative-block__head">
-      <span class="narrative-block__num" style="background:var(--obj-{num})" aria-hidden="true">{num:02d}</span>
-      <h2 class="section-mark__title" id="titulo-{bid}">{esc(block["title"])}</h2>
-    </header>
-{photo_block}
-    {headline_html}
-
-    <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">{trigger_label} {ARROW_SVG}</a>
-  </div>
-</section>
-
-{drawer_html(block)}'''
 
 
 def quote_panel_html(qc):
@@ -503,7 +585,7 @@ def quote_panel_html(qc):
   </div>'''
 
 
-HOME_TPL = """<!doctype html>
+REPORT_TPL = """<!doctype html>
 <html lang="es" class="no-js">
 <head>
   <meta charset="utf-8" />
@@ -515,70 +597,13 @@ HOME_TPL = """<!doctype html>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap site-header__inner">
-    <a href="index.html" class="brand" aria-label="Keyword — inicio">
-      <img src="img/logo-keyword-white.svg" alt="Keyword" class="brand__logo" />
-    </a>
-    <nav class="nav-crumbs" aria-label="Ruta de navegación">
-      <span>{product}</span>
-    </nav>
-  </div>
-</header>
-
-<nav class="home-nav" aria-label="Índice del análisis">
-  <div class="wrap home-nav__inner">
-    <a href="#cifras">En cifras</a>
-    <a href="#panorama">Los temas</a>
-    <a href="#riesgos">Balance de riesgos</a>
-    <a href="#voz-oficial">Voz oficial</a>
-    <a href="#cierre">Sobre este reporte</a>
-  </div>
-</nav>
+{masthead}
 
 <main>
 
-<section class="hero" aria-labelledby="titulo-principal">
-  <div class="hero__media">
-    <img src="img/hero-guayaquil.webp" alt="" loading="eager" />
-  </div>
-  <div class="wrap hero__inner">
-    <h1 class="hero__title" id="titulo-principal">{title}</h1>
-    <p class="hero__subtitle">{subtitle}</p>
-  </div>
-</section>
+{cover}
 
-<section class="section" id="cifras" aria-labelledby="titulo-cifras">
-  <div class="wrap">
-    <header class="section-mark">
-      <h2 class="section-mark__title" id="titulo-cifras">El escenario en diez datos</h2>
-      <p class="section-mark__lead">{cifras_lead}</p>
-    </header>
-
-    {stats_hero}
-
-    {stats_list}
-  </div>
-</section>
-
-{narrative_blocks}
-
-<section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
-  <div class="wrap">
-    <div class="risk-panel reveal">
-      <h2 class="risk-panel__title" id="titulo-riesgos">{risks_title}</h2>
-      <p class="risk-panel__lead">{risks_lead}</p>
-
-      {risk_cards}
-    </div>
-  </div>
-</section>
-
-<section class="section" id="voz-oficial" aria-label="Voz oficial">
-  <div class="wrap">
-    {quote_panel}
-  </div>
-</section>
+{chapters}
 
 </main>
 
@@ -601,24 +626,23 @@ HOME_TPL = """<!doctype html>
 """
 
 
-def build_home():
+def build_report():
     data = load("home")
-    risks_data = load("riesgos")
-    risk = risks_data["sections"][0]["risk_cards"]
-    narrative = load_narrative()
-    narrative_blocks = "\n\n".join(narrative_block_html(b) for b in narrative)
-    page = HOME_TPL.format(
+    chapters_data = load_informe()
+
+    pieces = []
+    for i, block in enumerate(chapters_data):
+        pieces.append(chapter_html(block))
+        if i < len(chapters_data) - 1:
+            pieces.append(divider_html(chapters_data[i + 1]))
+    chapters_html = "\n\n".join(pieces)
+
+    page = REPORT_TPL.format(
         title=esc(data["title"]), meta_desc=esc(data["meta_desc"]),
-        font=FONT_LINKS, product=PRODUCT_TITLE,
-        subtitle=rich(data["subtitle"]),
-        cifras_lead=rich(data["cifras_lead"]),
-        stats_hero=stats_hero_html(data["stats_hero"]),
-        stats_list=stats_list_html(data["stats_list"]),
-        narrative_blocks=narrative_blocks,
-        risks_title=esc(data["risks"]["title"]),
-        risks_lead=rich(data["risks"]["lead"]),
-        risk_cards=risk_cards_html(risk),
-        quote_panel=quote_panel_html(data.get("quote_closing")),
+        font=FONT_LINKS,
+        masthead=masthead_html(chapters_data),
+        cover=cover_html(data),
+        chapters=chapters_html,
         final_text=rich(data["final"]["text"]),
         email=EMAIL,
     )
@@ -629,7 +653,7 @@ def build_home():
 
 def main():
     os.makedirs(PAGES, exist_ok=True)
-    build_home()
+    build_report()
     for theme in THEMES:
         build_tema(theme)
     print(f"\nListo: index.html + {N} páginas de tema generadas.")

@@ -23,6 +23,7 @@
   --t-75: rgba(255,255,255,0.78);
   --t-60: rgba(255,255,255,0.62);
   --t-40: rgba(255,255,255,0.40);
+  --t-25: rgba(255,255,255,0.25);
   --t-15: rgba(255,255,255,0.15);
   --t-10: rgba(255,255,255,0.10);
   --t-08: rgba(255,255,255,0.075);
@@ -1226,6 +1227,31 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
 }
 .risk-details__toggle:hover { background: var(--t-15); border-color: var(--t-25); }
+
+/* Agrupa la barra de proporción + el desplegable en una sola tarjeta, para
+   que se lean como un componente ("mapa de riesgos") en vez de dos botones
+   sueltos apretados contra una barra de color. Separación generosa del
+   trigger de El Niño que la precede — son dos acciones distintas, no una
+   continuación de la misma. */
+.risk-summary {
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  border: 1px solid var(--t-15);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.risk-summary .risk-ratio { border-radius: 0; box-shadow: none; margin-bottom: 0; }
+.risk-summary .risk-details__toggle {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid var(--t-15);
+  background: var(--t-08);
+}
+.risk-summary .risk-details__toggle:hover { background: var(--t-10); }
+.risk-summary .risk-grid { padding: 0 var(--s-4) var(--s-4); }
+@media (max-width: 560px) { .risk-summary .risk-grid { padding: 0 var(--s-3) var(--s-3); } }
 .risk-details__chevron {
   display: inline-flex;
   transition: transform var(--t-fast) var(--ease);
@@ -1557,5 +1583,369 @@ body:has(.detail-drawer:target) { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .detail-drawer, .drawer-backdrop { transition: none; }
+}
+
+/* ============================================================
+   INFORME — lienzo híbrido (Ronda 8)
+   ------------------------------------------------------------
+   El índigo full-bleed queda para la portada y los separadores de
+   capítulo; el cuerpo de cada capítulo pasa a un lienzo claro tipo
+   papel. En vez de reescribir cada componente compartido (facts,
+   stats-list, risk-cards, charts, drawer-trigger), se redefinen los
+   tokens de color (--white/--t-*) dentro de .chapter--paper: todos
+   esos componentes ya están construidos sobre esos tokens, así que
+   heredan automáticamente el modo claro sin duplicar CSS.
+   ============================================================ */
+:root {
+  --paper: #F2F1F7;
+  --paper-line: #DAD8E8;
+  --ink-body: #171A33;
+}
+
+.chapter--paper {
+  --white: var(--ink-body);
+  --t-90: rgba(23, 26, 51, 0.90);
+  --t-75: rgba(23, 26, 51, 0.72);
+  --t-60: rgba(23, 26, 51, 0.58);
+  --t-40: rgba(23, 26, 51, 0.38);
+  --t-25: rgba(23, 26, 51, 0.20);
+  --t-15: rgba(23, 26, 51, 0.14);
+  --t-10: rgba(23, 26, 51, 0.09);
+  --t-08: rgba(23, 26, 51, 0.06);
+  background: var(--paper);
+  color: var(--ink-body);
+  position: relative;
+}
+
+/* ---------- header: cinta sólida, sin glass, con progreso de capítulo --- */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--indigo);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  height: 64px;
+}
+.masthead__logo { height: 22px; width: auto; }
+
+.chapter-rail ol {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chapter-rail__item { display: flex; align-items: center; }
+.chapter-rail__item + .chapter-rail__item::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: rgba(255,255,255,0.24);
+  margin-inline: 0.6rem;
+}
+.chapter-rail__item a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+}
+.chapter-rail .dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.24);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.chapter-rail__item.is-active .dot {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--indigo-deep);
+}
+.chapter-rail__label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.chapter-rail__item.is-active .chapter-rail__label { color: var(--white); }
+@media (max-width: 720px) {
+  .chapter-rail__label { display: none; }
+  .chapter-rail__item + .chapter-rail__item::before { width: 12px; margin-inline: 0.35rem; }
+}
+@media (max-width: 480px) {
+  .masthead__inner { height: 54px; }
+  .masthead__logo { height: 18px; }
+  .chapter-rail .dot { width: 21px; height: 21px; font-size: 0.62rem; }
+}
+
+/* ---------- portada — único momento índigo de apertura ---------- */
+.cover {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(440px, 62vw, 640px);
+  color: var(--white);
+  padding-block: clamp(2.5rem, 6vw, 4rem) clamp(3rem, 8vw, 5rem);
+}
+.cover__media { position: absolute; inset: 0; z-index: -1; }
+.cover__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+/* Mismo tratamiento que el hero original: degradado de abajo hacia arriba
+   para que el titular siempre asiente sobre índigo sólido y el cielo de la
+   foto respire arriba sin overlay pesado. */
+.cover__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg,
+      var(--indigo) 4%,
+      rgba(23, 28, 92, 0.85) 32%,
+      rgba(23, 28, 92, 0.28) 62%,
+      rgba(23, 28, 92, 0.55) 100%);
+}
+.cover__inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+.cover__content { grid-column: 2; }
+@media (max-width: 860px) {
+  .cover__inner { grid-template-columns: 1fr; }
+  .cover__content { grid-column: 1; }
+}
+.cover .kicker {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.4rem;
+}
+.cover h1 {
+  font-size: clamp(2.2rem, 2vw + 2.6rem, 3.5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+
+/* ---------- separador de capítulo — segundo momento índigo ---------- */
+.divider {
+  background: linear-gradient(155deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+  color: var(--white);
+  padding-block: clamp(3rem, 8vw, 4.5rem);
+}
+.divider__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  flex-wrap: wrap;
+}
+.divider__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--orange);
+}
+.divider__icon svg { width: 100%; height: 100%; }
+.divider__title {
+  font-size: clamp(1.5rem, 1.8vw + 1.1rem, 2.25rem);
+  font-weight: 700;
+  max-width: 26ch;
+  text-wrap: balance;
+  color: rgba(255,255,255,0.96);
+}
+.divider__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  width: 100%;
+  margin-bottom: -0.4rem;
+}
+
+/* ---------- cuerpo de capítulo ---------- */
+.chapter { padding-block: clamp(3rem, 7vw, 5rem); }
+.chapter__grid {
+  width: min(var(--wrap), 100% - var(--gutter) * 2);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+.chapter__rail { position: relative; }
+.chapter__rail-icon {
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 200px;
+  height: 200px;
+  color: var(--indigo);
+  opacity: 0.1;
+  pointer-events: none;
+}
+.chapter__rail-icon svg { width: 100%; height: 100%; }
+.chapter__rail-sticky {
+  position: sticky;
+  top: 84px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.chapter__num {
+  font-size: clamp(4rem, 5vw + 2rem, 6.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1.4px var(--indigo);
+  font-variant-numeric: tabular-nums;
+}
+.chapter__label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--t-60);
+  line-height: 1.35;
+}
+.chapter__label::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: var(--orange);
+  margin-bottom: 0.7rem;
+}
+@media (max-width: 860px) {
+  .chapter__rail-icon { display: none; }
+}
+@media (max-width: 860px) {
+  .chapter__grid { grid-template-columns: 1fr; }
+  .chapter__rail-sticky {
+    position: static;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .chapter__num { font-size: 1.8rem; }
+}
+
+.chapter__body .lead {
+  font-size: clamp(1.2rem, 0.5vw + 1.1rem, 1.5rem);
+  line-height: 1.5;
+  color: var(--ink-body);
+  max-width: 66ch;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+.chapter__body .lead strong { color: var(--indigo); }
+
+/* Tarjetas grandes de cifra: sin sombra/glass, solo regla fina y espacio.
+   Anula específicamente el tratamiento "tarjeta producto" que usa este
+   mismo componente en otros contextos. */
+.chapter--paper .stats-hero-row {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--paper-line);
+  margin-block: 0 clamp(2.5rem, 6vw, 4rem);
+}
+.chapter--paper .stat-hero {
+  background: none;
+  border: none;
+  border-right: 1px solid var(--paper-line);
+  border-radius: 0;
+  padding: 1.3rem 1.5rem 0 0;
+}
+.chapter--paper .stat-hero:last-child { border-right: none; padding-right: 0; }
+.chapter--paper .stat-hero__figure {
+  color: var(--indigo);
+  font-size: clamp(2.1rem, 1.4vw + 1.8rem, 2.7rem);
+}
+.chapter--paper .stat-hero__label {
+  letter-spacing: 0.03em;
+  margin-bottom: 0.6rem;
+}
+@media (max-width: 640px) {
+  .chapter--paper .stats-hero-row { grid-template-columns: 1fr; }
+  .chapter--paper .stat-hero {
+    border-right: none;
+    border-bottom: 1px solid var(--paper-line);
+    padding: 1.1rem 0;
+  }
+  .chapter--paper .stat-hero:last-child { border-bottom: none; }
+}
+
+.chapter--paper .fact-section__head,
+.chapter--paper .chart-card { margin-top: clamp(1.6rem, 4vw, 2.2rem); }
+
+/* .facts-grid--N fija 320px de columna, pensado para el layout angosto
+   de .obj-lead (mitad de ancho) del sistema original. En el cuerpo ancho
+   del capítulo eso deja casi todo el ancho vacío — acá se reparte el
+   ancho disponible en vez de un tope fijo. */
+.chapter--paper .facts-grid { margin-top: clamp(1.6rem, 4vw, 2.2rem); }
+.chapter--paper .facts-grid--1 { grid-template-columns: minmax(0, 1fr); }
+.chapter--paper .facts-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.chapter--paper .facts-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 640px) {
+  .chapter--paper .facts-grid--1,
+  .chapter--paper .facts-grid--2,
+  .chapter--paper .facts-grid--3 { grid-template-columns: 1fr; }
+}
+/* 4+ facts sin modificador (repeat(4,1fr) fijo) dejaba una fila final con
+   columnas vacías cuando el conteo no es múltiplo de 4 (p. ej. 6 items =
+   4+2, dos columnas de "gap de fondo" en la segunda fila). flex-wrap con
+   ancho base evita el hueco: la última fila simplemente termina antes, sin
+   dejar tramos de rejilla vacíos. */
+.chapter--paper .facts-grid:not([class*="facts-grid--"]) {
+  display: flex;
+  flex-wrap: wrap;
+}
+.chapter--paper .facts-grid:not([class*="facts-grid--"]) .fact {
+  flex: 1 1 260px;
+}
+
+/* Cita de cierre del capítulo 1 — un panel índigo sólido "insertado" en
+   el lienzo claro, no traslúcido: la cita sigue siendo el momento de
+   color, ahora como cierre del primer capítulo en vez de apertura. */
+.quote-panel--inset {
+  /* Re-declara los tokens claros→oscuros: esta tarjeta es una isla de
+     color índigo sólido sobre el papel del capítulo, no hereda el
+     texto oscuro del lienzo que la rodea. */
+  --white: #FFFFFF;
+  --t-90: rgba(255,255,255,0.92);
+  --t-75: rgba(255,255,255,0.78);
+  --t-60: rgba(255,255,255,0.62);
+  --t-40: rgba(255,255,255,0.40);
+  --t-25: rgba(255,255,255,0.25);
+  --t-15: rgba(255,255,255,0.15);
+  --t-10: rgba(255,255,255,0.10);
+  --t-08: rgba(255,255,255,0.075);
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+}
+.quote-panel--inset .quote-panel {
+  background: var(--indigo);
+  border: none;
+  border-radius: var(--r-lg);
 }
 

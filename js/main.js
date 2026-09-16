@@ -54,7 +54,15 @@
   // siempre gane el último que escribe.
   function revealCharts(root) {
     root.querySelectorAll(".chart-bar").forEach(function (el) { el.style.transform = "none"; });
-    root.querySelectorAll(".chart-line.chart-draw").forEach(function (el) { el.style.strokeDashoffset = "0"; });
+    // stroke-dasharray igual a la longitud exacta del trazo + dashoffset 0
+    // no siempre pinta el trazo completo (límite de redondeo en algunos
+    // motores de render) — se limpia el dasharray al revelar en vez de
+    // dejarlo en ese estado límite; se pierde la microanimación de
+    // "dibujado" pero se garantiza que la línea siempre se vea.
+    root.querySelectorAll(".chart-line.chart-draw").forEach(function (el) {
+      el.style.strokeDashoffset = "0";
+      el.style.strokeDasharray = "none";
+    });
   }
 
   var revealTargets = document.querySelectorAll(".reveal");
@@ -311,5 +319,28 @@
     });
   }
 
+  function initChapterRail() {
+    var rail = document.querySelector(".chapter-rail");
+    if (!rail) return;
+    var items = rail.querySelectorAll("li[data-chapter]");
+    var sections = document.querySelectorAll("[data-chapter-section]");
+    if (!items.length || !sections.length || !("IntersectionObserver" in window)) return;
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var n = entry.target.getAttribute("data-chapter-section");
+          items.forEach(function (li) {
+            li.classList.toggle("is-active", li.getAttribute("data-chapter") === n);
+          });
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
   initDrawers();
+  initChapterRail();
 })();
