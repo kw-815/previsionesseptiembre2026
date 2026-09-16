@@ -16,23 +16,17 @@
     { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Cierre de 2026, en niveles históricamente altos." }
   ],
   "intro_nav": {
-    "eyebrow": "El reporte",
-    "title": "Los frentes para entender hacia dónde va la economía",
-    "lead": "Del pulso reciente de la economía al primer impacto cuantificado del Fenómeno de El Niño, con el detalle sector por sector."
-  },
-  "risks": {
-    "eyebrow": "El mapa de riesgos del BCE",
-    "title": "Balance de riesgos: más factores a la baja que al alza",
-    "lead": "El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo.",
-    "cta_label": "Ver el mapa de riesgos completo",
-    "cta_href": "pages/tema-07-riesgos.html"
+    "title": "Los frentes para entender hacia dónde va la economía"
   },
   "closing": {
-    "eyebrow": "El dato más noticioso",
     "title": "El Niño ya tiene un número: hasta -1,4 puntos de PIB en 2027",
     "text": "El Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización.",
     "cta_label": "Ver la cuantificación completa",
-    "cta_href": "pages/tema-08-el-nino.html"
+    "cta_href": "pages/tema-07-el-nino.html"
+  },
+  "risks": {
+    "title": "Balance de riesgos: más factores a la baja que al alza",
+    "lead": "El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo."
   },
   "final": {
     "eyebrow": "Sobre este reporte",

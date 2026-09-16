@@ -30,7 +30,7 @@
   --orange:  #FF863E;   /* Metas + acento primario */
   --green:   #A2C56B;   /* Metas alternas */
 
-  /* 11 acentos, uno por tema */
+  /* 7 acentos, uno por tema */
   --obj-1: #FF863E;
   --obj-2: #01C5B4;
   --obj-3: #F5826F;
@@ -38,8 +38,6 @@
   --obj-5: #A2C56B;
   --obj-6: #6FB47C;
   --obj-7: #B096F8;
-  --obj-8: #4EA8DE;
-  --obj-9: #E8618C;
   --obj-10: #C9A227;
   --obj-11: #6B8CAE;
 
@@ -375,8 +373,27 @@ p { margin: 0; }
   flex-direction: column;
   overflow: hidden;
 }
+.obj-cover__photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.obj-cover__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--t-med) var(--ease);
+}
+.obj-cover__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+}
 .obj-cover__num {
   position: absolute;
+  z-index: 1;
   right: 0.4rem;
   bottom: -0.65rem;
   font-size: clamp(3.4rem, 6vw, 4.9rem);
@@ -396,6 +413,7 @@ p { margin: 0; }
   line-height: 1.16;
   max-width: 9ch;
 }
+.obj-cover:has(.obj-cover__photo) .obj-cover__title { color: var(--white); }
 /* Pill principal: acción explícita "Explorar tema →" */
 .obj-cover__cta-pill {
   position: relative;
@@ -431,7 +449,8 @@ p { margin: 0; }
   transform: translateX(3px);
 }
 
-.obj-cover:hover .obj-cover__photo img { transform: scale(1.05); }
+.obj-cover:hover .obj-cover__photo img,
+.obj-cover:focus-visible .obj-cover__photo img { transform: scale(1.05); }
 
 .obj-cover--1 .obj-cover__top { background: var(--obj-1); }
 .obj-cover--2 .obj-cover__top { background: var(--obj-2); }
@@ -440,7 +459,15 @@ p { margin: 0; }
 .obj-cover--5 .obj-cover__top { background: var(--obj-5); }
 .obj-cover--6 .obj-cover__top { background: var(--obj-6); }
 .obj-cover--7 .obj-cover__top { background: var(--obj-7); }
-.obj-cover--8 .obj-cover__top { background: var(--obj-8); }
+
+/* Foto editorial + velo de color de marca (multiply) por tema */
+.obj-cover--1 .obj-cover__photo::after { background: var(--obj-1); }
+.obj-cover--2 .obj-cover__photo::after { background: var(--obj-2); }
+.obj-cover--3 .obj-cover__photo::after { background: var(--obj-3); }
+.obj-cover--4 .obj-cover__photo::after { background: var(--obj-4); }
+.obj-cover--5 .obj-cover__photo::after { background: var(--obj-5); }
+.obj-cover--6 .obj-cover__photo::after { background: var(--obj-6); }
+.obj-cover--7 .obj-cover__photo::after { background: var(--obj-7); }
 
 /* ============================================================
    PÁGINA DE OBJETIVO
@@ -512,7 +539,6 @@ p { margin: 0; }
 .obj-nav-top__item--5 { background: var(--obj-5); }
 .obj-nav-top__item--6 { background: var(--obj-6); }
 .obj-nav-top__item--7 { background: var(--obj-7); }
-.obj-nav-top__item--8 { background: var(--obj-8); }
 
 /* Hero del objetivo — numeral compacto + nombre, sin kicker ni ghost-number */
 .obj-hero { padding-block: clamp(2.5rem, 7vw, 4.5rem) 0; }
@@ -551,7 +577,6 @@ p { margin: 0; }
 .obj-hero--5 .obj-hero__name { color: var(--obj-5); }
 .obj-hero--6 .obj-hero__name { color: var(--obj-6); }
 .obj-hero--7 .obj-hero__name { color: var(--obj-7); }
-.obj-hero--8 .obj-hero__name { color: var(--obj-8); }
 .obj-hero--1 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-1) 55%, transparent); }
 .obj-hero--2 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-2) 55%, transparent); }
 .obj-hero--3 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-3) 55%, transparent); }
@@ -559,7 +584,6 @@ p { margin: 0; }
 .obj-hero--5 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-5) 55%, transparent); }
 .obj-hero--6 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-6) 55%, transparent); }
 .obj-hero--7 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-7) 55%, transparent); }
-.obj-hero--8 .obj-hero__num { border-color: color-mix(in srgb, var(--obj-8) 55%, transparent); }
 
 /* Banner fotográfico editorial dentro de un tema (solo donde hay sujeto
    real y fotografiable — no decoración de relleno) */
@@ -597,7 +621,6 @@ p { margin: 0; }
 .obj-page--5 { --accent: var(--obj-5); }
 .obj-page--6 { --accent: var(--obj-6); }
 .obj-page--7 { --accent: var(--obj-7); }
-.obj-page--8 { --accent: var(--obj-8); }
 
 /* ---- Pager anterior / siguiente ---- */
 .obj-pager {
@@ -820,30 +843,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 @media (hover: none) {
 }
 
-/* --- Escala de aspecto del pilar cuando la foto no cargó ------ */
-
-/* =============================================================
-   Tonos por PILAR × EJE  (mismo hue, distinta saturación)
-   ============================================================= */
-/* Pilar 1 — base naranja #FF863E */
-.obj-page--1 .phase--eje-1 { --eje-accent: #E56818; --eje-tone: rgba(255, 134, 62, 0.08); }
-.obj-page--1 .phase--eje-2 { --eje-accent: #A2450A; --eje-tone: rgba(162, 69, 10, 0.08); }
-
-/* Pilar 2 — base teal #01C5B4 */
-.obj-page--2 .phase--eje-1 { --eje-accent: #008C7F; --eje-tone: rgba(1, 197, 180, 0.08); }
-.obj-page--2 .phase--eje-2 { --eje-accent: #005B52; --eje-tone: rgba(0, 91, 82, 0.10); }
-
-/* Pilar 3 — base coral #F26A5A */
-.obj-page--3 .phase--eje-1 { --eje-accent: #B23F31; --eje-tone: rgba(242, 106, 90, 0.08); }
-.obj-page--3 .phase--eje-2 { --eje-accent: #872C22; --eje-tone: rgba(135, 44, 34, 0.08); }
-.obj-page--3 .phase--eje-3 { --eje-accent: #5C1D16; --eje-tone: rgba(92, 29, 22, 0.09); }
-
-/* Pilar 4 — base amarillo #F5C042 */
-.obj-page--4 .phase--eje-1 { --eje-accent: #B48810; --eje-tone: rgba(245, 192, 66, 0.14); }
-.obj-page--4 .phase--eje-2 { --eje-accent: #7A5A08; --eje-tone: rgba(122, 90, 8, 0.10); }
-
-/* Flag del eje toma el color del eje */
-
 /* =============================================================
    PREVISIONES ECONOMÍA 2026-2030 — Adiciones específicas del producto
    Primer producto de la serie con gráficos reales (SVG generado en
@@ -956,12 +955,12 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 
 .chart { width: 100%; height: auto; overflow: visible; }
 .chart text { font-family: var(--font); }
-.chart-axis { font-size: 12px; fill: var(--t-75); font-weight: 500; }
-.chart-axis--row { font-size: 12.5px; fill: var(--t-90); font-weight: 600; }
+.chart-axis { font-size: 14px; fill: var(--t-75); font-weight: 500; }
+.chart-axis--row { font-size: 14.5px; fill: var(--t-90); font-weight: 600; }
 .chart-grid0 { stroke: var(--t-15); stroke-width: 1; }
-.chart-val { font-size: 13px; fill: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; }
-.chart-val__sub { fill: var(--t-60); font-weight: 500; font-size: 10.5px; }
-.chart-label { font-size: 13px; font-weight: 700; }
+.chart-val { font-size: 15px; fill: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; }
+.chart-val__sub { fill: var(--t-60); font-weight: 500; font-size: 12px; }
+.chart-label { font-size: 15px; font-weight: 700; }
 
 .chart-line {
   fill: none;
@@ -1135,50 +1134,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .risk-card__title { font-size: var(--fs-base); font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
 .risk-card__text { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.55; }
 
-/* Versión compacta del home: solo títulos, como chips con ícono */
-.risk-chip-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-4);
-  margin-bottom: var(--s-5);
-}
-@media (max-width: 700px) { .risk-chip-cols { grid-template-columns: 1fr; } }
-.risk-chip-col__label {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--t-60);
-  margin-bottom: var(--s-2);
-}
-.risk-chip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.risk-chip {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem 0.85rem;
-  background: var(--t-08);
-  border: 1px solid var(--t-15);
-  border-radius: 999px;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--t-90);
-  transition: background var(--t-fast) var(--ease);
-}
-.risk-chip:hover { background: var(--t-10); }
-.risk-chip__icon {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
-.risk-chip__icon svg { width: 13px; height: 13px; }
-.risk-chip--alza .risk-chip__icon { background: rgba(162, 197, 107, 0.2); color: var(--green); }
-.risk-chip--baja .risk-chip__icon { background: rgba(255, 134, 62, 0.2); color: var(--orange); }
-
 /* Panel del home — mismo tratamiento visual que el cierre de El Niño */
 .risk-panel {
   position: relative;
@@ -1190,19 +1145,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 }
 .risk-panel__title { font-size: var(--fs-2xl); max-width: 32ch; margin-bottom: var(--s-3); }
 .risk-panel__lead { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; max-width: 62ch; margin-bottom: var(--s-5); }
-.risk-panel__cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.9rem 1.6rem;
-  background: var(--white);
-  color: var(--ink);
-  font-weight: 700;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: transform var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
-}
-.risk-panel__cta:hover { transform: translateY(-2px); filter: brightness(0.96); }
-.risk-panel__cta svg { width: 16px; height: 16px; transition: transform var(--t-fast) var(--ease); }
-.risk-panel__cta:hover svg { transform: translateX(3px); }
 
 /* Bloque de cierre del home ("El dato más noticioso") */
 .closing-panel {
@@ -1258,10 +1200,10 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .reveal.in-view { opacity: 1; transform: none; }
 
 /* Un solo momento coreografiado por bloque: el contenedor lleva .reveal
-   y sus ítems (fact, stat-row, stat-hero, obj-cover, risk-card, risk-chip)
+   y sus ítems (fact, stat-row, stat-hero, obj-cover, risk-card)
    se escalonan por nth-child cuando el padre entra en viewport — no cada
    uno repite su propia entrada idéntica. */
-.fact, .stat-row, .stat-hero, .obj-cover, .risk-card, .risk-chip {
+.fact, .stat-row, .stat-hero, .obj-cover, .risk-card {
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 520ms var(--ease), transform 520ms var(--ease);
@@ -1270,34 +1212,33 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .reveal.in-view .stat-row,
 .reveal.in-view .stat-hero,
 .reveal.in-view .obj-cover,
-.reveal.in-view .risk-card,
-.reveal.in-view .risk-chip {
+.reveal.in-view .risk-card {
   opacity: 1;
   transform: none;
 }
 .facts-grid .fact:nth-child(1), .stats-hero-row .stat-hero:nth-child(1),
 .stats-list .stat-row:nth-child(1), .objectives__grid .obj-cover:nth-child(1),
-.risk-col .risk-card:nth-child(1), .risk-chip-list .risk-chip:nth-child(1) { transition-delay: 40ms; }
+.risk-col .risk-card:nth-child(1) { transition-delay: 40ms; }
 .facts-grid .fact:nth-child(2), .stats-hero-row .stat-hero:nth-child(2),
 .stats-list .stat-row:nth-child(2), .objectives__grid .obj-cover:nth-child(2),
-.risk-col .risk-card:nth-child(2), .risk-chip-list .risk-chip:nth-child(2) { transition-delay: 100ms; }
+.risk-col .risk-card:nth-child(2) { transition-delay: 100ms; }
 .facts-grid .fact:nth-child(3), .stats-hero-row .stat-hero:nth-child(3),
 .stats-list .stat-row:nth-child(3), .objectives__grid .obj-cover:nth-child(3),
-.risk-col .risk-card:nth-child(3), .risk-chip-list .risk-chip:nth-child(3) { transition-delay: 160ms; }
+.risk-col .risk-card:nth-child(3) { transition-delay: 160ms; }
 .facts-grid .fact:nth-child(4), .stats-list .stat-row:nth-child(4),
 .objectives__grid .obj-cover:nth-child(4),
-.risk-col .risk-card:nth-child(4), .risk-chip-list .risk-chip:nth-child(4) { transition-delay: 220ms; }
+.risk-col .risk-card:nth-child(4) { transition-delay: 220ms; }
 .facts-grid .fact:nth-child(5), .stats-list .stat-row:nth-child(5),
 .objectives__grid .obj-cover:nth-child(5),
-.risk-col .risk-card:nth-child(5), .risk-chip-list .risk-chip:nth-child(5) { transition-delay: 280ms; }
+.risk-col .risk-card:nth-child(5) { transition-delay: 280ms; }
 .facts-grid .fact:nth-child(6), .stats-list .stat-row:nth-child(6),
 .objectives__grid .obj-cover:nth-child(6),
-.risk-col .risk-card:nth-child(6), .risk-chip-list .risk-chip:nth-child(6) { transition-delay: 340ms; }
+.risk-col .risk-card:nth-child(6) { transition-delay: 340ms; }
 .objectives__grid .obj-cover:nth-child(7) { transition-delay: 400ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .fact, .stat-row, .stat-hero, .obj-cover, .risk-card, .risk-chip {
+  .fact, .stat-row, .stat-hero, .obj-cover, .risk-card {
     opacity: 1; transform: none; transition: none;
   }
   .chart-line.chart-draw { stroke-dashoffset: 0 !important; transition: none !important; }

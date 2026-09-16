@@ -263,16 +263,16 @@ def chart_hbars(chart):
     series2 = chart.get("series2")
     accent = series.get("accent", "orange")
     n = len(categories)
-    row_h = 30
+    row_h = 33
     height = PAD_T + n * row_h + 10
 
     vmin = min(0, min(values))
     vmax = max(values + [0])
     span = max(vmax - vmin, 0.001)
 
-    x_label_w = 172
+    x_label_w = 196
     x0 = x_label_w
-    x1 = W - 96
+    x1 = W - 108
     zero_x = x0 + (0 - vmin) / span * (x1 - x0)
 
     parts = [f'<line class="chart-grid0" x1="{zero_x:.1f}" y1="{PAD_T - 4}" x2="{zero_x:.1f}" y2="{PAD_T + n*row_h}"/>']

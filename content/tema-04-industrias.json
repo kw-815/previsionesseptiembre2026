@@ -1,7 +1,6 @@
 {
   "meta_desc": "Crecimiento del valor agregado por industria en 2026 y 2027, según el Banco Central del Ecuador — de la minería a la agricultura.",
   "en_sintesis": "Detrás del 2,7% de crecimiento total hay <strong>veinte industrias</strong> que se mueven a ritmos muy distintos. En 2026, la minería lidera con <strong>+6,8%</strong>, mientras que el arte y entretenimiento y la agricultura se contraen. Este es el desglose sector por sector.",
-  "chart": "industrias-crecimiento",
   "photo": {
     "src": "hero-puerto.webp",
     "alt": "Vista aérea de contenedores de exportación en un puerto de Guayaquil",
@@ -12,6 +11,7 @@
       "eyebrow": "Los extremos del ranking",
       "title": "Quién crece más y quién se contrae",
       "lead": "La minería, la electricidad y la construcción encabezan el crecimiento de 2026; la agricultura, la administración pública y el arte y entretenimiento son las únicas industrias en terreno negativo.",
+      "chart": "industrias-crecimiento",
       "facts": [
         { "label": "Minería", "text": "<strong>+6,8%</strong> en 2026, el mayor crecimiento de las 20 industrias — se modera a +1,1% en 2027." },
         { "label": "Electricidad y agua", "text": "<strong>+5,8%</strong> en 2026, en línea con la recuperación de la oferta eléctrica tras la crisis de 2024." },

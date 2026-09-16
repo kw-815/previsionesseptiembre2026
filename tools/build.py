@@ -26,19 +26,18 @@ BRAND = "Keyword"
 EMAIL = "info@keyword.com.ec"
 PRODUCT_TITLE = "Previsiones Económicas 2026-2030"
 
-# (num, slug, nombre, corto, headline_figure, headline_label, in_grid)
-# in_grid=False => la página existe y aparece en la navegación entre temas,
-# pero no se repite como tarjeta en el muro del home (ver "Balance de
-# riesgos": vive como sección propia en el home, no como tarjeta más).
+# (num, slug, nombre, corto, headline_figure, headline_label, card_photo)
+# El Balance de riesgos ya no es un tema propio: vive como sección de
+# cierre del home (ver build_home), justo antes del pie. card_photo es el
+# archivo en img/ que ilustra la tarjeta del tema en el muro del home.
 THEMES = [
-    (1, "tema-01-panorama", "Panorama y cifras clave", "Panorama", "2,7%", "PIB 2026", True),
-    (2, "tema-02-pulso-domestico", "El pulso de la economía ecuatoriana", "Pulso doméstico", "+2,2%", "IMAEc jun-26", True),
-    (3, "tema-03-motores", "Los motores del crecimiento 2026-2030", "Motores del crecimiento", "+5,8%", "Inversión (FBKF) 2026", True),
-    (4, "tema-04-industrias", "Cómo crecerá tu sector", "Cómo crecerá tu sector", "+6,8%", "Minería lidera en 2026", True),
-    (5, "tema-05-externo", "Petróleo, sector externo y reservas", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", True),
-    (6, "tema-06-fiscal-monetario", "Fiscal, crédito e inflación", "Fiscal y monetario", "2,1%", "Inflación 2026", True),
-    (7, "tema-07-riesgos", "Balance de riesgos", "Balance de riesgos", "6 vs 3", "Riesgos a la baja vs. al alza", False),
-    (8, "tema-08-el-nino", "Fenómeno de El Niño", "El Niño: el riesgo climático", "-1,4 p.p.", "PIB 2027, escenario fuerte", True),
+    (1, "tema-01-panorama", "Panorama y cifras clave", "Panorama", "2,7%", "PIB 2026", "card-panorama.webp"),
+    (2, "tema-02-pulso-domestico", "El pulso de la economía ecuatoriana", "Pulso doméstico", "+2,2%", "IMAEc jun-26", "card-pulso.webp"),
+    (3, "tema-03-motores", "Los motores del crecimiento 2026-2030", "Motores del crecimiento", "+5,8%", "Inversión (FBKF) 2026", "card-motores.webp"),
+    (4, "tema-04-industrias", "El crecimiento por industria", "Por industria", "+6,8%", "Minería lidera en 2026", "hero-puerto.webp"),
+    (5, "tema-05-externo", "Petróleo, sector externo y reservas", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", "card-externo.webp"),
+    (6, "tema-06-fiscal-monetario", "Fiscal, crédito e inflación", "Fiscal y monetario", "2,1%", "Inflación 2026", "card-fiscal.webp"),
+    (7, "tema-07-el-nino", "Fenómeno de El Niño", "El Niño: el riesgo climático", "-1,4 p.p.", "PIB 2027, escenario fuerte", "card-el-nino.webp"),
 ]
 N = len(THEMES)
 
@@ -192,27 +191,6 @@ def risk_cards_html(risk):
     )
 
 
-def risk_chips_html(risk):
-    """Versión compacta (solo títulos) para el panel del home."""
-    def col(kind, label, items, icon):
-        chips = "\n".join(
-            f'        <li class="risk-chip risk-chip--{kind}"><span class="risk-chip__icon" aria-hidden="true">{icon}</span>{esc(it["title"])}</li>'
-            for it in items
-        )
-        return (
-            f'    <div class="risk-chip-col">\n'
-            f'      <p class="risk-chip-col__label">{label}</p>\n'
-            f'      <ul class="risk-chip-list">\n{chips}\n      </ul>\n'
-            f'    </div>'
-        )
-    return (
-        '<div class="risk-chip-cols">\n'
-        + col("alza", "Al alza", risk["alza"], TREND_UP_SVG) + "\n"
-        + col("baja", "A la baja", risk["baja"], TREND_DOWN_SVG) + "\n"
-        + "</div>"
-    )
-
-
 def section_html(sec):
     head = (
         f'      <header class="fact-section__head">\n'
@@ -234,7 +212,7 @@ def section_html(sec):
 
 def nav_top_html(current):
     items = []
-    for num, slug, nombre, corto, _fig, _lab, _grid in THEMES:
+    for num, slug, nombre, corto, _fig, _lab, _photo in THEMES:
         cur = ' aria-current="page"' if num == current else ""
         items.append(
             f'    <a class="obj-nav-top__item obj-nav-top__item--{num}" href="{slug}.html"{cur}>\n'
@@ -246,7 +224,7 @@ def nav_top_html(current):
 
 def pager_html(num):
     if num > 1:
-        pn, pslug, pnombre, _pc, _pf, _pl, _pg = THEMES[num - 2]
+        pn, pslug, pnombre, _pc, _pf, _pl, _pp = THEMES[num - 2]
         prev_link = f'''    <a class="obj-pager__link" href="{pslug}.html">
       <small>&larr; Tema {pn:02d}</small>
       <strong>{esc(pnombre)}</strong>
@@ -257,7 +235,7 @@ def pager_html(num):
       <strong>Los temas del reporte</strong>
     </a>'''
     if num < N:
-        nn, nslug, nnombre, _nc, _nf, _nl, _ng = THEMES[num]
+        nn, nslug, nnombre, _nc, _nf, _nl, _np = THEMES[num]
         next_link = f'''    <a class="obj-pager__link obj-pager__link--next" href="{nslug}.html">
       <small>Tema {nn:02d} &rarr;</small>
       <strong>{esc(nnombre)}</strong>
@@ -340,7 +318,7 @@ TEMA_TPL = """<!doctype html>
 
 
 def build_tema(theme):
-    num, slug, nombre, corto, fig, lab, _grid = theme
+    num, slug, nombre, corto, fig, lab, _photo = theme
     data = load(slug)
     chart_lead = ""
     lead_solo = ""
@@ -373,9 +351,14 @@ def build_tema(theme):
 # ----------------------------------------------------------------------
 
 def obj_cover_html(theme):
-    num, slug, nombre, corto, fig, lab, _grid = theme
+    num, slug, nombre, corto, fig, lab, photo = theme
+    photo_html = (
+        f'<div class="obj-cover__photo"><img src="img/{esc(photo)}" alt="" loading="lazy" /></div>'
+        if photo else ""
+    )
     return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data" href="pages/{slug}.html">
     <div class="obj-cover__top">
+      {photo_html}
       <span class="obj-cover__num" aria-hidden="true">{num:02d}</span>
       <p class="obj-cover__title">{esc(corto)}</p>
       <span class="obj-cover__cta-pill">Explorar tema {ARROW_SVG}</span>
@@ -414,8 +397,8 @@ HOME_TPL = """<!doctype html>
   <div class="wrap home-nav__inner">
     <a href="#cifras">En cifras</a>
     <a href="#temas">Los temas</a>
-    <a href="#riesgos">Balance de riesgos</a>
     <a href="#el-nino">Fenómeno de El Niño</a>
+    <a href="#riesgos">Balance de riesgos</a>
     <a href="#cierre">Sobre este reporte</a>
   </div>
 </nav>
@@ -448,25 +431,10 @@ HOME_TPL = """<!doctype html>
   <div class="wrap">
     <header class="section-mark">
       <h2 class="section-mark__title" id="titulo-temas">{intro_title}</h2>
-      <p class="section-mark__lead">{intro_lead}</p>
     </header>
 
     <div class="objectives__grid reveal">
 {cards}
-    </div>
-  </div>
-</section>
-
-<section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
-  <div class="wrap">
-    <div class="risk-panel reveal">
-      <h2 class="risk-panel__title" id="titulo-riesgos">{risks_title}</h2>
-      <p class="risk-panel__lead">{risks_lead}</p>
-
-      {risk_ratio}
-      {risk_chips}
-
-      <a class="risk-panel__cta" href="{risks_href}">{risks_label} {arrow}</a>
     </div>
   </div>
 </section>
@@ -477,6 +445,17 @@ HOME_TPL = """<!doctype html>
       <h2 class="closing-panel__title" id="titulo-el-nino">{closing_title}</h2>
       <p class="closing-panel__text">{closing_text}</p>
       <a class="closing-panel__cta" href="{closing_href}">{closing_label} {arrow}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
+  <div class="wrap">
+    <div class="risk-panel reveal">
+      <h2 class="risk-panel__title" id="titulo-riesgos">{risks_title}</h2>
+      <p class="risk-panel__lead">{risks_lead}</p>
+
+      {risk_cards}
     </div>
   </div>
 </section>
@@ -502,9 +481,9 @@ HOME_TPL = """<!doctype html>
 
 def build_home():
     data = load("home")
-    risks_data = load("tema-07-riesgos")
+    risks_data = load("riesgos")
     risk = risks_data["sections"][0]["risk_cards"]
-    cards = "\n".join(obj_cover_html(t) for t in THEMES if t[6])
+    cards = "\n".join(obj_cover_html(t) for t in THEMES)
     page = HOME_TPL.format(
         title=esc(data["title"]), meta_desc=esc(data["meta_desc"]),
         font=FONT_LINKS, product=PRODUCT_TITLE,
@@ -512,14 +491,10 @@ def build_home():
         stats_hero=stats_hero_html(data["stats_hero"]),
         stats_list=stats_list_html(data["stats_list"]),
         intro_title=esc(data["intro_nav"]["title"]),
-        intro_lead=rich(data["intro_nav"]["lead"]),
         cards=cards,
         risks_title=esc(data["risks"]["title"]),
         risks_lead=rich(data["risks"]["lead"]),
-        risk_ratio=risk_ratio_html(risk),
-        risk_chips=risk_chips_html(risk),
-        risks_href=data["risks"]["cta_href"],
-        risks_label=esc(data["risks"]["cta_label"]),
+        risk_cards=risk_cards_html(risk),
         closing_title=esc(data["closing"]["title"]),
         closing_text=rich(data["closing"]["text"]),
         closing_href=data["closing"]["cta_href"],
