@@ -1,0 +1,41 @@
+{
+  "kind": "hbars",
+  "title": "Crecimiento del valor agregado por industria",
+  "unit": "%",
+  "note": "Ordenado de mayor a menor crecimiento previsto para 2026. La cifra tenue junto a cada barra es la previsión 2027.",
+  "source": "Fuente: Banco Central del Ecuador, Programación Macroeconómica 2026-2030, septiembre 2026 (Valor Agregado Bruto por industrias).",
+  "categories": [
+    "Explotación de minas y canteras",
+    "Suministro de electricidad y agua",
+    "Construcción",
+    "Manufactura de productos alimenticios",
+    "Alojamiento y comidas",
+    "Comercio",
+    "Actividades financieras y de seguros",
+    "Manufactura de productos no alimenticios",
+    "Refinados de petróleo",
+    "Pesca y acuicultura",
+    "Salud y asistencia social",
+    "Actividades inmobiliarias",
+    "Actividades profesionales y técnicas",
+    "Transporte y almacenamiento",
+    "Información y comunicación",
+    "Enseñanza",
+    "Hogares como empleadores",
+    "Administración pública",
+    "Agricultura, ganadería y silvicultura",
+    "Arte, entretenimiento y otros servicios"
+  ],
+  "series": [
+    {
+      "name": "2026 (prev)",
+      "accent": "obj-4",
+      "values": [6.8, 5.8, 4.8, 4.2, 4.0, 3.9, 3.7, 3.4, 3.3, 3.1, 2.8, 2.0, 2.0, 1.9, 1.8, 0.9, 0.1, -2.1, -2.9, -4.3]
+    }
+  ],
+  "series2": {
+    "name": "2027 (prev)",
+    "shortLabel": "2027:",
+    "values": [1.1, 2.6, 3.1, 3.8, 1.6, 3.2, 3.4, 2.5, 2.4, 2.9, 2.0, 2.5, 1.6, 1.8, 1.9, 0.5, 0.4, 1.8, 2.0, 1.8]
+  }
+}

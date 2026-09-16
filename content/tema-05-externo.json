@@ -7,9 +7,18 @@
       "eyebrow": "Petróleo",
       "title": "Más producción, pero un margen más ajustado",
       "facts": [
-        { "label": "Precio de exportación del crudo", "text": "<strong>USD 75,3/barril</strong> en 2026 (+28,5%), pero converge a USD 58,2/barril en 2030 conforme se normalizan los precios internacionales." },
-        { "label": "Producción de crudo", "text": "Sube a <strong>168,3 millones de barriles</strong> en 2026 (+4,7%), recuperándose de las disrupciones de 2025 en el OCP y el SOTE." },
-        { "label": "Balanza petrolera", "text": "El superávit <strong>cae de USD 1.104 a USD 834 millones</strong> en 2026: los derivados importados se encarecen 40% y compensan la mejora de los ingresos por exportación de crudo." }
+        {
+          "label": "Precio de exportación del crudo",
+          "text": "<strong>USD 75,3/barril</strong> en 2026 (+28,5%), pero converge a USD 58,2/barril en 2030 conforme se normalizan los precios internacionales."
+        },
+        {
+          "label": "Producción de crudo",
+          "text": "Sube a <strong>168,3 millones de barriles</strong> en 2026 (+4,7%), recuperándose de las disrupciones de 2025 en el OCP y el SOTE."
+        },
+        {
+          "label": "Balanza petrolera",
+          "text": "El superávit <strong>cae de USD 1.104 a USD 834 millones</strong> en 2026: los derivados importados se encarecen 40% y compensan la mejora de los ingresos por exportación de crudo."
+        }
       ]
     },
     {
@@ -17,17 +26,22 @@
       "title": "El colchón externo se mantiene, pero se angosta",
       "lead": "El superávit de 2026 (USD 4.587 millones, 3,4% del PIB) cae 39,9% frente a 2025. Las remesas son el ancla más estable: llegan a USD 8.020 millones en 2026 y se mantienen en un promedio de USD 8.400 millones entre 2027 y 2030.",
       "stats_list": [
-        { "key": "Cuenta corriente 2026", "val": "USD 4.587M", "ctx": "3,4% del PIB — cae 39,9% frente a 2025." },
-        { "key": "Remesas 2026", "val": "USD 8.020M", "ctx": "+3,8% — compensan con holgura el déficit de servicios e ingreso primario." },
-        { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Cierre de 2026, +USD 1.444 millones, sostenidas por flujos del sector privado." }
+        {
+          "key": "Cuenta corriente 2026",
+          "val": "USD 4.587M",
+          "ctx": "3,4% del PIB — cae 39,9% frente a 2025."
+        },
+        {
+          "key": "Remesas 2026",
+          "val": "USD 8.020M",
+          "ctx": "+3,8% — compensan con holgura el déficit de servicios e ingreso primario."
+        },
+        {
+          "key": "Reservas Internacionales",
+          "val": "USD 11.239M",
+          "ctx": "Cierre de 2026, +USD 1.444 millones, sostenidas por flujos del sector privado."
+        }
       ]
     }
-  ],
-  "business_take": {
-    "title": "Qué implica para tu empresa",
-    "items": [
-      { "func": "Disponibilidad de divisas", "text": "El país sigue generando superávit externo y remesas robustas, lo que sostiene la liquidez en dólares del sistema. Pero la tendencia es a un margen cada vez más ajustado — no es momento de asumir que el acceso a divisas seguirá mejorando indefinidamente." },
-      { "func": "Exposición a precios del petróleo", "text": "Buena parte del ingreso fiscal y externo de 2026 depende de un precio del crudo que ya empieza a normalizarse a la baja. Negocios ligados indirectamente al gasto público (obra pública, contratación estatal) deberían modelar un escenario fiscal más ajustado desde 2027." }
-    ]
-  }
+  ]
 }

@@ -5,7 +5,8 @@ charting, coherente con la filosofía "cero dependencias" del sitio.
 Tipos soportados:
   - line              : trayectoria multi-serie (líneas + puntos)
   - bars              : barras verticales agrupadas por categoría
-  - hbars             : ranking horizontal, una sola serie
+  - hbars             : ranking horizontal, una serie (admite signo y una
+                         segunda cifra de referencia por fila, p.ej. 2027)
   - diverging-hbars    : barras horizontales agrupadas a ambos lados de 0
                          (para comparar escenarios, p.ej. El Niño moderado/fuerte)
 
@@ -14,6 +15,11 @@ y fuente. El trazo de las líneas usa stroke-dasharray/-dashoffset calculado
 aquí mismo (largo real del polyline) para que js/main.js sólo tenga que
 quitar el offset cuando la card entra en viewport — cero cálculo de layout
 en el cliente.
+
+Interactividad: cada marca (barra, punto) lleva un <title> con la cifra
+exacta — tooltip nativo del navegador al pasar el mouse, sin JS — y CSS
+(.chart-bar:hover / .chart-dot:hover en styles.css) da la señal visual de
+que la marca responde.
 """
 import html
 import math
@@ -30,6 +36,10 @@ def _fmt(v):
     if abs(v - round(v)) < 0.001:
         return f"{round(v):,}".replace(",", ".")
     return f"{v:,.1f}".replace(",", "§").replace(".", ",").replace("§", ".")
+
+
+def _title(label, v, unit=""):
+    return f'<title>{esc(label)}: {_fmt(v)}{esc(unit)}</title>'
 
 
 def _poly_len(pts):
@@ -62,6 +72,7 @@ def _wrap_figure(inner, chart, extra_class=""):
 def chart_line(chart):
     categories = chart["categories"]
     series = chart["series"]
+    unit = chart.get("unit", "")
     n = len(categories)
     all_vals = [v for s in series for v in s["values"]]
     vmin, vmax = min(0, min(all_vals)), max(all_vals)
@@ -98,12 +109,16 @@ def chart_line(chart):
         )
         for i, (x, y) in enumerate(pts):
             r = 4.5 if i in (0, n - 1) else 3
-            parts.append(f'<circle class="chart-dot" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}"/>')
+            label = f'{s["name"]} · {categories[i]}'
+            parts.append(
+                f'<circle class="chart-dot" tabindex="0" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}">'
+                f'{_title(label, s["values"][i], unit)}</circle>'
+            )
         lx, ly = pts[-1]
         label_dy = -10 if s["values"][-1] >= s["values"][-2 if n > 1 else -1] else 16
         parts.append(
             f'<text class="chart-label" style="fill:var(--{accent})" x="{lx:.1f}" y="{ly + label_dy:.1f}" '
-            f'text-anchor="end">{esc(s["name"])} {_fmt(s["values"][-1])}{esc(chart.get("unit",""))}</text>'
+            f'text-anchor="end">{esc(s["name"])} {_fmt(s["values"][-1])}{esc(unit)}</text>'
         )
 
     svg = (
@@ -118,6 +133,7 @@ def chart_line(chart):
 def chart_bars(chart, stacked=False):
     categories = chart["categories"]
     series = chart["series"]
+    unit = chart.get("unit", "")
     n = len(categories)
     if stacked:
         totals = [sum(s["values"][i] for s in series) for i in range(n)]
@@ -155,9 +171,9 @@ def chart_bars(chart, stacked=False):
                 by0, by1 = yv(cum), yv(cum + v)
                 h = max(0, by0 - by1)
                 parts.append(
-                    f'<rect class="chart-bar chart-draw-v" style="fill:var(--{accent})" '
+                    f'<rect class="chart-bar chart-draw-v" tabindex="0" style="fill:var(--{accent})" '
                     f'x="{bx:.1f}" y="{by1:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
-                    f'data-final-h="{h:.1f}" data-final-y="{by1:.1f}"/>'
+                    f'data-final-h="{h:.1f}" data-final-y="{by1:.1f}">{_title(s["name"] + " · " + str(c), v, unit)}</rect>'
                 )
                 cum += v
             total_y = yv(cum)
@@ -174,9 +190,9 @@ def chart_bars(chart, stacked=False):
                     top = yv(0)
                     h = max(0.5, yv(v) - yv(0))
                 parts.append(
-                    f'<rect class="chart-bar chart-draw-v" style="fill:var(--{accent})" '
+                    f'<rect class="chart-bar chart-draw-v" tabindex="0" style="fill:var(--{accent})" '
                     f'x="{bx:.1f}" y="{top:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
-                    f'data-final-h="{h:.1f}" data-final-y="{top:.1f}"/>'
+                    f'data-final-h="{h:.1f}" data-final-y="{top:.1f}">{_title(str(c), v, unit)}</rect>'
                 )
                 lbl_y = top - 6 if v >= 0 else top + h + 12
                 parts.append(f'<text class="chart-val" x="{bx + bar_w/2:.1f}" y="{lbl_y:.1f}" text-anchor="middle">{_fmt(v)}</text>')
@@ -184,7 +200,6 @@ def chart_bars(chart, stacked=False):
     legend = ""
     if n_series > 1:
         items = []
-        lx = x0
         for s in series:
             accent = s.get("accent", "orange")
             items.append(
@@ -202,28 +217,56 @@ def chart_bars(chart, stacked=False):
 
 
 def chart_hbars(chart):
+    """Ranking horizontal de una serie. Admite valores con signo (barra
+    sale de una línea de cero, no siempre del borde izquierdo) y, si el
+    chart trae `series2`, agrega una cifra secundaria más tenue junto al
+    valor principal (p.ej. crecimiento 2026 grande + 2027 secundario)."""
     categories = chart["categories"]
     series = chart["series"][0]
     values = series["values"]
+    unit = chart.get("unit", "")
+    series2 = chart.get("series2")
     accent = series.get("accent", "orange")
     n = len(categories)
-    row_h = 34
+    row_h = 30
     height = PAD_T + n * row_h + 10
-    vmax = max(values) * 1.15 if values else 1
-    x0 = 130
-    x1 = W - 60
 
-    parts = []
+    vmin = min(0, min(values))
+    vmax = max(values + [0])
+    span = max(vmax - vmin, 0.001)
+
+    x_label_w = 172
+    x0 = x_label_w
+    x1 = W - 96
+    zero_x = x0 + (0 - vmin) / span * (x1 - x0)
+
+    parts = [f'<line class="chart-grid0" x1="{zero_x:.1f}" y1="{PAD_T - 4}" x2="{zero_x:.1f}" y2="{PAD_T + n*row_h}"/>']
     for i, (c, v) in enumerate(zip(categories, values)):
         y = PAD_T + i * row_h
-        bw = (v / vmax) * (x1 - x0) if vmax else 0
+        bw = abs(v) / span * (x1 - x0)
+        bx = zero_x - bw if v < 0 else zero_x
         highlight = " chart-hbar--on" if chart.get("highlight") == c else ""
-        parts.append(f'<text class="chart-axis chart-axis--row" x="{x0 - 12}" y="{y + row_h*0.62:.1f}" text-anchor="end">{esc(c)}</text>')
+        parts.append(f'<text class="chart-axis chart-axis--row" x="{x0 - 12}" y="{y + row_h*0.64:.1f}" text-anchor="end">{esc(c)}</text>')
         parts.append(
-            f'<rect class="chart-bar chart-draw-h{highlight}" style="fill:var(--{accent})" '
-            f'x="{x0}" y="{y + 6}" width="{bw:.1f}" height="{row_h - 14}" data-final-w="{bw:.1f}"/>'
+            f'<rect class="chart-bar chart-draw-h{highlight}" tabindex="0" style="fill:var(--{accent})" '
+            f'x="{bx:.1f}" y="{y + 5}" width="{max(bw,1.2):.1f}" height="{row_h - 11}" '
+            f'data-final-w="{bw:.1f}" data-dir="{"l" if v < 0 else "r"}">{_title(c, v, unit)}</rect>'
         )
-        parts.append(f'<text class="chart-val" x="{x0 + bw + 8:.1f}" y="{y + row_h*0.62:.1f}">{_fmt(v)}</text>')
+        # El valor de una barra negativa se ancla junto a la línea de cero
+        # (lado derecho, siempre libre), no en la punta de la barra: con
+        # valores muy negativos la barra puede llegar hasta el borde de la
+        # columna de nombres, y anclar el texto ahí lo haría chocar con esa
+        # etiqueta. Las barras positivas sí usan su propia punta, porque a
+        # la derecha de la punta siempre hay margen libre hasta x1.
+        val_x = bx + bw + 8 if v >= 0 else zero_x + 8
+        val_anchor = "start"
+        sign = "+" if v > 0 else ""
+        val_text = f'{sign}{_fmt(v)}'
+        if series2 and i < len(series2.get("values", [])):
+            v2 = series2["values"][i]
+            sign2 = "+" if v2 > 0 else ""
+            val_text += f'<tspan class="chart-val__sub"> · {esc(series2.get("shortLabel", series2.get("name","")))} {sign2}{_fmt(v2)}</tspan>'
+        parts.append(f'<text class="chart-val" x="{val_x:.1f}" y="{y + row_h*0.64:.1f}" text-anchor="{val_anchor}">{val_text}</text>')
 
     svg = (
         f'<svg class="chart chart--hbars" viewBox="0 0 {W} {height}" role="img" '
@@ -237,6 +280,7 @@ def chart_hbars(chart):
 def chart_diverging(chart):
     categories = chart["categories"]
     series = chart["series"]
+    unit = chart.get("unit", "")
     n = len(categories)
     n_series = len(series)
     row_h = 46
@@ -261,9 +305,10 @@ def chart_diverging(chart):
             by = y + 8 + si * bar_h
             bx = x_mid - bw if v < 0 else x_mid
             parts.append(
-                f'<rect class="chart-bar chart-draw-h" style="fill:var(--{accent})" '
+                f'<rect class="chart-bar chart-draw-h" tabindex="0" style="fill:var(--{accent})" '
                 f'x="{bx:.1f}" y="{by:.1f}" width="{bw:.1f}" height="{bar_h - 4:.1f}" '
-                f'data-final-w="{bw:.1f}" data-dir="{"l" if v < 0 else "r"}" data-mid="{x_mid}"/>'
+                f'data-final-w="{bw:.1f}" data-dir="{"l" if v < 0 else "r"}" data-mid="{x_mid}">'
+                f'{_title(s["name"] + " · " + str(c), v, unit)}</rect>'
             )
             lx = bx - 6 if v < 0 else bx + bw + 6
             anchor = "end" if v < 0 else "start"

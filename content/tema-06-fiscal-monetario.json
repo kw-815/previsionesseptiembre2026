@@ -9,26 +9,40 @@
       "lead": "La inflación promedio pasa de 0,7% en 2025 a 2,1% en 2026, empujada por la liberalización gradual de combustibles y la normalización de tarifas eléctricas. El pico llega en 2027 (2,2%) y luego converge hasta 0,9% en 2030.",
       "chart": "inflacion-trayectoria",
       "facts": [
-        { "label": "Inflación 2026", "text": "<strong>2,1%</strong> — 1,4 p.p. más que en 2025, por costos de energía y combustibles." },
-        { "label": "Pico en 2027", "text": "<strong>2,2%</strong>, antes de iniciar una convergencia sostenida hacia 0,9% en 2030." },
-        { "label": "Mecanismos de compensación", "text": "Las medidas de compensación al transporte comercial tras el fin del subsidio al diésel son <strong>temporales (8 meses)</strong> y no se extienden en el horizonte de previsión." }
+        {
+          "label": "Inflación 2026",
+          "text": "<strong>2,1%</strong> — 1,4 p.p. más que en 2025, por costos de energía y combustibles."
+        },
+        {
+          "label": "Pico en 2027",
+          "text": "<strong>2,2%</strong>, antes de iniciar una convergencia sostenida hacia 0,9% en 2030."
+        },
+        {
+          "label": "Mecanismos de compensación",
+          "text": "Las medidas de compensación al transporte comercial tras el fin del subsidio al diésel son <strong>temporales (8 meses)</strong> y no se extienden en el horizonte de previsión."
+        }
       ]
     },
     {
       "eyebrow": "Crédito y fiscal",
       "title": "Desaceleración ordenada, consolidación gradual",
       "stats_list": [
-        { "key": "Crédito privado 2026 → 2030", "val": "10,9% → 6,8%", "ctx": "Desaceleración progresiva; el crédito al PIB sube de 57,2% a 70,7% — más profundidad financiera, no menos." },
-        { "key": "Captaciones 2026 → 2030", "val": "11,5% → 7,0%", "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema." },
-        { "key": "Inversión pública 2026", "val": "USD 2.747M", "ctx": "+20,9% frente a 2025, con foco en educación, salud y seguridad — llega a USD 3.828M en 2030." }
+        {
+          "key": "Crédito privado 2026 → 2030",
+          "val": "10,9% → 6,8%",
+          "ctx": "Desaceleración progresiva; el crédito al PIB sube de 57,2% a 70,7% — más profundidad financiera, no menos."
+        },
+        {
+          "key": "Captaciones 2026 → 2030",
+          "val": "11,5% → 7,0%",
+          "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema."
+        },
+        {
+          "key": "Inversión pública 2026",
+          "val": "USD 2.747M",
+          "ctx": "+20,9% frente a 2025, con foco en educación, salud y seguridad — llega a USD 3.828M en 2030."
+        }
       ]
     }
-  ],
-  "business_take": {
-    "title": "Qué implica para tu empresa",
-    "items": [
-      { "func": "Pricing y contratos indexados", "text": "La inflación va a subir antes de bajar. Si tienes contratos o listas de precios que se revisan anualmente, conviene anticipar el ajuste de 2026-2027 en vez de reaccionar sobre la marcha." },
-      { "func": "Costo y disponibilidad de crédito", "text": "El crédito sigue creciendo y con más profundidad financiera, pero a un ritmo menor cada año. Es un buen momento relativo para cerrar financiamiento a mediano plazo antes de que las tasas de crecimiento del crédito se enfríen más." }
-    ]
-  }
+  ]
 }

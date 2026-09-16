@@ -8,28 +8,49 @@
       "title": "Un crecimiento revisado al alza, pero moderado",
       "lead": "El ajuste de 2,5% a 2,7% no es un cambio de tendencia: es la confirmación de que la economía sostuvo en el primer semestre de 2026 el mismo dinamismo mostrado en 2025 (3,7%). La proyección de mediano plazo se mantiene conservadora.",
       "facts": [
-        { "label": "PIB 2026", "text": "<strong>USD 136.017 millones</strong> nominales — el PIB real en cadena monetaria llega a USD 120.389 millones, con una tasa de variación de <strong>2,7%</strong>." },
-        { "label": "2027-2030", "text": "Crecimiento promedio de <strong>2,5% anual</strong>, con un pico de 2,8% en 2028 y una desaceleración gradual hasta 2,2% en 2030." },
-        { "label": "PIB per cápita", "text": "Sube <strong>1,9%</strong> en 2026 hasta USD 6.599, y llegaría a USD 7.054 en 2030 — un crecimiento promedio de apenas 1,7% anual en el mediano plazo." },
-        { "label": "Quién empuja el crecimiento", "text": "La <strong>demanda interna</strong> aporta 1,5 p.p. de los 2,7 p.p. de 2026; la demanda externa (exportaciones) aporta solo 1,2 p.p. — y esa brecha se amplía hacia 2030." }
+        {
+          "label": "PIB 2026",
+          "text": "<strong>USD 136.017 millones</strong> nominales — el PIB real en cadena monetaria llega a USD 120.389 millones, con una tasa de variación de <strong>2,7%</strong>."
+        },
+        {
+          "label": "2027-2030",
+          "text": "Crecimiento promedio de <strong>2,5% anual</strong>, con un pico de 2,8% en 2028 y una desaceleración gradual hasta 2,2% en 2030."
+        },
+        {
+          "label": "PIB per cápita",
+          "text": "Sube <strong>1,9%</strong> en 2026 hasta USD 6.599, y llegaría a USD 7.054 en 2030 — un crecimiento promedio de apenas 1,7% anual en el mediano plazo."
+        },
+        {
+          "label": "Quién empuja el crecimiento",
+          "text": "La <strong>demanda interna</strong> aporta 1,5 p.p. de los 2,7 p.p. de 2026; la demanda externa (exportaciones) aporta solo 1,2 p.p. — y esa brecha se amplía hacia 2030."
+        }
       ]
     },
     {
       "eyebrow": "Los cuatro números que sostienen el escenario",
       "title": "Consumo, inversión y comercio exterior en 2026",
       "stats_list": [
-        { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "Acelera frente a 2025 (2,7%), impulsado por remesas y crédito de consumo." },
-        { "key": "Inversión (FBKF)", "val": "+5,8%", "ctx": "El motor más dinámico del año: recuperación de obra pública y construcción privada." },
-        { "key": "Exportaciones", "val": "+3,8%", "ctx": "Se modera frente a 2025 (6,4%) por la corrección en cacao, atún y café." },
-        { "key": "Importaciones", "val": "+6,3%", "ctx": "Crecen más rápido que las exportaciones — la contrapartida natural de una demanda interna más fuerte." }
+        {
+          "key": "Consumo de hogares",
+          "val": "+3,3%",
+          "ctx": "Acelera frente a 2025 (2,7%), impulsado por remesas y crédito de consumo."
+        },
+        {
+          "key": "Inversión (FBKF)",
+          "val": "+5,8%",
+          "ctx": "El motor más dinámico del año: recuperación de obra pública y construcción privada."
+        },
+        {
+          "key": "Exportaciones",
+          "val": "+3,8%",
+          "ctx": "Se modera frente a 2025 (6,4%) por la corrección en cacao, atún y café."
+        },
+        {
+          "key": "Importaciones",
+          "val": "+6,3%",
+          "ctx": "Crecen más rápido que las exportaciones — la contrapartida natural de una demanda interna más fuerte."
+        }
       ]
     }
-  ],
-  "business_take": {
-    "title": "Qué implica para tu empresa",
-    "items": [
-      { "func": "Planeación comercial", "text": "El crecimiento de 2026-2030 se apoya en el <strong>mercado doméstico</strong>, no en la demanda externa. Los negocios orientados a consumo interno y construcción tienen un viento más favorable que los puramente exportadores." },
-      { "func": "Horizonte de inversión", "text": "2,5% anual es un crecimiento moderado y sostenido, no un boom. Sirve como referencia realista para proyectar demanda en planes a 3-5 años — sin descontar los riesgos que se detallan más adelante en este reporte." }
-    ]
-  }
+  ]
 }

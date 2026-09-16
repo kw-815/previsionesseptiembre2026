@@ -1,6 +1,6 @@
 {
   "meta_desc": "Por primera vez, el Banco Central cuantifica el impacto del Fenómeno de El Niño: hasta -1,4 puntos de PIB en 2027 en un escenario fuerte.",
-  "en_sintesis": "Por primera vez, el Banco Central <strong>cuantifica</strong> —no solo menciona— el impacto potencial del Fenómeno de El Niño. Bajo un escenario <strong>moderado</strong>, el crecimiento del PIB en 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>. Es el riesgo más noticioso de esta actualización.",
+  "en_sintesis": "Por primera vez, el Banco Central <strong>cuantifica</strong> el impacto potencial del Fenómeno de El Niño. Bajo un escenario <strong>moderado</strong>, el crecimiento del PIB en 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>. Es el riesgo más noticioso de esta actualización.",
   "chart": "fen-impacto",
   "sections": [
     {
@@ -8,17 +8,35 @@
       "title": "De la temperatura del océano a la economía real",
       "lead": "El Niño tiene dos componentes: uno oceánico (ENOS, región Niño 3.4) y uno costero (región Niño 1+2, frente a las costas de Ecuador y Perú). El BCE combinó trayectorias históricas de eventos moderados y fuertes con modelos econométricos para estimar primero el efecto sobre exportaciones no petroleras e inflación, y luego su transmisión al PIB mediante el IPMEC, el mismo instrumento de simulación que usa para el escenario base.",
       "facts": [
-        { "label": "Ventana de mayor riesgo", "text": "El BCE ubica los mayores impactos del FEN entre <strong>finales de 2026 y principios de 2027</strong>, con efectos sobre la actividad productiva concentrados en 2027." },
-        { "label": "Un ejercicio parcial", "text": "El propio Banco Central advierte que la estimación <strong>no cubre todos los canales</strong> posibles de afectación — es una aproximación de magnitud, no una previsión exacta." }
+        {
+          "label": "Ventana de mayor riesgo",
+          "text": "El BCE ubica los mayores impactos del FEN entre <strong>finales de 2026 y principios de 2027</strong>, con efectos sobre la actividad productiva concentrados en 2027."
+        },
+        {
+          "label": "Un ejercicio parcial",
+          "text": "El propio Banco Central advierte que la estimación <strong>no cubre todos los canales</strong> posibles de afectación — es una aproximación de magnitud, no una previsión exacta."
+        }
       ]
     },
     {
       "eyebrow": "El impacto en inflación",
       "title": "Los alimentos absorben la mayor parte del golpe",
       "stats_list": [
-        { "key": "Inflación de alimentos — moderado", "val": "+0,48 p.p.", "ctx": "En los 12 meses posteriores al evento, sobre el escenario base." },
-        { "key": "Inflación de alimentos — fuerte", "val": "+1,34 p.p.", "ctx": "Casi el triple del escenario moderado — el efecto no es lineal." },
-        { "key": "Inflación general", "val": "+0,11 a +0,30 p.p.", "ctx": "El canal directo vía alimentos es limitado; no incorpora efectos sobre transporte, logística o servicios." }
+        {
+          "key": "Inflación de alimentos — moderado",
+          "val": "+0,48 p.p.",
+          "ctx": "En los 12 meses posteriores al evento, sobre el escenario base."
+        },
+        {
+          "key": "Inflación de alimentos — fuerte",
+          "val": "+1,34 p.p.",
+          "ctx": "Casi el triple del escenario moderado — el efecto no es lineal."
+        },
+        {
+          "key": "Inflación general",
+          "val": "+0,11 a +0,30 p.p.",
+          "ctx": "El canal directo vía alimentos es limitado; no incorpora efectos sobre transporte, logística o servicios."
+        }
       ]
     },
     {
@@ -26,19 +44,23 @@
       "title": "Los productos costeros, los más expuestos",
       "lead": "En un escenario fuerte, las exportaciones no petroleras caerían 3,0 p.p. sobre el escenario base de 2027 — con el cacao en grano (-1,2 p.p.) y los enlatados de pescado (-0,7 p.p.) como los rubros más golpeados.",
       "facts": [
-        { "label": "Cacao en grano", "text": "-0,4 p.p. (moderado) / <strong>-1,2 p.p. (fuerte)</strong> — el producto más sensible del listado." },
-        { "label": "Enlatados de pescado", "text": "-0,3 p.p. (moderado) / <strong>-0,7 p.p. (fuerte)</strong>." },
-        { "label": "Banano", "text": "-0,2 p.p. (moderado) / -0,5 p.p. (fuerte)." },
-        { "label": "Camarón procesado", "text": "-0,1 p.p. (moderado) / -0,3 p.p. (fuerte) — el más resiliente del grupo." }
+        {
+          "label": "Cacao en grano",
+          "text": "-0,4 p.p. (moderado) / <strong>-1,2 p.p. (fuerte)</strong> — el producto más sensible del listado."
+        },
+        {
+          "label": "Enlatados de pescado",
+          "text": "-0,3 p.p. (moderado) / <strong>-0,7 p.p. (fuerte)</strong>."
+        },
+        {
+          "label": "Banano",
+          "text": "-0,2 p.p. (moderado) / -0,5 p.p. (fuerte)."
+        },
+        {
+          "label": "Camarón procesado",
+          "text": "-0,1 p.p. (moderado) / -0,3 p.p. (fuerte) — el más resiliente del grupo."
+        }
       ]
     }
-  ],
-  "business_take": {
-    "title": "Qué implica para tu empresa",
-    "items": [
-      { "func": "Agroexportadores costeños", "text": "Cacao y pesca ya están en corrección por precio (tema 4) — el FEN añade un riesgo de volumen y logística encima de esa corrección, concentrado en 2027. Vale la pena construir el presupuesto de ese año con ambos efectos juntos, no por separado." },
-      { "func": "Cadena de suministro y logística", "text": "Inundaciones, deslizamientos e interrupciones viales son el canal físico del FEN. Si tu operación depende de rutas costeras o de la producción agrícola de esa región, este es el momento de revisar planes de contingencia logística para el último trimestre de 2026." },
-      { "func": "Pricing de insumos con componente agrícola", "text": "El repunte de inflación de alimentos (+0,48 a +1,34 p.p.) se suma al que ya trae el escenario base por combustibles y tarifas eléctricas (tema 6) — dos fuentes de presión de costos que convergen en la misma ventana de tiempo." }
-    ]
-  }
+  ]
 }

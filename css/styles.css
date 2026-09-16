@@ -2603,6 +2603,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .chart-axis--row { font-size: 10px; fill: var(--t-75); font-weight: 600; }
 .chart-grid0 { stroke: var(--t-15); stroke-width: 1; }
 .chart-val { font-size: 10.5px; fill: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; }
+.chart-val__sub { fill: var(--t-60); font-weight: 500; }
 .chart-label { font-size: 10.5px; font-weight: 700; }
 
 .chart-line {
@@ -2612,12 +2613,24 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   stroke-linejoin: round;
   transition: stroke-dashoffset 1400ms var(--ease);
 }
-.chart-dot { transition: r var(--t-fast) var(--ease); }
+.chart-dot {
+  transition: r var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
+  cursor: pointer;
+}
+.chart-dot:hover, .chart-dot:focus-visible { r: 6.5; filter: brightness(1.25); outline: none; }
 
+/* Interactividad: cada barra/punto lleva un <title> (tooltip nativo del
+   navegador con la cifra exacta) — esta respuesta visual en hover/foco
+   es la señal de que la marca es interactiva. */
 .chart-bar {
   rx: 3;
   transform-box: fill-box;
-  transition: transform 900ms var(--ease);
+  transition: transform 900ms var(--ease), filter var(--t-fast) var(--ease);
+  cursor: pointer;
+}
+.chart-bar:hover, .chart-bar:focus-visible {
+  filter: brightness(1.22) drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+  outline: none;
 }
 .chart--bars .chart-bar.chart-draw-v,
 .chart--diverging .chart-bar,
@@ -2650,6 +2663,36 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 /* =============================================================
    Mapa de riesgos — factores al alza / a la baja
    ============================================================= */
+
+/* Barra de proporción — lectura instantánea antes de leer una sola
+   tarjeta: cuántos factores empujan a favor vs. en contra. */
+.risk-ratio {
+  display: flex;
+  min-height: 76px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: var(--s-4);
+  box-shadow: var(--elev-1);
+}
+.risk-ratio__seg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  padding: var(--s-3);
+  color: var(--ink);
+}
+.risk-ratio__seg--alza { background: var(--green); }
+.risk-ratio__seg--baja { background: var(--orange); }
+.risk-ratio__n { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1; }
+.risk-ratio__label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .risk-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2674,54 +2717,99 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   border: 1px solid var(--t-15);
   border-radius: var(--r);
   margin-bottom: var(--s-3);
-  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
 }
+.risk-card:hover { transform: translateY(-2px); }
 .risk-col--alza .risk-card:hover { background: var(--t-10); border-color: rgba(162, 197, 107, 0.4); }
 .risk-col--baja .risk-card:hover { background: var(--t-10); border-color: rgba(255, 134, 62, 0.4); }
+.risk-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-bottom: var(--s-2);
+}
+.risk-card__icon svg { width: 18px; height: 18px; }
+.risk-col--alza .risk-card__icon { background: rgba(162, 197, 107, 0.16); color: var(--green); }
+.risk-col--baja .risk-card__icon { background: rgba(255, 134, 62, 0.16); color: var(--orange); }
 .risk-card__title { font-size: var(--fs-base); font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
 .risk-card__text { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.55; }
 
-/* =============================================================
-   Cierre "Qué implica para tu empresa"
-   ============================================================= */
-.business-take {
-  margin-top: clamp(2.5rem, 6vw, 4rem);
-  padding: clamp(1.75rem, 4vw, 2.5rem);
-  background: linear-gradient(155deg, rgba(1, 197, 180, 0.14), rgba(1, 197, 180, 0.03) 60%);
-  border: 1px solid rgba(1, 197, 180, 0.28);
-  border-radius: var(--r-xl);
-}
-.business-take__title {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: var(--s-4);
-}
-.business-take__title::before {
-  content: "";
-  width: 26px; height: 26px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--obj-2);
-}
-.business-take__grid {
+/* Versión compacta del home: solo títulos, como chips con ícono */
+.risk-chip-cols {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: var(--s-4);
+  margin-bottom: var(--s-5);
 }
-.business-take__item { display: flex; flex-direction: column; gap: 0.35rem; }
-.business-take__func {
+@media (max-width: 700px) { .risk-chip-cols { grid-template-columns: 1fr; } }
+.risk-chip-col__label {
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--obj-2);
+  color: var(--t-60);
+  margin-bottom: var(--s-2);
 }
-.business-take__text { font-size: var(--fs-sm); line-height: 1.6; color: var(--t-90); }
-.business-take__text strong { color: var(--white); font-weight: 700; }
+.risk-chip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.risk-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--t-08);
+  border: 1px solid var(--t-15);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--t-90);
+  transition: background var(--t-fast) var(--ease);
+}
+.risk-chip:hover { background: var(--t-10); }
+.risk-chip__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+.risk-chip__icon svg { width: 13px; height: 13px; }
+.risk-chip--alza .risk-chip__icon { background: rgba(162, 197, 107, 0.2); color: var(--green); }
+.risk-chip--baja .risk-chip__icon { background: rgba(255, 134, 62, 0.2); color: var(--orange); }
+
+/* Panel del home — mismo tratamiento visual que el cierre de El Niño */
+.risk-panel {
+  position: relative;
+  padding: clamp(2.25rem, 5vw, 3.5rem);
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg, rgba(162, 197, 107, 0.14), rgba(255, 134, 62, 0.05) 65%);
+  border: 1px solid var(--t-15);
+  overflow: hidden;
+}
+.risk-panel__eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: var(--fs-sm); font-weight: 600; color: var(--t-75); margin-bottom: var(--s-2);
+}
+.risk-panel__eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--green); border-radius: 2px; }
+.risk-panel__title { font-size: var(--fs-2xl); max-width: 32ch; margin-bottom: var(--s-3); }
+.risk-panel__lead { font-size: var(--fs-md); color: var(--t-90); line-height: 1.6; max-width: 62ch; margin-bottom: var(--s-5); }
+.risk-panel__cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
+}
+.risk-panel__cta:hover { transform: translateY(-2px); filter: brightness(0.96); }
+.risk-panel__cta svg { width: 16px; height: 16px; transition: transform var(--t-fast) var(--ease); }
+.risk-panel__cta:hover svg { transform: translateX(3px); }
 
 /* Bloque de cierre del home ("El dato más noticioso") */
 .closing-panel {

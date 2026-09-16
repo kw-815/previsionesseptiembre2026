@@ -1,7 +1,6 @@
 {
-  "kicker": "Coyuntura económica · Programación Macroeconómica BCE, septiembre 2026",
   "title": "El Banco Central eleva a 2,7% la previsión de crecimiento de Ecuador para 2026",
-  "subtitle": "Y proyecta un promedio de 2,5% anual entre 2027 y 2030, sostenido por el consumo de los hogares y la inversión. Esta es la lectura de Keyword para empresarios: qué dice el escenario oficial, dónde están los riesgos y qué significa para tu negocio.",
+  "subtitle": "Y proyecta un promedio de 2,5% anual entre 2027 y 2030, sostenido por el consumo de los hogares y la inversión.",
   "meta_desc": "Lectura empresarial de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador: crecimiento, riesgos y el primer impacto cuantificado del Fenómeno de El Niño.",
   "stats_hero": [
     { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "Revisado al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica." },
@@ -18,18 +17,25 @@
   ],
   "intro_nav": {
     "eyebrow": "El reporte",
-    "title": "Nueve frentes para entender hacia dónde va la economía",
-    "lead": "De la coyuntura internacional al primer impacto cuantificado del Fenómeno de El Niño — cada tema cierra con una lectura directa de qué significa para tu empresa."
+    "title": "Los frentes para entender hacia dónde va la economía",
+    "lead": "Del pulso reciente de la economía al primer impacto cuantificado del Fenómeno de El Niño, con el detalle sector por sector."
+  },
+  "risks": {
+    "eyebrow": "El mapa de riesgos del BCE",
+    "title": "Balance de riesgos: más factores a la baja que al alza",
+    "lead": "El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo.",
+    "cta_label": "Ver el mapa de riesgos completo",
+    "cta_href": "pages/tema-07-riesgos.html"
   },
   "closing": {
     "eyebrow": "El dato más noticioso",
     "title": "El Niño ya tiene un número: hasta -1,4 puntos de PIB en 2027",
-    "text": "Por primera vez, el Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización — y la que menos empresas están monitoreando todavía.",
+    "text": "Por primera vez, el Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización.",
     "cta_label": "Ver la cuantificación completa",
     "cta_href": "pages/tema-08-el-nino.html"
   },
   "final": {
     "eyebrow": "Sobre este reporte",
-    "text": "Elaborado por Keyword a partir de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador (septiembre de 2026). Todas las cifras citadas provienen de esa publicación; las lecturas de \"qué implica para tu empresa\" son análisis propio de Keyword y no declaraciones del Banco Central."
+    "text": "Elaborado por Keyword a partir de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador (septiembre de 2026). Todas las cifras citadas provienen de esa publicación."
   }
 }
