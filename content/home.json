@@ -5,7 +5,7 @@
   "stats_hero": [
     { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "Revisado al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica." },
     { "label": "Promedio 2027-2030", "figure": "2,5", "unit": "%", "note": "Crecimiento sostenido por demanda interna, con un pico de <strong>2,8%</strong> en 2028." },
-    { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "Superávit equivalente a <strong>3,4% del PIB</strong>, aunque cae 39,9% frente a 2025." }
+    { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "Equivale a <strong>3,4% del PIB</strong> — cae desde <strong>USD 7.632M</strong> en 2025 (-39,9%)." }
   ],
   "stats_list": [
     { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "El motor más estable del crecimiento en 2026, apoyado en remesas y crédito de consumo." },
@@ -30,7 +30,7 @@
   "closing": {
     "eyebrow": "El dato más noticioso",
     "title": "El Niño ya tiene un número: hasta -1,4 puntos de PIB en 2027",
-    "text": "Por primera vez, el Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización.",
+    "text": "El Banco Central cuantifica el impacto potencial del Fenómeno de El Niño sobre el crecimiento, las exportaciones y la inflación. Es la pieza más importante de esta actualización.",
     "cta_label": "Ver la cuantificación completa",
     "cta_href": "pages/tema-08-el-nino.html"
   },

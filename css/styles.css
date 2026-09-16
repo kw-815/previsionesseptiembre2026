@@ -2599,12 +2599,12 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 
 .chart { width: 100%; height: auto; overflow: visible; }
 .chart text { font-family: var(--font); }
-.chart-axis { font-size: 9.5px; fill: var(--t-60); }
-.chart-axis--row { font-size: 10px; fill: var(--t-75); font-weight: 600; }
+.chart-axis { font-size: 12px; fill: var(--t-75); font-weight: 500; }
+.chart-axis--row { font-size: 12.5px; fill: var(--t-90); font-weight: 600; }
 .chart-grid0 { stroke: var(--t-15); stroke-width: 1; }
-.chart-val { font-size: 10.5px; fill: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; }
-.chart-val__sub { fill: var(--t-60); font-weight: 500; }
-.chart-label { font-size: 10.5px; font-weight: 700; }
+.chart-val { font-size: 13px; fill: var(--white); font-weight: 700; font-variant-numeric: tabular-nums; }
+.chart-val__sub { fill: var(--t-60); font-weight: 500; font-size: 10.5px; }
+.chart-label { font-size: 13px; font-weight: 700; }
 
 .chart-line {
   fill: none;
@@ -2617,21 +2617,29 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   transition: r var(--t-fast) var(--ease), filter var(--t-fast) var(--ease);
   cursor: pointer;
 }
-.chart-dot:hover, .chart-dot:focus-visible { r: 6.5; filter: brightness(1.25); outline: none; }
+.chart-dot:hover, .chart-dot:focus-visible, .chart-dot.chart-mark--active {
+  r: 6.5; filter: brightness(1.3); outline: none;
+}
 
-/* Interactividad: cada barra/punto lleva un <title> (tooltip nativo del
-   navegador con la cifra exacta) — esta respuesta visual en hover/foco
-   es la señal de que la marca es interactiva. */
+/* Interactividad: al mover el mouse sobre cualquier punto del área de
+   trazado (chart-hitzone), js/main.js ubica la categoría más cercana y
+   marca TODAS las marcas de esa categoría con .chart-mark--active — así
+   se ve, en una sola pasada, el valor de todas las series en ese punto
+   (p.ej. crédito y captaciones del mismo año), no solo la que está bajo
+   el cursor. El <title> queda como respaldo nativo/accesible. */
 .chart-bar {
   rx: 3;
   transform-box: fill-box;
   transition: transform 900ms var(--ease), filter var(--t-fast) var(--ease);
   cursor: pointer;
 }
-.chart-bar:hover, .chart-bar:focus-visible {
+.chart-bar:hover, .chart-bar:focus-visible, .chart-bar.chart-mark--active {
   filter: brightness(1.22) drop-shadow(0 2px 8px rgba(0,0,0,0.25));
   outline: none;
 }
+.chart-hitzone { pointer-events: none; cursor: crosshair; }
+.chart-crosshair { stroke: var(--t-40); stroke-width: 1; stroke-dasharray: 3 3; pointer-events: none; }
+.chart-row-highlight { fill: var(--t-08); pointer-events: none; }
 .chart--bars .chart-bar.chart-draw-v,
 .chart--diverging .chart-bar,
 .chart--hbars .chart-bar {
@@ -2659,6 +2667,39 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   font-weight: 600;
 }
 .chart-legend__item i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* Tooltip flotante — una sola instancia reutilizada por todos los charts
+   (js/main.js la crea una vez y la reposiciona). Muestra TODAS las series
+   de la categoría bajo el cursor, con nombre, color y valor. */
+.chart-tooltip {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  background: var(--indigo-deep);
+  border: 1px solid var(--t-15);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  box-shadow: var(--elev-3);
+  min-width: 150px;
+  max-width: 260px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+.chart-tooltip.is-visible { opacity: 1; transform: none; }
+.chart-tooltip__cat {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  margin-bottom: 0.45rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--t-15);
+}
+.chart-tooltip__row { display: flex; align-items: center; gap: 0.5rem; padding: 0.18rem 0; }
+.chart-tooltip__swatch { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+.chart-tooltip__name { color: var(--t-75); font-size: var(--fs-xs); flex: 1; }
+.chart-tooltip__val { color: var(--white); font-weight: 700; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
 
 /* =============================================================
    Mapa de riesgos — factores al alza / a la baja

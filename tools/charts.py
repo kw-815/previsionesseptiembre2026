@@ -16,12 +16,20 @@ aquí mismo (largo real del polyline) para que js/main.js sólo tenga que
 quitar el offset cuando la card entra en viewport — cero cálculo de layout
 en el cliente.
 
-Interactividad: cada marca (barra, punto) lleva un <title> con la cifra
-exacta — tooltip nativo del navegador al pasar el mouse, sin JS — y CSS
-(.chart-bar:hover / .chart-dot:hover en styles.css) da la señal visual de
-que la marca responde.
+Interactividad real (no solo :hover de CSS): cada gráfico lleva
+  1) un <script type="application/json" class="chart-data"> con todas las
+     series y categorías, y
+  2) en el <svg>, atributos data-orient/data-x0/data-step/... que describen
+     su geometría (dónde cae cada categoría en coordenadas SVG),
+de modo que js/main.js pueda, al mover el mouse, ubicar la categoría más
+cercana y mostrar un tooltip con el valor de TODAS las series en ese punto
+(p.ej. crédito Y captaciones del mismo año, o 2026 Y 2027 de una industria)
+— no solo el valor de la marca puntual bajo el cursor. Un <rect
+class="chart-hitzone"> transparente cubre toda el área de trazado para que
+el hover funcione en cualquier punto, no solo sobre el trazo/barra exacta.
 """
 import html
+import json
 import math
 
 W, H = 640, 300
@@ -51,6 +59,24 @@ def _poly_len(pts):
     return length
 
 
+def _data_script(chart):
+    """Bloque JSON que consume js/main.js para armar el tooltip enriquecido
+    (todas las series de la categoría bajo el cursor, no solo una)."""
+    payload = {
+        "categories": chart["categories"],
+        "series": [{"name": s["name"], "accent": s.get("accent", "orange"), "values": s["values"]} for s in chart["series"]],
+        "unit": chart.get("unit", ""),
+    }
+    if chart.get("series2"):
+        s2 = chart["series2"]
+        payload["series2"] = {"name": s2.get("shortLabel", s2.get("name", "")), "values": s2["values"]}
+    return f'<script type="application/json" class="chart-data">{json.dumps(payload, ensure_ascii=False)}</script>'
+
+
+def _hitzone(x, y, w, h):
+    return f'<rect class="chart-hitzone" x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" fill="transparent"/>'
+
+
 def _wrap_figure(inner, chart, extra_class=""):
     title = esc(chart.get("title", ""))
     unit = esc(chart.get("unit", ""))
@@ -64,6 +90,7 @@ def _wrap_figure(inner, chart, extra_class=""):
     {unit_html}
   </div>
   {inner}
+  {_data_script(chart)}
   {note_html}
   <p class="chart-card__source">{esc(source)}</p>
 </figure>'''
@@ -111,7 +138,7 @@ def chart_line(chart):
             r = 4.5 if i in (0, n - 1) else 3
             label = f'{s["name"]} · {categories[i]}'
             parts.append(
-                f'<circle class="chart-dot" tabindex="0" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}">'
+                f'<circle class="chart-dot" data-idx="{i}" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}">'
                 f'{_title(label, s["values"][i], unit)}</circle>'
             )
         lx, ly = pts[-1]
@@ -121,9 +148,13 @@ def chart_line(chart):
             f'text-anchor="end">{esc(s["name"])} {_fmt(s["values"][-1])}{esc(unit)}</text>'
         )
 
+    parts.append(_hitzone(x0, y1 - 6, x1 - x0, y0 - y1 + 6))
+
     svg = (
         f'<svg class="chart chart--line" viewBox="0 0 {W} {H}" role="img" '
-        f'aria-label="{esc(chart.get("title",""))}">'
+        f'aria-label="{esc(chart.get("title",""))}" '
+        f'data-orient="x" data-x0="{x0}" data-step="{step:.2f}" data-n="{n}" '
+        f'data-plot-top="{y1}" data-plot-bottom="{y0}">'
         + "".join(parts) + "".join(labels_x) +
         '</svg>'
     )
@@ -171,7 +202,7 @@ def chart_bars(chart, stacked=False):
                 by0, by1 = yv(cum), yv(cum + v)
                 h = max(0, by0 - by1)
                 parts.append(
-                    f'<rect class="chart-bar chart-draw-v" tabindex="0" style="fill:var(--{accent})" '
+                    f'<rect class="chart-bar chart-draw-v" data-idx="{i}" style="fill:var(--{accent})" '
                     f'x="{bx:.1f}" y="{by1:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
                     f'data-final-h="{h:.1f}" data-final-y="{by1:.1f}">{_title(s["name"] + " · " + str(c), v, unit)}</rect>'
                 )
@@ -190,7 +221,7 @@ def chart_bars(chart, stacked=False):
                     top = yv(0)
                     h = max(0.5, yv(v) - yv(0))
                 parts.append(
-                    f'<rect class="chart-bar chart-draw-v" tabindex="0" style="fill:var(--{accent})" '
+                    f'<rect class="chart-bar chart-draw-v" data-idx="{i}" style="fill:var(--{accent})" '
                     f'x="{bx:.1f}" y="{top:.1f}" width="{bar_w:.1f}" height="{h:.1f}" '
                     f'data-final-h="{h:.1f}" data-final-y="{top:.1f}">{_title(str(c), v, unit)}</rect>'
                 )
@@ -207,9 +238,13 @@ def chart_bars(chart, stacked=False):
             )
         legend = f'<div class="chart-legend">{"".join(items)}</div>'
 
+    parts.append(_hitzone(x0, y1 - 6, x1 - x0, y0 - y1 + 6))
+
     svg = (
         f'<svg class="chart chart--bars" viewBox="0 0 {W} {H}" role="img" '
-        f'aria-label="{esc(chart.get("title",""))}">'
+        f'aria-label="{esc(chart.get("title",""))}" '
+        f'data-orient="x" data-x0="{x0}" data-step="{group_w:.2f}" data-n="{n}" '
+        f'data-plot-top="{y1}" data-plot-bottom="{y0}">'
         + "".join(parts) + "".join(labels_x) +
         '</svg>'
     )
@@ -248,7 +283,7 @@ def chart_hbars(chart):
         highlight = " chart-hbar--on" if chart.get("highlight") == c else ""
         parts.append(f'<text class="chart-axis chart-axis--row" x="{x0 - 12}" y="{y + row_h*0.64:.1f}" text-anchor="end">{esc(c)}</text>')
         parts.append(
-            f'<rect class="chart-bar chart-draw-h{highlight}" tabindex="0" style="fill:var(--{accent})" '
+            f'<rect class="chart-bar chart-draw-h{highlight}" data-idx="{i}" style="fill:var(--{accent})" '
             f'x="{bx:.1f}" y="{y + 5}" width="{max(bw,1.2):.1f}" height="{row_h - 11}" '
             f'data-final-w="{bw:.1f}" data-dir="{"l" if v < 0 else "r"}">{_title(c, v, unit)}</rect>'
         )
@@ -268,9 +303,13 @@ def chart_hbars(chart):
             val_text += f'<tspan class="chart-val__sub"> · {esc(series2.get("shortLabel", series2.get("name","")))} {sign2}{_fmt(v2)}</tspan>'
         parts.append(f'<text class="chart-val" x="{val_x:.1f}" y="{y + row_h*0.64:.1f}" text-anchor="{val_anchor}">{val_text}</text>')
 
+    parts.append(_hitzone(0, PAD_T, W, n * row_h))
+
     svg = (
         f'<svg class="chart chart--hbars" viewBox="0 0 {W} {height}" role="img" '
-        f'aria-label="{esc(chart.get("title",""))}">'
+        f'aria-label="{esc(chart.get("title",""))}" '
+        f'data-orient="y" data-y0="{PAD_T}" data-step="{row_h}" data-n="{n}" '
+        f'data-plot-left="0" data-plot-right="{W}">'
         + "".join(parts) +
         '</svg>'
     )
@@ -305,7 +344,7 @@ def chart_diverging(chart):
             by = y + 8 + si * bar_h
             bx = x_mid - bw if v < 0 else x_mid
             parts.append(
-                f'<rect class="chart-bar chart-draw-h" tabindex="0" style="fill:var(--{accent})" '
+                f'<rect class="chart-bar chart-draw-h" data-idx="{i}" style="fill:var(--{accent})" '
                 f'x="{bx:.1f}" y="{by:.1f}" width="{bw:.1f}" height="{bar_h - 4:.1f}" '
                 f'data-final-w="{bw:.1f}" data-dir="{"l" if v < 0 else "r"}" data-mid="{x_mid}">'
                 f'{_title(s["name"] + " · " + str(c), v, unit)}</rect>'
@@ -320,9 +359,13 @@ def chart_diverging(chart):
         items = [f'<span class="chart-legend__item"><i style="background:var(--{s.get("accent","orange")})"></i>{esc(s["name"])}</span>' for s in series]
         legend = f'<div class="chart-legend">{"".join(items)}</div>'
 
+    parts.append(_hitzone(x_left, PAD_T, x_right - x_left, n * row_h))
+
     svg = (
         f'<svg class="chart chart--diverging" viewBox="0 0 {W} {height}" role="img" '
-        f'aria-label="{esc(chart.get("title",""))}">'
+        f'aria-label="{esc(chart.get("title",""))}" '
+        f'data-orient="y" data-y0="{PAD_T}" data-step="{row_h}" data-n="{n}" '
+        f'data-plot-left="{x_left}" data-plot-right="{x_right}">'
         + "".join(parts) +
         '</svg>'
     )

@@ -423,7 +423,6 @@ HOME_TPL = """<!doctype html>
       <span class="section-mark__num" aria-hidden="true">01</span>
       <p class="section-mark__eyebrow">En cifras</p>
       <h2 class="section-mark__title" id="titulo-cifras">El escenario en diez datos</h2>
-      <p class="section-mark__lead">Lo esencial de la Programación Macroeconómica 2026-2030 del Banco Central.</p>
     </header>
 
     {stats_hero}
