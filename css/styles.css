@@ -273,6 +273,13 @@ p { margin: 0; }
 /* ============================================================
    Datos de interés — 4 + banner destacado
    ============================================================ */
+/* El número de columnas lo decide Python según cuántos facts hay de
+   verdad (facts_grid_html en tools/build.py agrega .facts-grid--N) — con
+   1-3 items ya no quedan columnas vacías desperdiciando espacio (bug
+   reportado en el bloque de Panorama, que tenía solo 2 facts en una
+   grilla de 4). Se probó repeat(auto-fit, minmax(...)) pero el motor de
+   este proyecto lo colapsaba a una sola columna pese a haber espacio de
+   sobra — de ahí el enfoque explícito. */
 .facts-grid {
   display: grid;
   gap: var(--s-3);
@@ -281,10 +288,18 @@ p { margin: 0; }
 @media (max-width: 1024px) { .facts-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px)  { .facts-grid { grid-template-columns: 1fr; } }
 
-.facts-grid--3 { grid-template-columns: repeat(3, 1fr); }
-@media (max-width: 860px) { .facts-grid--3 { grid-template-columns: 1fr; } }
+.facts-grid--1 { grid-template-columns: minmax(0, 320px); }
+.facts-grid--2 { grid-template-columns: repeat(2, minmax(0, 320px)); }
+.facts-grid--3 { grid-template-columns: repeat(3, minmax(0, 320px)); }
+@media (max-width: 560px) {
+  .facts-grid--1, .facts-grid--2, .facts-grid--3 { grid-template-columns: 1fr; }
+}
 
 .fact {
+  /* min-width:0 anula el mínimo automático por contenido de los grid
+     items — sin esto, el auto-fit de .facts-grid subestimaba cuántas
+     columnas entraban y colapsaba a una sola. */
+  min-width: 0;
   background: var(--t-08);
   border: 1px solid var(--t-10);
   border-radius: var(--r);
@@ -1495,14 +1510,14 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .detail-drawer__close:hover { background: var(--t-15); }
 .detail-drawer__body .roadmap { margin-top: 0; }
 .detail-drawer__body .fact-section { margin-bottom: clamp(2rem, 5vw, 3rem); }
-/* El panel es angosto (680px) a cualquier ancho de viewport — las reglas
-   responsive de .facts-grid/.stats-hero-row reaccionan al viewport, no al
-   contenedor, así que acá se fuerzan menos columnas siempre. */
-.detail-drawer__body .facts-grid,
-.detail-drawer__body .facts-grid--3 { grid-template-columns: repeat(2, 1fr); }
+/* El panel es angosto (680px) a cualquier ancho de viewport — la media
+   query de .facts-grid (sin modificador --N, o sea 4+ facts) reacciona al
+   viewport, no al contenedor, así que acá se fuerzan 2 columnas siempre.
+   Las variantes --1/--2/--3 no necesitan esto: usan minmax(0, 320px), que
+   ya se achica solo dentro de un contenedor angosto. */
+.detail-drawer__body .facts-grid { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 560px) {
-  .detail-drawer__body .facts-grid,
-  .detail-drawer__body .facts-grid--3 { grid-template-columns: 1fr; }
+  .detail-drawer__body .facts-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .detail-drawer { width: 100vw; }

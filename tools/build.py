@@ -121,7 +121,13 @@ def facts_grid_html(facts, highlight=None):
             f'        </div>\n'
             f'      </div>'
         )
-    return '<div class="facts-grid reveal">\n' + "\n".join(items) + "\n    </div>"
+    # El número de columnas se decide acá según cuántos facts hay de
+    # verdad — con un ancho de columna fijo por CSS (repeat(N, 1fr) con N
+    # chico), 1-3 facts ya no dejan columnas vacías desperdiciando espacio
+    # (bug reportado: el bloque de Panorama con 2 facts en una grilla de 4).
+    n = len(facts or [])
+    mod = f" facts-grid--{n}" if 1 <= n <= 3 else ""
+    return f'<div class="facts-grid{mod} reveal">\n' + "\n".join(items) + "\n    </div>"
 
 
 def stats_list_html(rows):
