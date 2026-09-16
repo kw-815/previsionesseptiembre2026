@@ -487,6 +487,7 @@ HOME_TPL = """<!doctype html>
   <div class="wrap">
     <header class="section-mark">
       <h2 class="section-mark__title" id="titulo-cifras">El escenario en diez datos</h2>
+      <p class="section-mark__lead">{cifras_lead}</p>
     </header>
 
     {stats_hero}
@@ -552,6 +553,7 @@ def build_home():
         title=esc(data["title"]), meta_desc=esc(data["meta_desc"]),
         font=FONT_LINKS, product=PRODUCT_TITLE,
         subtitle=rich(data["subtitle"]),
+        cifras_lead=rich(data["cifras_lead"]),
         stats_hero=stats_hero_html(data["stats_hero"]),
         stats_list=stats_list_html(data["stats_list"]),
         intro_title=esc(data["intro_nav"]["title"]),

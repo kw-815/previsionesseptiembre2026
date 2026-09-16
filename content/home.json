@@ -2,18 +2,19 @@
   "title": "Banco Central eleva al 2,7% previsión de crecimiento para 2026",
   "subtitle": "Y proyecta un promedio de 2,5% anual entre 2027 y 2030, sostenido por el consumo de los hogares y la inversión.",
   "meta_desc": "Lectura empresarial de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador: crecimiento, riesgos y el primer impacto cuantificado del Fenómeno de El Niño.",
+  "cifras_lead": "El año fiscal 2026 todavía no termina: las cifras de 2026 en adelante son la previsión del Banco Central, no un resultado ya cerrado. Donde citamos 2025, ese sí es un dato observado.",
   "stats_hero": [
-    { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "Revisado al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica." },
-    { "label": "Promedio 2027-2030", "figure": "2,5", "unit": "%", "note": "Crecimiento sostenido por demanda interna, con un pico de <strong>2,8%</strong> en 2028." },
-    { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "Equivale a <strong>3,4% del PIB</strong> — cae desde <strong>USD 7.632M</strong> en 2025 (-39,9%)." }
+    { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "Previsión del Banco Central para el crecimiento del PIB en 2026, revisada al alza desde <strong>2,5%</strong> con la información más reciente de actividad económica." },
+    { "label": "Promedio 2027-2030", "figure": "2,5", "unit": "%", "note": "Crecimiento promedio que proyecta el Banco Central para ese período, con un pico de <strong>2,8%</strong> en 2028." },
+    { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "Superávit que el Banco Central proyecta para el cierre de 2026 (equivalente a <strong>3,4% del PIB</strong>). En 2025, el superávit ya cerrado fue de <strong>USD 7.632M</strong> — una caída del 39,9%." }
   ],
   "stats_list": [
-    { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "El motor más estable del crecimiento en 2026, apoyado en remesas y crédito de consumo." },
-    { "key": "Inversión (FBKF)", "val": "+5,8%", "ctx": "El componente más dinámico del año — construcción, vivienda y obra pública." },
-    { "key": "Remesas", "val": "USD 8.020M", "ctx": "+3,8% en 2026; sostienen el consumo y compensan el déficit de servicios." },
-    { "key": "Inflación promedio 2026", "val": "2,1%", "ctx": "Repunta por combustibles y tarifa eléctrica; converge a 0,9% recién en 2030." },
-    { "key": "Crédito al sector privado", "val": "+10,9%", "ctx": "Crece pero se desacelera cada año hasta 6,8% en 2030 — de forma ordenada." },
-    { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Cierre de 2026, en niveles históricamente altos." }
+    { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "Crecimiento que el Banco Central prevé para 2026 frente a 2025 — el motor más estable, apoyado en remesas y crédito de consumo." },
+    { "key": "Inversión (FBKF)", "val": "+5,8%", "ctx": "Crecimiento previsto para 2026 frente a 2025 — el componente más dinámico del año, por construcción, vivienda y obra pública." },
+    { "key": "Remesas", "val": "USD 8.020M", "ctx": "Monto que el Banco Central proyecta recibir en 2026, un 3,8% más que en 2025 — sostienen el consumo y compensan el déficit de servicios." },
+    { "key": "Inflación promedio 2026", "val": "2,1%", "ctx": "Promedio previsto para 2026. Repunta por combustibles y tarifa eléctrica, y no baja de forma sostenida hasta 2030 (0,9%)." },
+    { "key": "Crédito al sector privado", "val": "+10,9%", "ctx": "Crecimiento previsto para 2026 frente a 2025. El ritmo se desacelera cada año de forma ordenada, hasta 6,8% en 2030." },
+    { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Proyección del Banco Central para el cierre de 2026 — de confirmarse, un nivel históricamente alto." }
   ],
   "intro_nav": {
     "title": "Los frentes para entender hacia dónde va la economía"
