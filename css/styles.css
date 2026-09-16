@@ -1382,3 +1382,142 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   .chart-bar { transform: none !important; transition: none !important; }
 }
 
+/* ============================================================
+   HILO ÚNICO DEL HOME (Ronda 7)
+   Cada bloque temático vive en el propio home, con la cifra líder
+   siempre visible y el detalle ampliado detrás de un panel lateral
+   ("Ver más"). Reemplaza la navegación por 7 páginas separadas —
+   ver NOTAS-EDITORIAL.md.
+   ============================================================ */
+
+.narrative-block { scroll-margin-top: 84px; }
+.narrative-block__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.narrative-block__num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.narrative-block .obj-lead { margin-top: var(--s-4); }
+
+/* Botón "Ver más" — abre el panel lateral correspondiente */
+.drawer-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: var(--s-4);
+  padding: 0.85rem 1.5rem;
+  background: var(--t-10);
+  border: 1px solid var(--t-15);
+  border-radius: 999px;
+  color: var(--white);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.drawer-trigger:hover { background: var(--t-15); border-color: var(--t-25); transform: translateY(-1px); }
+.drawer-trigger svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Panel lateral — base 100% CSS (:target) para que abrir/cerrar funcione
+   sin JS; main.js solo suma cierre con Escape y bloqueo de scroll. */
+.detail-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(680px, 100vw);
+  background: var(--indigo-deep);
+  border-left: 1px solid var(--t-15);
+  box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.4s var(--ease), visibility 0s linear 0.4s;
+  overflow-y: auto;
+  z-index: 110;
+}
+.detail-drawer:target {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.4s var(--ease), visibility 0s;
+}
+.detail-drawer__inner { padding-block: clamp(2rem, 5vw, 3rem); }
+.detail-drawer__head {
+  position: relative;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-4);
+  border-bottom: 1px solid var(--t-15);
+}
+.detail-drawer__eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.3rem;
+}
+.detail-drawer__title { font-size: var(--fs-xl); font-weight: 700; color: var(--white); max-width: 85%; }
+.detail-drawer__close {
+  position: absolute;
+  top: -0.4rem;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--t-10);
+  color: var(--white);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: background var(--t-fast) var(--ease);
+}
+.detail-drawer__close:hover { background: var(--t-15); }
+.detail-drawer__body .roadmap { margin-top: 0; }
+.detail-drawer__body .fact-section { margin-bottom: clamp(2rem, 5vw, 3rem); }
+/* El panel es angosto (680px) a cualquier ancho de viewport — las reglas
+   responsive de .facts-grid/.stats-hero-row reaccionan al viewport, no al
+   contenedor, así que acá se fuerzan menos columnas siempre. */
+.detail-drawer__body .facts-grid,
+.detail-drawer__body .facts-grid--3 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 560px) {
+  .detail-drawer__body .facts-grid,
+  .detail-drawer__body .facts-grid--3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .detail-drawer { width: 100vw; }
+}
+
+/* Telón de fondo compartido por todos los paneles — un solo elemento en
+   el DOM; :has() lo enciende cuando cualquier .detail-drawer es :target. */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 20, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease), visibility 0s linear 0.3s;
+  z-index: 105;
+}
+body:has(.detail-drawer:target) .drawer-backdrop {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s var(--ease), visibility 0s;
+}
+body:has(.detail-drawer:target) { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-drawer, .drawer-backdrop { transition: none; }
+}
+

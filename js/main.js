@@ -272,4 +272,44 @@
   }
 
   initChartInteractivity();
+
+  // ---------------------------------------------------------------
+  // 5) Paneles laterales de detalle ("Ver más")
+  // El abrir/cerrar en sí es CSS puro (:target, ver .detail-drawer en
+  // styles.css) — funciona incluso sin JS. Esto solo suma cierre con
+  // Escape y devuelve el foco al botón que abrió el panel, para que la
+  // experiencia con teclado/lector de pantalla sea completa.
+  // ---------------------------------------------------------------
+  function initDrawers() {
+    var triggers = document.querySelectorAll("[data-drawer-open]");
+    if (!triggers.length) return;
+    var lastTrigger = null;
+
+    triggers.forEach(function (t) {
+      t.addEventListener("click", function () { lastTrigger = t; });
+    });
+
+    function openDrawer() {
+      var m = /^#drawer-(.+)/.exec(window.location.hash);
+      return m ? document.getElementById("drawer-" + m[1]) : null;
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      var d = openDrawer();
+      if (!d) return;
+      window.location.hash = "_";
+    });
+
+    window.addEventListener("hashchange", function () {
+      var d = openDrawer();
+      if (d) {
+        d.focus();
+      } else if (lastTrigger) {
+        lastTrigger.focus();
+      }
+    });
+  }
+
+  initDrawers();
 })();

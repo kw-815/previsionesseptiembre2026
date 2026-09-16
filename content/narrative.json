@@ -1,0 +1,239 @@
+[
+  {
+    "num": 1,
+    "id": "panorama",
+    "title": "Panorama y pulso reciente",
+    "headline": {
+      "chart": "pib-trayectoria",
+      "intro": "El Banco Central revisó al alza su previsión de crecimiento para 2026, de <strong>2,5% a 2,7%</strong>, con la información más reciente de actividad económica, y proyecta una expansión promedio de <strong>2,5% anual</strong> para 2027-2030, sostenida por la demanda interna más que por el sector exportador. Los indicadores de corto plazo confirman ese ritmo: el Indicador de Actividad Económica Mensual (IMAEc) creció <strong>2,2% interanual en junio</strong> y la confianza empresarial se mantiene en zona optimista por quinto mes consecutivo.",
+      "facts": [
+        {
+          "label": "PIB 2026",
+          "text": "<strong>USD 136.017 millones</strong> nominales — el PIB real en cadena monetaria llega a USD 120.389 millones, con una tasa de variación de <strong>2,7%</strong>."
+        },
+        {
+          "label": "Quién empuja el crecimiento",
+          "text": "La <strong>demanda interna</strong> aporta 1,5 p.p. de los 2,7 p.p. de 2026; la demanda externa (exportaciones) aporta solo 1,2 p.p. — y esa brecha se amplía hacia 2030."
+        }
+      ],
+      "highlight": {
+        "label": "Comercio exterior 1S2026",
+        "text": "El superávit comercial cayó <strong>43,9%</strong> en el primer semestre, de USD 4.166 millones a USD 2.339 millones, porque las importaciones no petroleras crecieron 11,9% frente a 1,1% de las exportaciones no petroleras."
+      }
+    },
+    "drawer": {
+      "trigger_label": "Ver el detalle completo de panorama y pulso reciente",
+      "sections": [
+        {
+          "eyebrow": "La cifra del año",
+          "title": "Un crecimiento revisado al alza, pero moderado",
+          "lead": "El ajuste de 2,5% a 2,7% no es un cambio de tendencia: es la confirmación de que la economía sostuvo en el primer semestre de 2026 el mismo dinamismo mostrado en 2025 (3,7%). La proyección de mediano plazo se mantiene conservadora.",
+          "facts": [
+            {
+              "label": "2027-2030",
+              "text": "Crecimiento promedio de <strong>2,5% anual</strong>, con un pico de 2,8% en 2028 y una desaceleración gradual hasta 2,2% en 2030."
+            },
+            {
+              "label": "PIB per cápita",
+              "text": "Sube <strong>1,9%</strong> en 2026 hasta USD 6.599, y llegaría a USD 7.054 en 2030 — un crecimiento promedio de apenas 1,7% anual en el mediano plazo."
+            }
+          ]
+        },
+        {
+          "eyebrow": "Los cuatro números que sostienen el escenario",
+          "title": "Consumo, inversión y comercio exterior en 2026",
+          "stats_list": [
+            { "key": "Consumo de hogares", "val": "+3,3%", "ctx": "Acelera frente a 2025 (2,7%), impulsado por remesas y crédito de consumo." },
+            { "key": "Inversión (FBKF)", "val": "+5,8%", "ctx": "El motor más dinámico del año: recuperación de obra pública y construcción privada." },
+            { "key": "Exportaciones", "val": "+3,8%", "ctx": "Se modera frente a 2025 (6,4%) por la corrección en cacao, atún y café." },
+            { "key": "Importaciones", "val": "+6,3%", "ctx": "Crecen más rápido que las exportaciones — la contrapartida natural de una demanda interna más fuerte." }
+          ]
+        },
+        {
+          "eyebrow": "Actividad y expectativas",
+          "title": "La economía sostiene el ritmo mes a mes",
+          "facts": [
+            { "label": "IMAEc (jun-26)", "text": "<strong>+2,2%</strong> interanual, con el componente no petrolero (+2,3%) como principal motor; el acumulado del semestre es +2,0%." },
+            { "label": "Confianza empresarial (IEE)", "text": "<strong>53,2 puntos</strong>, quinto mes en zona de mayor confianza (>50). Construcción lidera con 57,5 puntos; comercio cae a 49,5, zona de menor confianza." },
+            { "label": "Construcción", "text": "Producción de cemento <strong>+11,8%</strong> y despachos +14,0% (ene-jul) — contrasta con la contracción de 2024 (-5,6% y -8,3%) y la recuperación más moderada de 2025 (+5,7% y +7,6%)." },
+            { "label": "Generación eléctrica", "text": "Supera los <strong>3.300 GWh mensuales</strong> en julio, cerca de máximos históricos — normalización tras la crisis energética de 2024." }
+          ]
+        },
+        {
+          "eyebrow": "Crédito y ventas",
+          "title": "Más financiamiento y más facturación",
+          "lead": "Las ventas acumuladas de enero a junio llegaron a USD 137.000 millones (+10,1%), lideradas por comercio, manufactura y servicios — que juntos concentran el 76,2% del total.",
+          "stats_list": [
+            { "key": "Crédito al sector privado", "val": "+10,4%", "ctx": "A julio de 2026, en camino al 10,9% previsto para el cierre del año." },
+            { "key": "Captaciones", "val": "+10,9%", "ctx": "Se desaceleran desde 17,9% (jul-25) — el sistema financiero madura hacia un ritmo más sostenible." },
+            { "key": "Monto de operaciones activas", "val": "+9,9%", "ctx": "Ene-jul 2026, impulsado por consumo (+14,9%), microcrédito (+19,5%) e inmobiliario (+35,4%)." }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "num": 2,
+    "id": "motores-industrias",
+    "title": "Motores del crecimiento y por industria",
+    "headline": {
+      "chart": "exportaciones-producto",
+      "intro": "El crecimiento de mediano plazo descansa en tres motores: el <strong>consumo de los hogares</strong>, la <strong>inversión (FBKF)</strong> y, en menor medida, las <strong>exportaciones no petroleras</strong>. Por industria, la fotografía es desigual: detrás del 2,7% de crecimiento total hay <strong>veinte sectores</strong> que se mueven a ritmos muy distintos — en 2026 la minería lidera con <strong>+6,8%</strong>, mientras que la agricultura, la administración pública y el arte y entretenimiento se contraen.",
+      "stats_list": [
+        { "key": "Consumo de hogares", "val": "+3,3% / +2,8%", "ctx": "2026 y promedio 2027-2030. Sostenido por remesas y crédito de consumo." },
+        { "key": "Inversión (FBKF)", "val": "+5,8% / +2,4%", "ctx": "2026 y promedio 2027-2030. Impulsada por construcción, vivienda y obra pública." },
+        { "key": "Exportaciones", "val": "+3,8% / +1,7%", "ctx": "2026 y promedio 2027-2030. El componente más volátil del escenario." }
+      ]
+    },
+    "drawer": {
+      "trigger_label": "Ver el ranking completo de 20 industrias y el detalle por producto exportado",
+      "photo": {
+        "src": "hero-puerto.webp",
+        "alt": "Vista aérea de contenedores de exportación en un puerto de Guayaquil",
+        "caption": "El comercio exterior no petrolero — minería, camarón, banano — es uno de los canales por los que estas cifras llegan a la economía real. Puerto de Guayaquil."
+      },
+      "sections": [
+        {
+          "eyebrow": "Los extremos del ranking",
+          "title": "Quién crece más y quién se contrae",
+          "lead": "La minería, la electricidad y la construcción encabezan el crecimiento de 2026; la agricultura, la administración pública y el arte y entretenimiento son las únicas industrias en terreno negativo.",
+          "chart": "industrias-crecimiento",
+          "chart_cap": true,
+          "facts": [
+            { "label": "Minería", "icon": "mining", "text": "<strong>+6,8%</strong> en 2026, el mayor crecimiento de las 20 industrias — se modera a +1,1% en 2027." },
+            { "label": "Electricidad y agua", "icon": "bolt", "text": "<strong>+5,8%</strong> en 2026, en línea con la recuperación de la oferta eléctrica tras la crisis de 2024." },
+            { "label": "Construcción", "icon": "construction", "text": "<strong>+4,8%</strong> en 2026 y +3,1% en 2027 — el ritmo más sostenido entre los sectores de mayor peso." },
+            { "label": "Manufactura de alimentos", "icon": "food", "text": "<strong>+4,2%</strong> en 2026 y +3,8% en 2027, la industria con la trayectoria más estable del listado." },
+            { "label": "Arte, entretenimiento y otros servicios", "icon": "art", "text": "<strong>-4,3%</strong> en 2026, la mayor contracción, aunque revierte a +1,8% en 2027." },
+            { "label": "Agricultura, ganadería y silvicultura", "icon": "leaf", "text": "<strong>-2,9%</strong> en 2026, revierte a +2,0% en 2027." }
+          ]
+        },
+        {
+          "eyebrow": "Exportaciones no petroleras",
+          "title": "Minería y camarón arriba, cacao y pesca en corrección",
+          "lead": "Las exportaciones no tradicionales crecen 10,8% en 2026, con la minería como líder absoluto: Fruta del Norte y Mirador explican buena parte del salto. El cacao, en cambio, cae 45,8% en valor por una combinación de fatiga fisiológica en las plantaciones y la corrección de precios internacionales tras dos años atípicamente altos.",
+          "facts": [
+            { "label": "Minería", "text": "<strong>+24,7%</strong> en 2026 (USD 5.192 millones), por precios altos de oro y cobre y mayor producción de Fruta del Norte y Mirador. Fruta del Norte agota reservas en 2027." },
+            { "label": "Camarón", "text": "<strong>+11,5%</strong> en valor para 2026 (+15,4% en volumen), con demanda sostenida de Estados Unidos y China pese a restricciones comerciales puntuales ya superadas." },
+            { "label": "Cacao y elaborados", "text": "<strong>-45,8%</strong> en valor: cae el precio internacional tras el pico de 2024-2025 y la oferta de Ghana y Costa de Marfil vuelve al mercado." },
+            { "label": "Atún, pescado y enlatados", "text": "Caídas de <strong>3,5% a 6,5%</strong> en volumen por costos de producción, transporte y disponibilidad del recurso — con el FEN como riesgo adicional en el segundo semestre." }
+          ]
+        },
+        {
+          "eyebrow": "El contrapeso",
+          "title": "Las importaciones también aceleran",
+          "highlight": {
+            "label": "Importaciones 2026",
+            "text": "Crecen <strong>15,1%</strong> (comercio registrado), lideradas por combustibles y lubricantes (+37,7%, efecto precio), bienes de consumo duraderos (+17,8%) y bienes de capital para industria (+8,0%) — señal de que buena parte del gasto es inversión productiva, no solo consumo."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "num": 3,
+    "id": "sector-externo",
+    "title": "Sector externo",
+    "headline": {
+      "chart": "cuenta-corriente",
+      "intro": "El país sigue recibiendo más dólares de los que gasta con el exterior, pero ese margen se <strong>estrecha año tras año</strong>. La cuenta corriente pasa de un superávit de USD 7.632 millones en 2025 a USD 4.587 millones en 2026 y a USD 3.645 millones en 2030, mientras el petróleo aporta cada vez menos y las remesas sostienen buena parte del ingreso de divisas.",
+      "stats_list": [
+        { "key": "Cuenta corriente 2026", "val": "USD 4.587M", "ctx": "3,4% del PIB — cae 39,9% frente a 2025." },
+        { "key": "Remesas 2026", "val": "USD 8.020M", "ctx": "+3,8% — compensan con holgura el déficit de servicios e ingreso primario." },
+        { "key": "Reservas Internacionales", "val": "USD 11.239M", "ctx": "Proyección para el cierre de 2026, +USD 1.444 millones, sostenidas por flujos del sector privado." }
+      ]
+    },
+    "drawer": {
+      "trigger_label": "Ver el detalle del sector petrolero",
+      "sections": [
+        {
+          "eyebrow": "Petróleo",
+          "title": "Más producción, pero un margen más ajustado",
+          "facts": [
+            { "label": "Precio de exportación del crudo", "text": "<strong>USD 75,3/barril</strong> en 2026 (+28,5%), pero converge a USD 58,2/barril en 2030 conforme se normalizan los precios internacionales." },
+            { "label": "Producción de crudo", "text": "Sube a <strong>168,3 millones de barriles</strong> en 2026 (+4,7%), recuperándose de las disrupciones de 2025 en el OCP y el SOTE." },
+            { "label": "Balanza petrolera", "text": "El superávit <strong>cae de USD 1.104 a USD 834 millones</strong> en 2026: los derivados importados se encarecen 40% y compensan la mejora de los ingresos por exportación de crudo." }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "num": 4,
+    "id": "fiscal-monetario",
+    "title": "Sector fiscal, crédito e inflación",
+    "headline": {
+      "chart": "inflacion-trayectoria",
+      "intro": "La inflación promedio pasa de 0,7% en 2025 a <strong>2,1% en 2026</strong>, empujada por la liberalización gradual de combustibles y la normalización de tarifas eléctricas. El pico llega en 2027 (2,2%) y luego converge hasta 0,9% en 2030. El crédito al sector privado y el resultado fiscal siguen una trayectoria similar de desaceleración y consolidación graduales, sin sobresaltos.",
+      "facts": [
+        { "label": "Inflación 2026", "text": "<strong>2,1%</strong> — 1,4 p.p. más que en 2025, por costos de energía y combustibles." },
+        { "label": "Pico en 2027", "text": "<strong>2,2%</strong>, antes de iniciar una convergencia sostenida hacia 0,9% en 2030." }
+      ],
+      "highlight": {
+        "label": "Mecanismos de compensación",
+        "text": "Tras la eliminación del subsidio al diésel en septiembre de 2025 (Decreto Ejecutivo 378), el Gobierno implementó mecanismos de compensación dirigidos específicamente al sector de transporte comercial, uno de los más expuestos al ajuste de precios. El Banco Central asume en su escenario que estas medidas tienen un carácter <strong>temporal, con una duración de 8 meses</strong>, y no las proyecta como una política permanente — un supuesto que incide directamente en la trayectoria de inflación estimada para 2026 y 2027."
+      }
+    },
+    "drawer": {
+      "trigger_label": "Ver el detalle de crédito, captaciones e inversión pública",
+      "sections": [
+        {
+          "eyebrow": "Crédito y sector fiscal",
+          "title": "Desaceleración ordenada, consolidación gradual",
+          "chart": "credito-captaciones",
+          "chart_compact": true,
+          "stats_list": [
+            { "key": "Crédito privado 2026 → 2030", "val": "10,9% → 6,8%", "ctx": "Desaceleración progresiva; el crédito al PIB sube de 60,8% a 70,7% — más profundidad financiera, no menos." },
+            { "key": "Captaciones 2026 → 2030", "val": "11,5% → 7,0%", "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema." },
+            { "key": "Inversión pública 2026", "val": "USD 2.747M", "ctx": "+20,9% frente a 2025, con foco en educación, salud y seguridad — llega a USD 3.828M en 2030." }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "num": 5,
+    "id": "el-nino",
+    "title": "Fenómeno de El Niño",
+    "headline": {
+      "chart": "fen-impacto",
+      "intro": "El Banco Central <strong>cuantifica</strong> el impacto potencial del Fenómeno de El Niño. Bajo un escenario <strong>moderado</strong>, el crecimiento del PIB en 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>. Es el riesgo más noticioso de esta actualización.",
+      "facts": [
+        { "label": "Ventana de mayor riesgo", "text": "El BCE ubica los mayores impactos del FEN entre <strong>finales de 2026 y principios de 2027</strong>, con efectos sobre la actividad productiva concentrados en 2027." }
+      ]
+    },
+    "drawer": {
+      "trigger_label": "Ver el detalle del impacto en inflación y exportaciones",
+      "sections": [
+        {
+          "eyebrow": "Cómo se construyó la estimación",
+          "title": "De la temperatura del océano a la economía real",
+          "lead": "El Niño tiene dos componentes: uno oceánico (ENOS, región Niño 3.4) y uno costero (región Niño 1+2, frente a las costas de Ecuador y Perú). El BCE combinó trayectorias históricas de eventos moderados y fuertes con modelos econométricos para estimar primero el efecto sobre exportaciones no petroleras e inflación, y luego su transmisión al PIB mediante el IPMEC, el mismo instrumento de simulación que usa para el escenario base.",
+          "facts": [
+            { "label": "Un ejercicio parcial", "text": "El propio Banco Central advierte que la estimación <strong>no cubre todos los canales</strong> posibles de afectación — es una aproximación de magnitud, no una previsión exacta." }
+          ]
+        },
+        {
+          "eyebrow": "El impacto en inflación",
+          "title": "Los alimentos absorben la mayor parte del golpe",
+          "stats_list": [
+            { "key": "Inflación de alimentos — moderado", "val": "+0,48 p.p.", "ctx": "En los 12 meses posteriores al evento, sobre el escenario base." },
+            { "key": "Inflación de alimentos — fuerte", "val": "+1,34 p.p.", "ctx": "Casi el triple del escenario moderado — el efecto no es lineal." },
+            { "key": "Inflación general", "val": "+0,11 a +0,30 p.p.", "ctx": "El canal directo vía alimentos es limitado; no incorpora efectos sobre transporte, logística o servicios." }
+          ]
+        },
+        {
+          "eyebrow": "El impacto en exportaciones",
+          "title": "Los productos costeros, los más expuestos",
+          "lead": "En un escenario fuerte, las exportaciones no petroleras caerían 3,0 p.p. sobre el escenario base de 2027 — con el cacao en grano (-1,2 p.p.) y los enlatados de pescado (-0,7 p.p.) como los rubros más golpeados.",
+          "facts": [
+            { "label": "Cacao en grano", "text": "-0,4 p.p. (moderado) / <strong>-1,2 p.p. (fuerte)</strong> — el producto más sensible del listado." },
+            { "label": "Enlatados de pescado", "text": "-0,3 p.p. (moderado) / <strong>-0,7 p.p. (fuerte)</strong>." },
+            { "label": "Banano", "text": "-0,2 p.p. (moderado) / -0,5 p.p. (fuerte)." },
+            { "label": "Camarón procesado", "text": "-0,1 p.p. (moderado) / -0,3 p.p. (fuerte) — el más resiliente del grupo." }
+          ]
+        }
+      ]
+    }
+  }
+]

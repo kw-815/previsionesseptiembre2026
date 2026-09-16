@@ -41,6 +41,18 @@ THEMES = [
 ]
 N = len(THEMES)
 
+# Tarjetas del muro "Los temas" del home — ya no enlazan a una página
+# aparte, saltan por ancla al bloque correspondiente del hilo único
+# (Ronda 7: se eliminó la navegación por pestañas, ver NOTAS-EDITORIAL.md).
+# (num, id, corto, headline_figure, headline_label, card_photo)
+NARRATIVE_CARDS = [
+    (1, "panorama", "Panorama", "2,7%", "PIB 2026", "card-panorama.webp"),
+    (2, "motores-industrias", "Motores e industria", "+6,8%", "Minería lidera en 2026", "card-motores.webp"),
+    (3, "sector-externo", "Sector externo", "USD 4.587M", "Cuenta corriente 2026", "card-externo.webp"),
+    (4, "fiscal-monetario", "Fiscal y monetario", "2,1%", "Inflación 2026", "card-fiscal.webp"),
+    (5, "el-nino", "El Niño", "-1,4 p.p.", "PIB 2027, escenario fuerte", "card-el-nino.webp"),
+]
+
 FONT_LINKS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
     '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n'
@@ -83,6 +95,11 @@ def load(name):
 
 def load_chart(slug):
     with open(os.path.join(CHARTS_DIR, f"{slug}.json"), encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_narrative():
+    with open(os.path.join(CONTENT, "narrative.json"), encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -408,6 +425,101 @@ def obj_cover_html(theme):
   </a>'''
 
 
+def narrative_cover_html(card):
+    """Tarjeta del muro 'Los temas' — misma pieza visual que obj_cover_html,
+    pero el href salta por ancla dentro del propio home en vez de navegar
+    a una página aparte."""
+    num, bid, corto, fig, lab, photo = card
+    photo_html = (
+        f'<div class="obj-cover__photo"><img src="img/{esc(photo)}" alt="" loading="lazy" /></div>'
+        if photo else ""
+    )
+    return f'''  <a class="obj-cover obj-cover--{num} obj-cover--data" href="#{bid}">
+    <div class="obj-cover__top">
+      {photo_html}
+      <span class="obj-cover__num" aria-hidden="true">{num:02d}</span>
+      <p class="obj-cover__title">{esc(corto)}</p>
+      <span class="obj-cover__cta-pill">Ir al bloque {ARROW_SVG}</span>
+    </div>
+    <div class="obj-cover__data">
+      <span class="obj-cover__data-figure">{esc(fig)}</span>
+      <span class="obj-cover__data-label">{esc(lab)}</span>
+    </div>
+  </a>'''
+
+
+def narrative_headline_html(block):
+    """La parte del bloque que siempre está visible en el hilo: cifra +
+    2-3 frases + a lo sumo un gráfico y un puñado de facts/stats. Reusa
+    los mismos renderers que las antiguas páginas de tema — el modelo de
+    datos no cambió, solo qué tan visible es cada parte."""
+    headline = block["headline"]
+    chart_lead = ""
+    lead_solo = ""
+    if headline.get("chart"):
+        chart_lead = charts.render_chart(load_chart(headline["chart"]))
+    else:
+        lead_solo = " obj-lead--solo"
+    extra = []
+    if headline.get("facts") or headline.get("highlight"):
+        extra.append(facts_grid_html(headline.get("facts"), headline.get("highlight")))
+    if headline.get("stats_list"):
+        extra.append(stats_list_html(headline["stats_list"]))
+    extra_html = ("\n\n    " + "\n\n    ".join(extra)) if extra else ""
+    return f'''<div class="obj-lead{lead_solo}">
+      <div class="obj-lead__card reveal">
+        <p class="obj-lead__text">{rich(headline["intro"])}</p>
+      </div>
+      {chart_lead}
+    </div>{extra_html}'''
+
+
+def drawer_html(block):
+    """Panel lateral con el detalle completo del bloque — mismo contenido
+    que antes vivía en la página aparte del tema, ahora detrás de un
+    'Ver más'. Base funcional en CSS puro (:target, ver .detail-drawer en
+    styles.css) para que abrir/cerrar funcione incluso sin JS; main.js
+    solo suma cierre con Escape y el bloqueo de scroll del body."""
+    drawer = block["drawer"]
+    bid = block["id"]
+    sections_html = "\n\n".join(section_html(s) for s in drawer["sections"])
+    photo = photo_html(drawer.get("photo"))
+    body = (photo + "\n\n    " if photo else "") + '<div class="roadmap">\n' + sections_html + '\n    </div>'
+    return f'''<div class="detail-drawer" id="drawer-{bid}" role="dialog" aria-modal="true" aria-labelledby="drawer-{bid}-title" tabindex="-1">
+  <div class="wrap detail-drawer__inner">
+    <div class="detail-drawer__head">
+      <p class="detail-drawer__eyebrow">Detalle completo</p>
+      <p class="detail-drawer__title" id="drawer-{bid}-title">{esc(block["title"])}</p>
+      <a href="#_" class="detail-drawer__close" aria-label="Cerrar detalle">&times;</a>
+    </div>
+    <div class="detail-drawer__body">
+    {body}
+    </div>
+  </div>
+</div>'''
+
+
+def narrative_block_html(block):
+    num = block["num"]
+    bid = block["id"]
+    headline_html = narrative_headline_html(block)
+    trigger_label = esc(block["drawer"]["trigger_label"])
+    return f'''<section class="section narrative-block" id="{bid}" aria-labelledby="titulo-{bid}">
+  <div class="wrap">
+    <header class="section-mark narrative-block__head">
+      <span class="narrative-block__num" style="background:var(--obj-{num})" aria-hidden="true">{num:02d}</span>
+      <h2 class="section-mark__title" id="titulo-{bid}">{esc(block["title"])}</h2>
+    </header>
+
+    {headline_html}
+
+    <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">{trigger_label} {ARROW_SVG}</a>
+  </div>
+</section>
+
+{drawer_html(block)}'''
+
+
 def quote_panel_html(qc):
     """Bloque de cierre con cita presidencial. Tratamiento formal/editorial
     deliberadamente contenido: un retrato pequeño junto al nombre y cargo
@@ -500,6 +612,7 @@ HOME_TPL = """<!doctype html>
   <div class="wrap">
     <header class="section-mark">
       <h2 class="section-mark__title" id="titulo-temas">{intro_title}</h2>
+      <p class="section-mark__lead">Saltá directo a un bloque, o seguí leyendo — el hilo completo continúa más abajo.</p>
     </header>
 
     <div class="objectives__grid reveal">
@@ -507,6 +620,8 @@ HOME_TPL = """<!doctype html>
     </div>
   </div>
 </section>
+
+{narrative_blocks}
 
 <section class="section" id="riesgos" aria-labelledby="titulo-riesgos">
   <div class="wrap">
@@ -538,6 +653,8 @@ HOME_TPL = """<!doctype html>
   </div>
 </footer>
 
+<a href="#_" class="drawer-backdrop" aria-hidden="true" tabindex="-1"></a>
+
 <script src="js/main.js"></script>
 </body>
 </html>
@@ -548,7 +665,9 @@ def build_home():
     data = load("home")
     risks_data = load("riesgos")
     risk = risks_data["sections"][0]["risk_cards"]
-    cards = "\n".join(obj_cover_html(t) for t in THEMES)
+    cards = "\n".join(narrative_cover_html(c) for c in NARRATIVE_CARDS)
+    narrative = load_narrative()
+    narrative_blocks = "\n\n".join(narrative_block_html(b) for b in narrative)
     page = HOME_TPL.format(
         title=esc(data["title"]), meta_desc=esc(data["meta_desc"]),
         font=FONT_LINKS, product=PRODUCT_TITLE,
@@ -558,6 +677,7 @@ def build_home():
         stats_list=stats_list_html(data["stats_list"]),
         intro_title=esc(data["intro_nav"]["title"]),
         cards=cards,
+        narrative_blocks=narrative_blocks,
         risks_title=esc(data["risks"]["title"]),
         risks_lead=rich(data["risks"]["lead"]),
         risk_cards=risk_cards_html(risk),
