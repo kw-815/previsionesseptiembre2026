@@ -89,7 +89,7 @@
           "chart": "credito-captaciones",
           "chart_compact": true,
           "stats_list": [
-            { "key": "Crédito privado 2026 → 2030", "val": "10,9% → 6,8%", "ctx": "Desaceleración progresiva; el crédito al PIB sube de 60,8% a 70,7% — más profundidad financiera, no menos." },
+            { "key": "Profundidad financiera (crédito/PIB)", "val": "60,8% → 70,7%", "ctx": "Aunque el crédito privado crece cada año más despacio (10,9% en 2026, 6,8% en 2030), gana peso frente al tamaño de la economía." },
             { "key": "Captaciones 2026 → 2030", "val": "11,5% → 7,0%", "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema." },
             { "key": "Inversión pública 2026", "val": "USD 2.747M", "ctx": "+20,9% frente a 2025, con foco en educación, salud y seguridad — llega a USD 3.828M en 2030." }
           ]
@@ -107,7 +107,7 @@
     },
     "headline": {
       "chart": "industrias-crecimiento",
-      "intro": "Detrás del 2,7% de crecimiento total hay <strong>veinte industrias</strong> que se mueven a ritmos muy distintos. En 2026, la minería lidera con <strong>+6,8%</strong>, seguida de la electricidad y agua (+5,8%) y la construcción (+4,8%); la agricultura, la administración pública y el arte y entretenimiento son las únicas industrias en terreno negativo.",
+      "intro": "Detrás del 2,7% de crecimiento total hay <strong>veinte industrias</strong> que se mueven a ritmos muy distintos: minería, electricidad y agua, y construcción lideran en 2026, mientras que la agricultura, la administración pública y el arte y entretenimiento son las únicas en terreno negativo.",
       "facts": [
         { "label": "Minería", "icon": "mining", "text": "<strong>+6,8%</strong> en 2026, el mayor crecimiento de las 20 industrias — se modera a +1,1% en 2027." },
         { "label": "Electricidad y agua", "icon": "bolt", "text": "<strong>+5,8%</strong> en 2026, en línea con la recuperación de la oferta eléctrica tras la crisis de 2024." },
@@ -152,7 +152,7 @@
     },
     "headline": {
       "chart": "fen-impacto",
-      "intro": "El Banco Central identifica <strong>nueve factores</strong> que podrían desviar el crecimiento de su escenario base: <strong>tres</strong> al alza y <strong>seis</strong> a la baja, con más peso hacia la baja. El más noticioso de esta actualización es climático: bajo un escenario <strong>moderado</strong> del Fenómeno de El Niño, el PIB de 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>.",
+      "intro": "El Banco Central identifica <strong>nueve factores</strong> que podrían desviar el crecimiento de su escenario base: <strong>tres</strong> al alza y <strong>seis</strong> a la baja, con más peso hacia la baja. Además, cuantifica por primera vez un riesgo climático: bajo un escenario <strong>moderado</strong> del Fenómeno de El Niño, el PIB de 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>.",
       "highlight": {
         "label": "Ventana de mayor riesgo (El Niño)",
         "text": "El BCE ubica los mayores impactos entre <strong>finales de 2026 y principios de 2027</strong>, con efectos sobre la actividad productiva concentrados en 2027."
