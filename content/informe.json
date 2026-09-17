@@ -9,14 +9,15 @@
     },
     "headline": {
       "chart": "pib-trayectoria",
-      "intro": "El Banco Central revisó al alza su previsión de crecimiento para 2026, con la información más reciente de actividad económica, y proyecta una expansión sostenida para 2027-2030 apoyada más en la demanda interna que en el sector exportador. El ajuste no marca un cambio de tendencia: confirma que la economía sostuvo en el primer semestre el mismo dinamismo que mostró en 2025, cuando el PIB creció 3,7%.",
+      "intro": "El Banco Central revisó al alza su previsión de crecimiento para 2026, con la información más reciente de actividad económica, y proyecta una expansión sostenida para 2027-2030 apoyada más en la demanda interna que en el sector exportador.",
+      "intro_note": "El ajuste no marca un cambio de tendencia: confirma que la economía sostuvo en el primer semestre el mismo dinamismo que mostró en 2025, cuando el PIB creció 3,7%.",
       "stats_hero": [
         { "label": "PIB 2026", "figure": "2,7", "unit": "%", "note": "PIB nominal de <strong>USD 136.017 millones</strong>; en cadena monetaria (real), USD 120.389 millones." },
         { "label": "Promedio 2027-2030", "figure": "2,5", "unit": "%", "note": "Con un pico de 2,8% en 2028 y una desaceleración gradual hasta 2,2% en 2030." },
         { "label": "PIB per cápita 2026", "figure": "6.599", "unit": "USD", "note": "+1,9% frente a 2025; llegaría a USD 7.054 en 2030 — un crecimiento promedio de apenas 1,7% anual." }
       ],
       "facts": [
-        { "label": "Quién empuja el crecimiento", "text": "La <strong>demanda interna</strong> aporta 1,5 p.p. de los 2,7 p.p. de 2026; la demanda externa (exportaciones) aporta solo 1,2 p.p., y esa brecha se amplía hacia 2030." }
+        { "label": "Quién empuja el crecimiento", "text": "La <strong>demanda interna</strong> aporta 1,5 puntos porcentuales del crecimiento de 2026; la demanda externa (exportaciones) aporta solo 1,2 puntos, y esa brecha se amplía hacia 2030." }
       ],
       "highlight": {
         "label": "Comercio exterior 1S2026",
@@ -24,13 +25,15 @@
       }
     },
     "drawer": {
-      "trigger_label": "Ver el detalle completo de cifras y actividad reciente",
+      "trigger_label": "Ver los indicadores que respaldan la cifra",
+      "title": "Los indicadores detrás de la cifra",
+      "lead": "Estos son los datos mensuales que muestran que la economía ya sostiene ese ritmo hoy, no solo la proyección hacia adelante.",
       "sections": [
         {
           "eyebrow": "Actividad y expectativas",
           "title": "La economía sostiene el ritmo mes a mes",
           "facts": [
-            { "label": "IMAEc (jun-26)", "text": "<strong>+2,2%</strong> interanual, con el componente no petrolero (+2,3%) como principal motor; el acumulado del semestre es +2,0%." },
+            { "label": "IMAEc", "text": "El <strong>Indicador de Actividad Económica Mensual</strong> del Banco Central creció <strong>+2,2%</strong> interanual en junio, con el componente no petrolero (+2,3%) como principal motor; el acumulado del semestre es +2,0%." },
             { "label": "Confianza empresarial (IEE)", "text": "<strong>53,2 puntos</strong>, quinto mes en zona de mayor confianza (>50). Construcción lidera con 57,5 puntos; comercio cae a 49,5, zona de menor confianza." },
             { "label": "Construcción", "text": "Producción de cemento <strong>+11,8%</strong> y despachos +14,0% (ene-jul) — contrasta con la contracción de 2024 (-5,6% y -8,3%) y la recuperación más moderada de 2025 (+5,7% y +7,6%)." },
             { "label": "Generación eléctrica", "text": "Supera los <strong>3.300 GWh mensuales</strong> en julio, cerca de máximos históricos — normalización tras la crisis energética de 2024." }
@@ -60,19 +63,22 @@
     "headline": {
       "chart": "cuenta-corriente",
       "intro": "El crecimiento de mediano plazo descansa en tres motores: el <strong>consumo de los hogares</strong>, la <strong>inversión (FBKF)</strong> y, en menor medida, las <strong>exportaciones no petroleras</strong>. El crédito privado y el resultado fiscal acompañan con una desaceleración y consolidación graduales, sin sobresaltos.",
-      "stats_hero": [
-        { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "3,4% del PIB — cae 39,9% frente a 2025 (USD 7.632M)." },
-        { "label": "Inflación 2026", "figure": "2,1", "unit": "%", "note": "Pico de 2,2% en 2027, antes de converger a 0,9% en 2030." },
-        { "label": "Crédito al sector privado", "figure": "10,9", "unit": "%", "note": "Crecimiento previsto para 2026; se desacelera de forma ordenada hasta 6,8% en 2030." }
-      ],
+      "stats_list_top": true,
       "stats_list": [
         { "key": "Consumo de hogares", "val": "+3,3% / +2,8%", "ctx": "2026 y promedio 2027-2030. Sostenido por remesas y crédito de consumo." },
         { "key": "Inversión (FBKF)", "val": "+5,8% / +2,4%", "ctx": "2026 y promedio 2027-2030. Impulsada por construcción, vivienda y obra pública." },
         { "key": "Exportaciones", "val": "+3,8% / +1,7%", "ctx": "2026 y promedio 2027-2030. El componente más volátil del escenario." }
+      ],
+      "stats_hero": [
+        { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "3,4% del PIB — cae 39,9% frente a 2025 (USD 7.632M)." },
+        { "label": "Inflación 2026", "figure": "2,1", "unit": "%", "note": "Pico de 2,2% en 2027, antes de converger a 0,9% en 2030." },
+        { "label": "Crédito al sector privado", "figure": "10,9", "unit": "%", "note": "Crecimiento previsto para 2026; se desacelera de forma ordenada hasta 6,8% en 2030." }
       ]
     },
     "drawer": {
       "trigger_label": "Ver el detalle de petróleo, crédito y sector fiscal",
+      "title": "El resto del panorama: petróleo, crédito y fiscal",
+      "lead": "Además de los tres motores de la demanda, el petróleo y las condiciones de crédito y fiscales completan el panorama de 2026-2030.",
       "sections": [
         {
           "eyebrow": "Petróleo",
@@ -107,7 +113,7 @@
     },
     "headline": {
       "chart": "industrias-crecimiento",
-      "intro": "Detrás del 2,7% de crecimiento total hay <strong>veinte industrias</strong> que se mueven a ritmos muy distintos: minería, electricidad y agua, y construcción lideran en 2026, mientras que la agricultura, la administración pública y el arte y entretenimiento son las únicas en terreno negativo.",
+      "intro": "El crecimiento de 2026 combina <strong>veinte industrias</strong> que avanzan a ritmos muy distintos: minería, electricidad y agua, y construcción lideran, mientras que la agricultura, la administración pública y el arte y entretenimiento son las únicas en terreno negativo.",
       "facts": [
         { "label": "Minería", "icon": "mining", "text": "<strong>+6,8%</strong> en 2026, el mayor crecimiento de las 20 industrias — se modera a +1,1% en 2027." },
         { "label": "Electricidad y agua", "icon": "bolt", "text": "<strong>+5,8%</strong> en 2026, en línea con la recuperación de la oferta eléctrica tras la crisis de 2024." },
@@ -119,6 +125,8 @@
     },
     "drawer": {
       "trigger_label": "Ver el detalle de exportaciones no petroleras e importaciones",
+      "title": "El comercio exterior que sostiene al ranking",
+      "lead": "El ranking por industria se apoya en el comercio exterior: así se mueven las exportaciones no petroleras y las importaciones que las acompañan.",
       "sections": [
         {
           "eyebrow": "Exportaciones no petroleras",
@@ -152,7 +160,8 @@
     },
     "headline": {
       "chart": "fen-impacto",
-      "intro": "El Banco Central identifica <strong>nueve factores</strong> que podrían desviar el crecimiento de su escenario base: <strong>tres</strong> al alza y <strong>seis</strong> a la baja, con más peso hacia la baja. Además, cuantifica por primera vez un riesgo climático: bajo un escenario <strong>moderado</strong> del Fenómeno de El Niño, el PIB de 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>.",
+      "intro": "El Banco Central identifica <strong>nueve factores</strong> que podrían desviar el crecimiento de su escenario base: <strong>tres</strong> al alza y <strong>seis</strong> a la baja.",
+      "intro_note": "Además, cuantifica por primera vez un riesgo climático: bajo un escenario <strong>moderado</strong> del Fenómeno de El Niño, el PIB de 2027 podría reducirse <strong>0,5 puntos porcentuales</strong> frente al escenario base; bajo un escenario <strong>fuerte</strong>, hasta <strong>1,4 puntos</strong>.",
       "highlight": {
         "label": "Ventana de mayor riesgo (El Niño)",
         "text": "El BCE ubica los mayores impactos entre <strong>finales de 2026 y principios de 2027</strong>, con efectos sobre la actividad productiva concentrados en 2027."
@@ -160,6 +169,8 @@
     },
     "drawer": {
       "trigger_label": "Ver el detalle del impacto de El Niño en inflación y exportaciones",
+      "title": "Del clima a la economía: el cálculo de El Niño",
+      "lead": "El ajuste al PIB es solo una parte del riesgo: así se traduce el mismo evento en inflación de alimentos y exportaciones.",
       "sections": [
         {
           "eyebrow": "Cómo se construyó la estimación",

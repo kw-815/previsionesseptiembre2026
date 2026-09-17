@@ -1084,6 +1084,12 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .chart-dot:hover, .chart-dot:focus-visible, .chart-dot.chart-mark--active {
   r: 6.5; filter: brightness(1.3); outline: none;
 }
+/* Punto destacado (p.ej. el 2026 del que habla todo el documento): un halo
+   detrás del punto para que se lea como "la cifra a mirar", no solo otro
+   dato más de la trayectoria. */
+.chart-dot__halo { fill: var(--white); pointer-events: none; }
+.chart-dot--on { stroke: var(--white); stroke-width: 2; }
+.chart-label--on { fill: var(--ink); font-size: 15.5px; }
 
 /* Interactividad: al mover el mouse sobre cualquier punto del área de
    trazado (chart-hitzone), js/main.js ubica la categoría más cercana y
@@ -1216,17 +1222,17 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
 .risk-details__toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.7rem 1.25rem 0.7rem 0.7rem;
   background: var(--t-10);
   border: 1px solid var(--t-15);
   border-radius: 999px;
   font-weight: 700;
   font-size: var(--fs-sm);
   color: var(--white);
-  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
-.risk-details__toggle:hover { background: var(--t-15); border-color: var(--t-25); }
+.risk-details__toggle:hover { background: var(--t-15); border-color: var(--orange); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
 
 /* Agrupa la barra de proporción + el desplegable en una sola tarjeta, para
    que se lean como un componente ("mapa de riesgos") en vez de dos botones
@@ -1249,14 +1255,22 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   border-top: 1px solid var(--t-15);
   background: var(--t-08);
 }
-.risk-summary .risk-details__toggle:hover { background: var(--t-10); }
+.risk-summary .risk-details__toggle:hover { background: var(--t-10); box-shadow: none; }
 .risk-summary .risk-grid { padding: 0 var(--s-4) var(--s-4); }
 @media (max-width: 560px) { .risk-summary .risk-grid { padding: 0 var(--s-3) var(--s-3); } }
 .risk-details__chevron {
   display: inline-flex;
-  transition: transform var(--t-fast) var(--ease);
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--t-10);
+  color: var(--white);
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 .risk-details__chevron svg { width: 16px; height: 16px; }
+.risk-details__toggle:hover .risk-details__chevron { background: var(--orange); color: var(--indigo-deep); }
 
 /* Apertura animada del <details> — nativo, sin JS. Antes abría/cerraba de
    golpe (el único componente del sitio sin transición), destacando por lo
@@ -1357,14 +1371,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   filter: grayscale(55%) contrast(1.03);
   border: 1px solid var(--t-15);
 }
-.quote-panel__eyebrow {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 0.15rem;
-}
 .quote-panel__name { font-size: var(--fs-base); font-weight: 700; color: var(--white); line-height: 1.2; }
 .quote-panel__role { font-size: var(--fs-xs); color: var(--t-60); line-height: 1.3; }
 .quote-panel__intro { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.6; margin-bottom: var(--s-3); }
@@ -1379,25 +1385,6 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   color: var(--white);
 }
 .quote-panel__text { font-size: var(--fs-sm); color: var(--t-75); line-height: 1.6; }
-.quote-panel__credit {
-  margin-top: var(--s-3);
-  padding-top: var(--s-2);
-  border-top: 1px solid var(--t-10);
-  font-size: var(--fs-xs);
-  color: var(--t-40);
-}
-
-/* Nota final "sobre este reporte" */
-.about-note {
-  max-width: 74ch;
-  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
-  padding-top: var(--s-5);
-  border-top: 1px solid var(--t-15);
-  font-size: var(--fs-sm);
-  color: var(--t-60);
-  line-height: 1.65;
-  text-align: center;
-}
 
 /* =============================================================
    Scroll-reveal + reduced motion
@@ -1494,24 +1481,46 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
    pesado al lado de la tarjeta compacta del gráfico. */
 .narrative-block .obj-lead__text { font-size: var(--fs-md); }
 
-/* Botón "Ver más" — abre el panel lateral correspondiente */
+/* Botón "Ver más" — abre el panel lateral correspondiente. Ícono en una
+   insignia circular de color (no el trazo suelto de antes) para que el
+   chip se lea como una acción con peso propio, no como un link discreto
+   más — invita a hacer clic sin dejar de ser un componente formal. */
 .drawer-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
   margin-top: var(--s-4);
-  padding: 0.85rem 1.5rem;
-  background: var(--t-10);
+  padding: 0.6rem 1.4rem 0.6rem 0.6rem;
+  background: var(--t-08);
   border: 1px solid var(--t-15);
   border-radius: 999px;
   color: var(--white);
   font-weight: 700;
   font-size: var(--fs-sm);
   text-decoration: none;
-  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+              transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
-.drawer-trigger:hover { background: var(--t-15); border-color: var(--t-25); transform: translateY(-1px); }
-.drawer-trigger svg { width: 15px; height: 15px; flex-shrink: 0; }
+.drawer-trigger:hover {
+  background: var(--t-15);
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+}
+.drawer-trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--indigo-deep);
+  flex-shrink: 0;
+  transition: transform var(--t-fast) var(--ease);
+}
+.drawer-trigger:hover .drawer-trigger__icon { transform: translateX(3px); }
+.drawer-trigger__icon svg { width: 15px; height: 15px; }
 
 /* Panel lateral — base 100% CSS (:target) para que abrir/cerrar funcione
    sin JS; main.js solo suma cierre con Escape y bloqueo de scroll. */
@@ -1548,18 +1557,21 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   border-bottom: 1px solid var(--t-15);
 }
 .detail-drawer__eyebrow,
-.detail-drawer__title {
+.detail-drawer__title,
+.detail-drawer__lead {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 420ms var(--ease), transform 420ms var(--ease);
   transition-delay: 120ms;
 }
 .detail-drawer:target .detail-drawer__eyebrow,
-.detail-drawer:target .detail-drawer__title {
+.detail-drawer:target .detail-drawer__title,
+.detail-drawer:target .detail-drawer__lead {
   opacity: 1;
   transform: none;
 }
 .detail-drawer:target .detail-drawer__title { transition-delay: 180ms; }
+.detail-drawer:target .detail-drawer__lead { transition-delay: 240ms; }
 .detail-drawer__eyebrow {
   font-size: var(--fs-xs);
   font-weight: 700;
@@ -1569,6 +1581,15 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   margin-bottom: 0.3rem;
 }
 .detail-drawer__title { font-size: var(--fs-xl); font-weight: 700; color: var(--white); max-width: 85%; }
+/* Frase puente: retoma la afirmación del capítulo antes del detalle, para
+   que el panel se sienta continuación de la misma historia. */
+.detail-drawer__lead {
+  margin-top: var(--s-3);
+  max-width: 52ch;
+  font-size: var(--fs-sm);
+  color: var(--t-75);
+  line-height: 1.6;
+}
 .detail-drawer__close {
   position: absolute;
   top: -0.4rem;
@@ -1677,7 +1698,7 @@ body:has(.detail-drawer:target) { overflow: hidden; }
   gap: var(--s-3);
   height: 64px;
 }
-.masthead__logo { height: 22px; width: auto; }
+.masthead__logo { height: 30px; width: auto; }
 
 .chapter-rail ol {
   display: flex;
@@ -1731,7 +1752,7 @@ body:has(.detail-drawer:target) { overflow: hidden; }
 }
 @media (max-width: 480px) {
   .masthead__inner { height: 54px; }
-  .masthead__logo { height: 18px; }
+  .masthead__logo { height: 24px; }
   .chapter-rail .dot { width: 21px; height: 21px; font-size: 0.62rem; }
 }
 
@@ -1905,6 +1926,33 @@ body:has(.detail-drawer:target) { overflow: hidden; }
   margin-bottom: clamp(2rem, 5vw, 3rem);
 }
 .chapter__body .lead strong { color: var(--indigo); }
+
+/* Frase destacada que se separa del párrafo principal — le da ritmo visual
+   a un bloque de texto que si no se leería todo parejo, sin llegar a ser
+   una lista de viñetas genérica. */
+.chapter__body .lead:has(+ .lead-note) { margin-bottom: 0.85rem; }
+.lead-note {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  max-width: 62ch;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+.lead-note__marker {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.6em;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.lead-note p {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--ink-body);
+}
+.lead-note strong { color: var(--indigo); }
 
 /* Tarjetas grandes de cifra: sin sombra/glass, solo regla fina y espacio.
    Anula específicamente el tratamiento "tarjeta producto" que usa este

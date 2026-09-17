@@ -478,6 +478,21 @@ def divider_html(next_block):
 </section>'''
 
 
+def lead_note_html(text):
+    """Frase corta separada del párrafo principal (p.ej. una precisión o un
+    dato de cierre) tratada como un punto destacado en vez de una cláusula
+    más dentro del mismo bloque de texto — le da variación de ritmo visual
+    a un párrafo que si no se leería todo parejo."""
+    if not text:
+        return ""
+    return (
+        f'<div class="lead-note reveal">\n'
+        f'  <span class="lead-note__marker" aria-hidden="true"></span>\n'
+        f'  <p>{rich(text)}</p>\n'
+        f'</div>'
+    )
+
+
 def chapter_html(block):
     num = block["num"]
     bid = block["id"]
@@ -485,12 +500,22 @@ def chapter_html(block):
 
     chart_html = charts.render_chart(load_chart(headline["chart"])) if headline.get("chart") else ""
     stat_tiles = stats_hero_html(headline.get("stats_hero")) if headline.get("stats_hero") else ""
+    note_html = lead_note_html(headline.get("intro_note"))
 
     extra = []
     if headline.get("facts") or headline.get("highlight"):
         extra.append(facts_grid_html(headline.get("facts"), headline.get("highlight")))
-    if headline.get("stats_list"):
-        extra.append(stats_list_html(headline["stats_list"]))
+    # stats_list normalmente es una elaboración adicional y va después del
+    # gráfico (orden por defecto). Cuando es el desglose de los componentes
+    # que explican la cifra del párrafo (p.ej. los tres motores del
+    # crecimiento) — flag `stats_list_top` — va arriba de todo, justo
+    # después del párrafo, para que se lea como el sustento de esa cifra en
+    # vez de una nota suelta pegada a un gráfico de un tema relacionado
+    # pero distinto (mismo criterio que ya usa el Notion de referencia).
+    stats_list_html_block = stats_list_html(headline["stats_list"]) if headline.get("stats_list") else ""
+    top_stats = stats_list_html_block if headline.get("stats_list_top") else ""
+    if headline.get("stats_list") and not headline.get("stats_list_top"):
+        extra.append(stats_list_html_block)
     extra_html = ("\n\n        " + "\n\n        ".join(extra)) if extra else ""
 
     closing = ""
@@ -517,13 +542,15 @@ def chapter_html(block):
 
     <div class="chapter__body">
       <p class="lead reveal">{rich(headline["intro"])}</p>
+      {note_html}
+      {top_stats}
 {photo_block}
       {stat_tiles}
 
       {chart_html}
       {extra_html}
 
-      <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">{esc(block["drawer"]["trigger_label"])} {ARROW_SVG}</a>
+      <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}"><span>{esc(block["drawer"]["trigger_label"])}</span><span class="drawer-trigger__icon" aria-hidden="true">{ARROW_SVG}</span></a>
       {closing}
     </div>
   </div>
@@ -542,13 +569,22 @@ def drawer_html(block):
     bid = block["id"]
     sections_html = "\n\n".join(section_html(s) for s in drawer["sections"])
     photo = photo_html(drawer.get("photo"))
+    # Frase puente: retoma la afirmación del capítulo antes de entrar en el
+    # detalle, para que el panel se sienta la continuación de la misma
+    # historia y no una lista de datos sueltos sin relación con lo de arriba.
+    lead_html = f'<p class="detail-drawer__lead">{rich(drawer["lead"])}</p>' if drawer.get("lead") else ""
     body = (photo + "\n\n    " if photo else "") + '<div class="roadmap">\n' + sections_html + '\n    </div>'
+    # El panel tiene su propio título narrativo — nunca repite el título
+    # del capítulo (que ya se ve en el riel de fondo), describe qué
+    # historia cuenta específicamente este detalle.
+    title = drawer.get("title", block["title"])
     return f'''<div class="detail-drawer" id="drawer-{bid}" role="dialog" aria-modal="true" aria-labelledby="drawer-{bid}-title" tabindex="-1">
   <div class="wrap detail-drawer__inner">
     <div class="detail-drawer__head">
       <p class="detail-drawer__eyebrow">Detalle completo</p>
-      <p class="detail-drawer__title" id="drawer-{bid}-title">{esc(block["title"])}</p>
+      <p class="detail-drawer__title" id="drawer-{bid}-title">{esc(title)}</p>
       <a href="#_" class="detail-drawer__close" aria-label="Cerrar detalle">&times;</a>
+      {lead_html}
     </div>
     <div class="detail-drawer__body">
     {body}
@@ -570,7 +606,6 @@ def quote_panel_html(qc):
         f'alt="{esc(photo.get("alt",""))}" loading="lazy" />'
         if photo.get("src") else ""
     )
-    credit_html = f'<p class="quote-panel__credit">Foto: {esc(photo["credit"])}</p>' if photo.get("credit") else ""
     # Cuando hay una segunda cita (quote2), va en su propio blockquote en
     # vez de quedar cosida dentro del párrafo de "text" — una cita citada
     # de corrido dentro de una oración larga es exactamente el párrafo
@@ -580,7 +615,6 @@ def quote_panel_html(qc):
     <div class="quote-panel__head">
       {portrait_html}
       <div>
-        <p class="quote-panel__eyebrow">{esc(qc.get("eyebrow",""))}</p>
         <p class="quote-panel__name">{esc(qc.get("name",""))}</p>
         <p class="quote-panel__role">{esc(qc.get("role",""))}</p>
       </div>
@@ -589,7 +623,6 @@ def quote_panel_html(qc):
     <blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote"])}&rdquo;</blockquote>
     <p class="quote-panel__text">{rich(qc["text"])}</p>
     {quote2_html}
-    {credit_html}
   </div>'''
 
 
@@ -616,9 +649,6 @@ REPORT_TPL = """<!doctype html>
 </main>
 
 <footer class="site-footer" id="cierre">
-  <div class="wrap">
-    <p class="about-note">{final_text}</p>
-  </div>
   <div class="wrap site-footer__inner">
     <img src="img/logo-keyword-white.svg" alt="Keyword" class="site-footer__logo" />
     <p class="site-footer__copy">&copy; Todos los derechos reservados</p>
@@ -651,7 +681,6 @@ def build_report():
         masthead=masthead_html(chapters_data),
         cover=cover_html(data),
         chapters=chapters_html,
-        final_text=rich(data["final"]["text"]),
         email=EMAIL,
     )
     with open(os.path.join(SITE, "index.html"), "w", encoding="utf-8") as f:

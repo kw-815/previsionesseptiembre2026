@@ -21,11 +21,9 @@
     "lead": "El propio Banco Central marca los límites de su escenario base: tres factores podrían llevar el crecimiento por encima de lo previsto, y seis podrían llevarlo por debajo."
   },
   "quote_closing": {
-    "eyebrow": "Voz oficial",
     "photo": {
       "src": "cierre-noboa.webp",
-      "alt": "Retrato oficial del presidente Daniel Noboa Azín",
-      "credit": "Isaac Castillo / Presidencia de la República del Ecuador"
+      "alt": "Retrato oficial del presidente Daniel Noboa Azín"
     },
     "name": "Daniel Noboa Azín",
     "role": "Presidente de la República del Ecuador",
@@ -33,9 +31,5 @@
     "quote": "Estamos contentos, estamos optimistas con los números que hemos visto últimamente de la economía y viendo que ajustamos lo que había que ajustar, pusimos en orden la casa y ahora es momento de obra.",
     "text": "También destacó el efecto de las políticas de apoyo a emprendedores y sectores vulnerables sobre las ventas y la circulación de efectivo:",
     "quote2": "Al entender estos elementos positivos de la economía se logra un mejoramiento muy claro en las ventas, muy claro en la cantidad de circulante que hay. Se ve una economía sólida, se ve una economía más estable."
-  },
-  "final": {
-    "eyebrow": "Sobre este reporte",
-    "text": "Elaborado por Keyword a partir de la Programación Macroeconómica 2026-2030 del Banco Central del Ecuador (septiembre de 2026). Todas las cifras citadas provienen de esa publicación."
   }
 }

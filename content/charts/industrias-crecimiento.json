@@ -2,7 +2,6 @@
   "kind": "hbars",
   "title": "Crecimiento del valor agregado por industria",
   "unit": "%",
-  "note": "Ordenado de mayor a menor crecimiento previsto para 2026. La cifra tenue junto a cada barra es la previsión 2027.",
   "source": "Fuente: Banco Central del Ecuador, Programación Macroeconómica 2026-2030, septiembre 2026 (Valor Agregado Bruto por industrias).",
   "categories": [
     "Minas y canteras",

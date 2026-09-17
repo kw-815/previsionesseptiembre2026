@@ -101,6 +101,10 @@ def chart_line(chart):
     series = chart["series"]
     unit = chart.get("unit", "")
     n = len(categories)
+    # Punto destacado (p.ej. 2026, la cifra de la que habla todo el
+    # documento): dato más grande + halo, para que no compita en igualdad
+    # de peso visual con el resto de la trayectoria.
+    highlight_idx = categories.index(chart["highlight"]) if chart.get("highlight") in categories else None
     all_vals = [v for s in series for v in s["values"]]
     vmin, vmax = min(0, min(all_vals)), max(all_vals)
     if vmax == vmin:
@@ -136,12 +140,24 @@ def chart_line(chart):
             f'points="{pts_str}"/>'
         )
         for i, (x, y) in enumerate(pts):
-            r = 4.5 if i in (0, n - 1) else 3
+            is_hl = si == 0 and highlight_idx is not None and i == highlight_idx
+            r = 6.5 if is_hl else (4.5 if i in (0, n - 1) else 3)
             label = f'{s["name"]} · {categories[i]}'
+            if is_hl:
+                parts.append(f'<circle class="chart-dot__halo" cx="{x:.1f}" cy="{y:.1f}" r="{r + 4}"/>')
+            cls = "chart-dot chart-dot--on" if is_hl else "chart-dot"
             parts.append(
-                f'<circle class="chart-dot" data-idx="{i}" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}">'
+                f'<circle class="{cls}" data-idx="{i}" style="fill:var(--{accent})" cx="{x:.1f}" cy="{y:.1f}" r="{r}">'
                 f'{_title(label, s["values"][i], unit)}</circle>'
             )
+            if is_hl and i != n - 1:
+                # Sin el año: ya está en la etiqueta del eje X justo debajo,
+                # repetirlo acá sería la misma redundancia que se corrigió
+                # en el resto del documento.
+                parts.append(
+                    f'<text class="chart-label chart-label--on" x="{x:.1f}" y="{y - 14:.1f}" text-anchor="middle">'
+                    f'{esc(s["name"])} {_fmt(s["values"][i])}{esc(unit)}</text>'
+                )
         lx, ly = pts[-1]
         label_dy = -10 if s["values"][-1] >= s["values"][-2 if n > 1 else -1] else 16
         end_labels.append({
