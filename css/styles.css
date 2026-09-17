@@ -1257,6 +1257,26 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   transition: transform var(--t-fast) var(--ease);
 }
 .risk-details__chevron svg { width: 16px; height: 16px; }
+
+/* Apertura animada del <details> — nativo, sin JS. Antes abría/cerraba de
+   golpe (el único componente del sitio sin transición), destacando por lo
+   mecánico frente al resto de la coreografía de reveals. ::details-content
+   es soportado por los motores evergreen; donde no lo esté, <details> sigue
+   funcionando exactamente igual que antes, solo sin animar (degrada bien). */
+@supports (transition-behavior: allow-discrete) {
+  .risk-details::details-content {
+    opacity: 0;
+    block-size: 0;
+    overflow-y: clip;
+    transition: content-visibility 420ms var(--ease) allow-discrete,
+                opacity 420ms var(--ease),
+                block-size 420ms var(--ease);
+  }
+  .risk-details[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
+}
 .risk-details[open] .risk-details__chevron { transform: rotate(180deg); }
 
 .risk-col__head {
@@ -1504,16 +1524,21 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   background: var(--indigo-deep);
   border-left: 1px solid var(--t-15);
   box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
-  transform: translateX(100%);
+  /* translateX + un empuje leve en el eje Z: el panel no es una lámina
+     plana que entra desde el borde, llega con algo de profundidad — el
+     mismo tipo de matiz que ya tienen los .reveal del resto del sitio,
+     aplicado acá al contenedor completo, no solo a su contenido. */
+  transform: translateX(100%) scale(0.98);
+  transform-origin: right center;
   visibility: hidden;
-  transition: transform 0.4s var(--ease), visibility 0s linear 0.4s;
+  transition: transform 0.45s var(--ease), visibility 0s linear 0.45s;
   overflow-y: auto;
   z-index: 110;
 }
 .detail-drawer:target {
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
   visibility: visible;
-  transition: transform 0.4s var(--ease), visibility 0s;
+  transition: transform 0.45s var(--ease), visibility 0s;
 }
 .detail-drawer__inner { padding-block: clamp(2rem, 5vw, 3rem); }
 .detail-drawer__head {
@@ -1522,6 +1547,19 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   margin-bottom: var(--s-4);
   border-bottom: 1px solid var(--t-15);
 }
+.detail-drawer__eyebrow,
+.detail-drawer__title {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 420ms var(--ease), transform 420ms var(--ease);
+  transition-delay: 120ms;
+}
+.detail-drawer:target .detail-drawer__eyebrow,
+.detail-drawer:target .detail-drawer__title {
+  opacity: 1;
+  transform: none;
+}
+.detail-drawer:target .detail-drawer__title { transition-delay: 180ms; }
 .detail-drawer__eyebrow {
   font-size: var(--fs-xs);
   font-weight: 700;
@@ -1569,20 +1607,27 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   position: fixed;
   inset: 0;
   background: rgba(8, 10, 20, 0.6);
+  backdrop-filter: blur(0);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s var(--ease), visibility 0s linear 0.3s;
+  transition: opacity 0.35s var(--ease), backdrop-filter 0.35s var(--ease), visibility 0s linear 0.35s;
   z-index: 105;
 }
 body:has(.detail-drawer:target) .drawer-backdrop {
   opacity: 1;
+  backdrop-filter: blur(3px);
   visibility: visible;
-  transition: opacity 0.3s var(--ease), visibility 0s;
+  transition: opacity 0.35s var(--ease), backdrop-filter 0.35s var(--ease), visibility 0s;
 }
 body:has(.detail-drawer:target) { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .detail-drawer, .drawer-backdrop { transition: none; }
+}
+@supports (transition-behavior: allow-discrete) {
+  @media (prefers-reduced-motion: reduce) {
+    .risk-details::details-content { transition: none; }
+  }
 }
 
 /* ============================================================

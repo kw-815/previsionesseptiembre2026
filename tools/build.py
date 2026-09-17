@@ -176,6 +176,9 @@ def stats_hero_html(items):
 
 
 def photo_html(photo, base="img/"):
+    # Sin pie de foto: en un informe AAA la fotografía editorial ilustra,
+    # no necesita una leyenda descriptiva de lo que ya se ve o de lo que
+    # el propio texto de al lado ya cuenta (créditos completos en README.md).
     if not photo:
         return ""
     return (
@@ -183,7 +186,6 @@ def photo_html(photo, base="img/"):
         f'  <div class="obj-photo__frame">\n'
         f'    <img src="{base}{esc(photo["src"])}" alt="{esc(photo.get("alt",""))}" loading="lazy" />\n'
         f'  </div>\n'
-        f'  <figcaption>{rich(photo["caption"])}</figcaption>\n'
         f'</figure>'
     )
 
@@ -569,6 +571,11 @@ def quote_panel_html(qc):
         if photo.get("src") else ""
     )
     credit_html = f'<p class="quote-panel__credit">Foto: {esc(photo["credit"])}</p>' if photo.get("credit") else ""
+    # Cuando hay una segunda cita (quote2), va en su propio blockquote en
+    # vez de quedar cosida dentro del párrafo de "text" — una cita citada
+    # de corrido dentro de una oración larga es exactamente el párrafo
+    # denso que el resto del sitio evita.
+    quote2_html = f'<blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote2"])}&rdquo;</blockquote>' if qc.get("quote2") else ""
     return f'''<div class="quote-panel reveal">
     <div class="quote-panel__head">
       {portrait_html}
@@ -581,6 +588,7 @@ def quote_panel_html(qc):
     <p class="quote-panel__intro">{rich(qc["intro"])}</p>
     <blockquote class="quote-panel__quote">&ldquo;{rich(qc["quote"])}&rdquo;</blockquote>
     <p class="quote-panel__text">{rich(qc["text"])}</p>
+    {quote2_html}
     {credit_html}
   </div>'''
 
