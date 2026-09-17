@@ -226,7 +226,7 @@ def risk_ratio_html(risk):
 </div>'''
 
 
-def risk_cards_html(risk):
+def risk_cards_html(risk, open_default=False):
     def col(kind, label, items, icon):
         cards = "\n".join(
             f'      <article class="risk-card">\n'
@@ -248,15 +248,23 @@ def risk_cards_html(risk):
     # (.risk-summary) — sueltos se veían como dos botones iguales (mismo
     # estilo que .drawer-trigger) apretados contra una barra de color, sin
     # que quedara claro qué hacía cada uno.
+    # `open_default`: en el capítulo de Riesgos la tabla de los 9 factores
+    # ahora es el contenido macro de apertura, no un detalle opcional detrás
+    # de un clic — se muestra ya desplegada (sigue siendo un <details>
+    # nativo, así que el lector puede colapsarla si quiere). La etiqueta del
+    # summary cambia de "Ver el detalle..." a "Detalle de..." porque el
+    # detalle ya está a la vista, no es una invitación a revelarlo.
+    open_attr = " open" if open_default else ""
+    toggle_label = f"Detalle de los {total} factores" if open_default else f"Ver el detalle de los {total} factores"
     return (
         '<div class="risk-summary">\n'
         + risk_ratio_html(risk) + "\n"
         # <details>/<summary> nativo: el balance de riesgos se abre al
         # pinchar en vez de mostrar las 9 tarjetas de entrada — cero JS,
         # el mismo patrón "cero dependencias" del resto del sitio.
-        + '<details class="risk-details">\n'
+        + f'<details class="risk-details"{open_attr}>\n'
         + '  <summary class="risk-details__toggle">\n'
-        + f'    <span>Ver el detalle de los {total} factores</span>\n'
+        + f'    <span>{toggle_label}</span>\n'
         + f'    <span class="risk-details__chevron" aria-hidden="true">{CHEVRON_SVG}</span>\n'
         + '  </summary>\n'
         + '  <div class="risk-grid">\n'
@@ -264,6 +272,34 @@ def risk_cards_html(risk):
         + col("baja", "Factores a la baja", risk["baja"], TREND_DOWN_SVG) + "\n"
         + '  </div>\n'
         + '</details>\n'
+        + '</div>'
+    )
+
+
+def scenario_table_html(data):
+    """Tabla real (Escenario / cifra) para comparar el mismo indicador bajo
+    dos intensidades de un evento (p.ej. moderado/fuerte de El Niño). No usa
+    el patrón `periods` de `stats_list` porque esas etiquetas ("Escenario
+    moderado"/"Escenario fuerte") son más largas que las que ese componente
+    espera (años cortos) — no cabían en su columna angosta y partían el
+    número de su unidad al ajustar línea, además de no leerse como tabla al
+    ser una sola fila. Acá cada escenario es una fila real de un `<table>`."""
+    if not data:
+        return ""
+    rows = "".join(
+        f'      <tr><td class="scenario-table__scenario">{esc(r["scenario"])}</td>'
+        f'<td class="scenario-table__figure">{esc(r["figure"])}</td></tr>\n'
+        for r in data["rows"]
+    )
+    ctx_html = f'  <p class="scenario-table__ctx">{rich(data["ctx"])}</p>\n' if data.get("ctx") else ""
+    return (
+        '<div class="scenario-table reveal">\n'
+        f'  <p class="scenario-table__key">{esc(data["key"])}</p>\n'
+        '  <table class="scenario-table__grid">\n'
+        f'    <thead><tr><th>Escenario</th><th>{esc(data.get("col_label", "Valor"))}</th></tr></thead>\n'
+        '    <tbody>\n' + rows + '    </tbody>\n'
+        '  </table>\n'
+        + ctx_html
         + '</div>'
     )
 
@@ -295,6 +331,8 @@ def section_html(sec):
         body.append("      " + stats_list_html(sec["stats_list"]).replace("\n", "\n      "))
     if sec.get("risk_cards"):
         body.append("      " + risk_cards_html(sec["risk_cards"]).replace("\n", "\n      "))
+    if sec.get("scenario_table"):
+        body.append("      " + scenario_table_html(sec["scenario_table"]).replace("\n", "\n      "))
     return f'    <div class="fact-section reveal">\n{head}\n' + "\n\n".join(body) + "\n    </div>"
 
 
@@ -537,17 +575,56 @@ def chapter_html(block):
         extra.append(stats_list_html_block)
     extra_html = ("\n\n        " + "\n\n        ".join(extra)) if extra else ""
 
-    closing = ""
-    if bid == "crecimiento-general":
-        home = load("home")
-        closing = f'\n\n        <div class="quote-panel--inset">{quote_panel_html(home.get("quote_closing"))}</div>'
-    if bid == "riesgos":
-        risk = load("riesgos")["sections"][0]["risk_cards"]
-        closing = f'\n\n        <div class="reveal">{risk_cards_html(risk)}</div>'
-
     photo = photo_html(block.get("photo"))
     photo_block = ("\n        " + photo.replace("\n", "\n        ") + "\n") if photo else ""
     icon_svg = CHAPTER_ICONS.get(num, "")
+    drawer_trigger = (
+        f'<a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}">'
+        f'<span>{esc(block["drawer"]["trigger_label"])}</span>'
+        f'<span class="drawer-trigger__icon" aria-hidden="true">{ARROW_SVG}</span></a>'
+    )
+
+    if bid == "riesgos":
+        # De lo macro a lo micro: el balance de los 9 factores del BCE
+        # (mostrado ya desplegado, no detrás de un clic) se lee primero,
+        # completo; El Niño es una cuantificación aparte (no uno de los
+        # nueve, ver headline.intro_note) y cierra el capítulo con su propio
+        # detalle y el chip hacia el panel ampliado. Antes el orden era
+        # 9 factores (mención) → El Niño (foto+gráfico+chip) → 9 factores
+        # (tabla) — el mismo número aparecía dos veces con el detalle de un
+        # tema distinto en medio, lo que leía como confuso/circular.
+        # La foto va justo después del párrafo de apertura, igual que en los
+        # otros 3 capítulos (imagen de cabecera del capítulo, no una
+        # ilustración pegada al gráfico de El Niño) — antes quedaba
+        # encajonada entre la nota de transición y el gráfico, una posición
+        # que no sigue el mismo patrón que el resto del informe.
+        risk = load("riesgos")["sections"][0]["risk_cards"]
+        risk_table = f'<div class="reveal">{risk_cards_html(risk, open_default=True)}</div>'
+        body = f'''<p class="lead reveal">{rich(headline["intro"])}</p>
+{photo_block}
+      {risk_table}
+
+      {note_html}
+      {chart_html}
+      {extra_html}
+
+      {drawer_trigger}'''
+    else:
+        closing = ""
+        if bid == "crecimiento-general":
+            home = load("home")
+            closing = f'\n\n        <div class="quote-panel--inset">{quote_panel_html(home.get("quote_closing"))}</div>'
+        body = f'''<p class="lead reveal">{rich(headline["intro"])}</p>
+      {note_html}
+      {top_stats}
+{photo_block}
+      {stat_tiles}
+
+      {chart_html}
+      {extra_html}
+
+      {drawer_trigger}
+      {closing}'''
 
     return f'''<section class="chapter chapter--paper" id="{bid}" data-chapter-section="{num}" aria-labelledby="titulo-{bid}">
   <div class="chapter__grid">
@@ -560,17 +637,7 @@ def chapter_html(block):
     </aside>
 
     <div class="chapter__body">
-      <p class="lead reveal">{rich(headline["intro"])}</p>
-      {note_html}
-      {top_stats}
-{photo_block}
-      {stat_tiles}
-
-      {chart_html}
-      {extra_html}
-
-      <a href="#drawer-{bid}" class="drawer-trigger" data-drawer-open="{bid}"><span>{esc(block["drawer"]["trigger_label"])}</span><span class="drawer-trigger__icon" aria-hidden="true">{ARROW_SVG}</span></a>
-      {closing}
+      {body}
     </div>
   </div>
 </section>

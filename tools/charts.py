@@ -125,8 +125,36 @@ def chart_line(chart):
     zero_y = y0 - (0 - vmin) / (vmax - vmin) * (y0 - y1)
     parts = [f'<line class="chart-grid0" x1="{x0}" y1="{zero_y:.1f}" x2="{x1}" y2="{zero_y:.1f}"/>']
 
-    labels_x = [f'<text class="chart-axis" x="{x0 + step * i:.1f}" y="{H - 8}" text-anchor="middle">{esc(c)}</text>'
-                for i, c in enumerate(categories)]
+    # La primera y última etiqueta, centradas sobre su punto como el resto,
+    # se salían del viewBox por su lado exterior (p.ej. "2030 (prev)"
+    # sobresaliendo del borde derecho) — un texto centrado en el extremo del
+    # eje siempre tiene la mitad de su ancho fuera del área de trazado. Se
+    # anclan hacia adentro (start/end) solo en los extremos; las del medio
+    # se quedan centradas como antes. Anclar sin más "2030 (prev)" entero
+    # hacia adentro lo hacía chocar con "2029 (prev)" — se parte además en
+    # dos líneas (año / calificador) reutilizando `_wrap_axis_label`, solo
+    # en los dos extremos, para que ninguna de las dos líneas sea tan ancha
+    # como para invadir la categoría vecina.
+    def _axis_anchor(i):
+        if i == 0:
+            return "start"
+        if i == n - 1:
+            return "end"
+        return "middle"
+
+    labels_x = []
+    for i, c in enumerate(categories):
+        x = x0 + step * i
+        anchor = _axis_anchor(i)
+        lines = _wrap_axis_label(c, max_chars=0) if i in (0, n - 1) else [c]
+        if len(lines) > 1:
+            tspans = "".join(
+                f'<tspan x="{x:.1f}" dy="{0 if li == 0 else 13}">{esc(line)}</tspan>'
+                for li, line in enumerate(lines)
+            )
+            labels_x.append(f'<text class="chart-axis" x="{x:.1f}" y="{H - 20}" text-anchor="{anchor}">{tspans}</text>')
+        else:
+            labels_x.append(f'<text class="chart-axis" x="{x:.1f}" y="{H - 8}" text-anchor="{anchor}">{esc(c)}</text>')
 
     end_labels = []
     for si, s in enumerate(series):

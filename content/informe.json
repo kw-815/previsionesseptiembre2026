@@ -181,13 +181,32 @@
           ]
         },
         {
-          "eyebrow": "El impacto en inflación y exportaciones",
-          "title": "Alimentos y productos costeros, los más expuestos",
-          "stats_list": [
-            { "key": "Inflación de alimentos — moderado", "val": "+0,48 p.p.", "ctx": "En los 12 meses posteriores al evento, sobre el escenario base." },
-            { "key": "Inflación de alimentos — fuerte", "val": "+1,34 p.p.", "ctx": "Casi el triple del escenario moderado — el efecto no es lineal." },
-            { "key": "Cacao en grano (exportación)", "val": "-1,2 p.p.", "ctx": "Escenario fuerte sobre 2027 — el producto más sensible del listado." }
-          ]
+          "eyebrow": "El impacto en inflación",
+          "title": "Los alimentos, el canal más directo",
+          "lead": "En los 12 meses posteriores al evento, la inflación de alimentos subiría por encima del escenario base — el efecto no es lineal: un FEN fuerte casi triplica el impacto de uno moderado.",
+          "scenario_table": {
+            "key": "Inflación de alimentos",
+            "col_label": "Impacto",
+            "rows": [
+              { "scenario": "Moderado", "figure": "+0,48 p.p." },
+              { "scenario": "Fuerte", "figure": "+1,34 p.p." }
+            ],
+            "ctx": "Sobre el escenario base de inflación."
+          }
+        },
+        {
+          "eyebrow": "El impacto en exportaciones",
+          "title": "El cacao, el producto más sensible",
+          "lead": "El FEN también reduce las exportaciones no petroleras de 2027: el cacao en grano es el producto de la canasta con mayor caída estimada en ambos escenarios.",
+          "scenario_table": {
+            "key": "Cacao en grano (exportación)",
+            "col_label": "Impacto",
+            "rows": [
+              { "scenario": "Moderado", "figure": "-0,4 p.p." },
+              { "scenario": "Fuerte", "figure": "-1,2 p.p." }
+            ],
+            "ctx": "Sobre el valor exportado de 2027 frente al escenario base."
+          }
         }
       ]
     }
