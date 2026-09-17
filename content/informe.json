@@ -65,9 +65,9 @@
       "intro": "El crecimiento de mediano plazo descansa en tres motores: el <strong>consumo de los hogares</strong>, la <strong>inversión (FBKF)</strong> y, en menor medida, las <strong>exportaciones no petroleras</strong>. El crédito privado y el resultado fiscal acompañan con una desaceleración y consolidación graduales, sin sobresaltos.",
       "stats_list_top": true,
       "stats_list": [
-        { "key": "Consumo de hogares", "val": "+3,3% / +2,8%", "ctx": "2026 y promedio 2027-2030. Sostenido por remesas y crédito de consumo." },
-        { "key": "Inversión (FBKF)", "val": "+5,8% / +2,4%", "ctx": "2026 y promedio 2027-2030. Impulsada por construcción, vivienda y obra pública." },
-        { "key": "Exportaciones", "val": "+3,8% / +1,7%", "ctx": "2026 y promedio 2027-2030. El componente más volátil del escenario." }
+        { "key": "Consumo de hogares", "periods": [{ "label": "2026", "figure": "+3,3%" }, { "label": "2027-2030 (prom.)", "figure": "+2,8%" }], "ctx": "Sostenido por remesas y crédito de consumo." },
+        { "key": "Inversión (FBKF)", "periods": [{ "label": "2026", "figure": "+5,8%" }, { "label": "2027-2030 (prom.)", "figure": "+2,4%" }], "ctx": "Impulsada por construcción, vivienda y obra pública." },
+        { "key": "Exportaciones", "periods": [{ "label": "2026", "figure": "+3,8%" }, { "label": "2027-2030 (prom.)", "figure": "+1,7%" }], "ctx": "El componente más volátil del escenario." }
       ],
       "stats_hero": [
         { "label": "Cuenta corriente 2026", "figure": "4.587", "unit": "M USD", "note": "3,4% del PIB — cae 39,9% frente a 2025 (USD 7.632M)." },
@@ -95,8 +95,8 @@
           "chart": "credito-captaciones",
           "chart_compact": true,
           "stats_list": [
-            { "key": "Profundidad financiera (crédito/PIB)", "val": "60,8% → 70,7%", "ctx": "Aunque el crédito privado crece cada año más despacio (10,9% en 2026, 6,8% en 2030), gana peso frente al tamaño de la economía." },
-            { "key": "Captaciones 2026 → 2030", "val": "11,5% → 7,0%", "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema." },
+            { "key": "Profundidad financiera (crédito/PIB)", "periods": [{ "label": "2026", "figure": "60,8%" }, { "label": "2030", "figure": "70,7%" }], "ctx": "Aunque el crédito privado crece cada año más despacio (10,9% en 2026, 6,8% en 2030), gana peso frente al tamaño de la economía." },
+            { "key": "Captaciones", "periods": [{ "label": "2026", "figure": "11,5%" }, { "label": "2030", "figure": "7,0%" }], "ctx": "Se mantienen por encima del crédito durante todo el horizonte, sosteniendo el fondeo del sistema." },
             { "key": "Inversión pública 2026", "val": "USD 2.747M", "ctx": "+20,9% frente a 2025, con foco en educación, salud y seguridad — llega a USD 3.828M en 2030." }
           ]
         }

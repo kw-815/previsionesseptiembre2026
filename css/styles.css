@@ -921,6 +921,31 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 1rem); }
   line-height: 1.5;
 }
 .stat-row__ctx strong { color: var(--white); font-weight: 600; }
+/* Dos cifras de períodos distintos (p.ej. 2026 y promedio 2027-2030) —
+   cada una con su propia etiqueta de año al lado, en vez del viejo
+   "+3,3% / +2,8%" que no distinguía a qué año correspondía cada número. */
+.stat-row__val--split {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.stat-row__period {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.stat-row__period-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--t-60);
+  white-space: nowrap;
+}
+.stat-row__period-figure {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
 @media (max-width: 900px) {
   .stat-row { grid-template-columns: 1fr; gap: 0.35rem; padding: var(--s-3); }
 }

@@ -142,6 +142,25 @@ def facts_grid_html(facts, highlight=None):
     return f'<div class="facts-grid{mod} reveal">\n' + "\n".join(items) + "\n    </div>"
 
 
+def stat_val_html(r):
+    """Una fila de stats-list puede llevar un solo valor ("val", texto
+    plano) o dos valores de períodos distintos ("periods": [{label,
+    figure}, ...]) — el segundo caso reemplaza el viejo formato "X / Y" o
+    "X → Y", que no dejaba claro a qué año correspondía cada cifra sin leer
+    el ctx. Con `periods` cada número lleva su propia etiqueta de año al
+    lado, sin depender del texto de contexto para entenderse."""
+    if r.get("periods"):
+        items = "".join(
+            f'<span class="stat-row__period">'
+            f'<span class="stat-row__period-label">{esc(p["label"])}</span>'
+            f'<span class="stat-row__period-figure">{esc(p["figure"])}</span>'
+            f'</span>'
+            for p in r["periods"]
+        )
+        return f'<div class="stat-row__val stat-row__val--split">{items}</div>'
+    return f'<p class="stat-row__val">{esc(r["val"])}</p>'
+
+
 def stats_list_html(rows):
     if not rows:
         return ""
@@ -150,7 +169,7 @@ def stats_list_html(rows):
         items.append(
             f'    <div class="stat-row">\n'
             f'      <p class="stat-row__key">{esc(r["key"])}</p>\n'
-            f'      <p class="stat-row__val">{esc(r["val"])}</p>\n'
+            f'      {stat_val_html(r)}\n'
             f'      <p class="stat-row__ctx">{rich(r["ctx"])}</p>\n'
             f'    </div>'
         )
